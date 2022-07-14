@@ -1,1 +1,1 @@
-import * as test from './js';
+import * as test from './js/example';
