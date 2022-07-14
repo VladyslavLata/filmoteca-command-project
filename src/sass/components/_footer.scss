@@ -1,0 +1,14 @@
+.footer {
+    background-color: $footer-bg-color;
+    color: $footer-text-color;
+}
+
+.footer__text {
+    @include fonts;
+    @include center;
+}
+
+.footer-text__link {
+    color: $footer-text-color;
+    text-decoration:underline;
+}
