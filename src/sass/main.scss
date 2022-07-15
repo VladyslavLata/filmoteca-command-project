@@ -1,5 +1,3 @@
-@import './base/common';
-
 @import "./utils/container";
 @import "./utils/mixins";
 @import "./utils/variables";
@@ -9,3 +7,5 @@
 @import "./components/_gallery";
 
 @import "./components/_footer";
+
+@import './base/common';
