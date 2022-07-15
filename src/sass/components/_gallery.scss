@@ -1,0 +1,40 @@
+.container--space {
+      padding-top: 60px;
+      padding-bottom: 60px;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      margin-left: auto;
+      margin-right: auto;
+      row-gap: 20px;
+
+          @media screen and (min-width: 320px) {
+              width: 100%;       
+          }
+
+          @media screen and (min-width: 768px) {
+              gap: 32px;
+          }
+
+          @media screen and (min-width: 1280px) {
+            column-gap: 16px;                
+          }
+    }
+
+    .card {
+
+          @media screen and (min-width: 320px) {
+              width: 100%;
+          }
+
+          @media screen and (min-width: 768px) {
+              flex-basis: calc((100% - 32px) / 2);
+          }
+
+          @media screen and (min-width: 1280px) {
+              flex-basis: calc((100% - 16px * 2) / 3);
+          }
+
+    }
