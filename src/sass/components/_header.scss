@@ -17,77 +17,85 @@ body {
 .header {
     padding-top: 40px;
     min-height: 230px;
-    background-color: $black-color;
+    background-color: rgba(0, 0, 0, 0.56);
 
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 
-    @include mq(tablet-only) {
-        min-height: 219px;
-    }
-
-    @include mq(desktop) {
+    @include mq(tablet) {
         min-height: 216px;
     }
 }
 
 .header-main {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
+    background-image: 
+    // linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
     url(/src/images/header-main-bg-mob.png);
 
     @include mq(retina) {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
+        background-image: 
+        // linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
         url(/src/images/header-main-bg-mob-2x.png);
     }
 
     @include mq(tablet-only) {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
+        background-image: 
+        // linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
         url(/src/images/header-main-bg-tab.png);
 
         @include mq(retina) {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
+            background-image: 
+            // linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
             url(/src/images/header-main-bg-tab-2x.png);
         }
     }
 
     @include mq(desktop) {
         min-height: 216px;
-        background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
+        background-image: 
+        // linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
         url(/src/images/header-main-bg-desk.png);
 
         @include mq(retina) {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
+            background-image: 
+            // linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
             url(/src/images/header-main-bg-desk-2x.png);
         }
     }
 }
 
 .header-mylib {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+    background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
     url(/src/images/header-mylib-bg-mob.png);
 
     @include mq(retina) {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+            background-image: 
+            linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
             url(/src/images/header-mylib-bg-mob-2x.png);
         }
     
         @include mq(tablet-only) {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)), 
+            background-image: 
+            linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)), 
             url(/src/images/header-mylib-bg-tab.png);
     
             @include mq(retina) {
-                background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)), 
+                background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)), 
                 url(/src/images/header-mylib-bg-tab-2x.png);
             }
         }
     
         @include mq(desktop) {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)), 
+            background-image: 
+            linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)), 
             url(/src/images/header-mylib-bg-desk.png);
     
             @include mq(retina) {
-                background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)), 
+                background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)), 
                 url(/src/images/header-mylib-bg-desk-2x.png);
             }
         }
