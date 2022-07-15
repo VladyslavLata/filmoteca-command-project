@@ -1,0 +1,15 @@
+body {
+
+    &.dark__theme {
+        background-color: #04002b;
+    }
+}
+
+.icon__button {
+    background-color: transparent;
+    border: none;
+}
+
+.icon__item--hidden {
+    display: none;
+}
