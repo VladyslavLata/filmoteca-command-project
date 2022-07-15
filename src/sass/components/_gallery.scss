@@ -24,17 +24,36 @@
     }
 
     .card {
+        width: 100%;
+        @media screen and (min-width: 320px) {
+            
+            height: 438px;
+        }
 
-          @media screen and (min-width: 320px) {
-              width: 100%;
-          }
+        @media screen and (min-width: 768px) {
+            flex-basis: calc((100% - 32px) / 2);
+            height: 495px;
+        }
 
-          @media screen and (min-width: 768px) {
-              flex-basis: calc((100% - 32px) / 2);
-          }
+        @media screen and (min-width: 1280px) {
+            flex-basis: calc((100% - 16px * 2) / 3);
+            height: 634px;
+        }
 
-          @media screen and (min-width: 1280px) {
-              flex-basis: calc((100% - 16px * 2) / 3);
-          }
+        &__img {
+            @media screen and (min-width: 320px) {            
+                    height: 398px;
+                }
+            
+                @media screen and (min-width: 768px) {                    
+                    height: 455px;
+                }
+            
+                @media screen and (min-width: 1280px) {
+                    height: 574px;
+                }
+        }
 
     }
+
+    
