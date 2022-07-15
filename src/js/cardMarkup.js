@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Movie } from './fetchMovie';
 import { genreFind } from './HomePageAndGenreFetch';
 
