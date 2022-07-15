@@ -2,6 +2,9 @@ import { makeMarkupCard } from './cardMarkup';
 import { Movie } from './fetchMovie';
 import { makeMarkupCard } from './cardMarkup';
 
+const gallery = document.querySelector('.gallery');
+console.log('~ gallery', gallery);
+
 const LS_GENRE_KEY = 'themoviedb.org-genre';
 
 startPageVisit();
@@ -54,3 +57,15 @@ export function genreFind(genreList = []) {
     return genreResult.join(', ');
   }
 }
+
+// data.results.map(movieItem => {
+//   // console.log(movieItem);
+//   console.log(`Poster: ${Movie.IMG_PATH + movieItem.poster_path}`);
+//   console.log(`Title: ${movieItem.title}`);
+//   console.log(
+//     `${genreFind(movieItem.genre_ids)} | ${parseInt(
+//       movieItem.release_date,
+//       10
+//     )}`
+//   );
+// });
