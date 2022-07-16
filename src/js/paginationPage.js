@@ -10,7 +10,7 @@ refs.btnLoadPrevious.addEventListener('click', onClickPrevious);
 refs.btnLoadNext.addEventListener('click', onClickNext);
 
 function onClickPrevious() {
-  workClassIstance = trendMovie;
+  const workClassIstance = trendMovie;
 
   if (workClassIstance.page === 1) {
     return;
@@ -20,7 +20,7 @@ function onClickPrevious() {
 }
 
 function onClickNext() {
-  workClassIstance = trendMovie;
+  const workClassIstance = trendMovie;
 
   workClassIstance.page += 1;
   fetchAndMarkup(workClassIstance);
