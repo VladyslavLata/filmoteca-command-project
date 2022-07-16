@@ -13,7 +13,7 @@ async function onClickSubmit(event) {
   event.preventDefault();
   keyword = event.target.query.value.trim();
 
-  keywordMovies = new Movie(keyword);
+  const keywordMovies = new Movie(keyword);
   await keywordMovies
     .fetchSearch()
     .then(data => {
