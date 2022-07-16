@@ -2,7 +2,11 @@ import { Movie } from './fetchMovie';
 import { trendMovie, fetchAndMarkup } from './HomePageAndGenreFetch';
 import { disabledEl, unlockEl } from './interfaceWork';
 
-const LS_LANGUAGE_KEY = 'themoviedb-current-language';
+export const keyLS = {
+  LS_LANGUAGE_KEY: 'themoviedb-current-language',
+  LS_GENRE_KEY_EN: 'themoviedb-genre-EN',
+  LS_GENRE_KEY_UA: 'themoviedb-genre-UA',
+};
 const refs = {
   btnSwitchEN: document.querySelector('.switch-EN'),
   btnSwitchUA: document.querySelector('.switch-UA'),
@@ -26,13 +30,13 @@ function onClickUA() {
 }
 
 export function setLanguageToLS(newLanguage) {
-  localStorage.setItem(LS_LANGUAGE_KEY, JSON.stringify(newLanguage));
+  localStorage.setItem(keyLS.LS_LANGUAGE_KEY, JSON.stringify(newLanguage));
   switchBtnLang(newLanguage);
   return newLanguage;
 }
 
 export function getLanguageFromLS() {
-  return JSON.parse(localStorage.getItem(LS_LANGUAGE_KEY));
+  return JSON.parse(localStorage.getItem(keyLS.LS_LANGUAGE_KEY));
 }
 
 export function switchBtnLang(currentLang) {
