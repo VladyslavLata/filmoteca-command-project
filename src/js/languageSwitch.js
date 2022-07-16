@@ -12,14 +12,14 @@ refs.btnSwitchEN.addEventListener('click', onClickEN);
 refs.btnSwitchUA.addEventListener('click', onClickUA);
 
 function onClickEN() {
-  workClassIstance = trendMovie;
+  const workClassIstance = trendMovie;
 
   workClassIstance.langCurrent = setLanguageToLS(Movie.language.ENGLISH);
   fetchAndMarkup(workClassIstance);
 }
 
 function onClickUA() {
-  workClassIstance = trendMovie;
+  const workClassIstance = trendMovie;
 
   workClassIstance.langCurrent = setLanguageToLS(Movie.language.UKRAINIAN);
   fetchAndMarkup(workClassIstance);
