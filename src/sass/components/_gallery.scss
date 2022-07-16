@@ -71,6 +71,11 @@
   }
 }
 
+.card__name,
+.card__description {
+  padding-left: 5px;
+}
+
 .card__name {
   font-weight: 500;
   font-size: 12px;
@@ -85,6 +90,7 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 1.33;
+  padding-bottom: 5px;
 
   @include mq(desktop) {
     font-size: 16;
