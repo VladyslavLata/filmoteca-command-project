@@ -3,7 +3,7 @@ import { makeMarkupCard } from './cardMarkup';
 
 let keyword = '';
 
-refs = {
+const refs = {
   formEl: document.querySelector('.search-form'),
 };
 
