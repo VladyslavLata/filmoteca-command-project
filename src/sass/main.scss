@@ -1,11 +1,13 @@
-@import "./utils/container";
-@import "./utils/mixins";
-@import "./utils/variables";
-@import "./utils/placeholders";
+@import './utils/container';
+@import './utils/mixins';
+@import './utils/variables';
+@import './utils/placeholders';
 
 @import "./components/_header";
 @import "./components/_gallery";
 @import "./components/modal";
 @import "./components/_footer";
+@import './components/language-switch';
+@import './components/pagination-page';
 
 @import './base/_common';

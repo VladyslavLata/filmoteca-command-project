@@ -13,12 +13,18 @@ export class Movie {
     DAY: 'day',
     WEEK: 'week',
   };
+  static language = {
+    ENGLISH: 'en-US',
+    UKRAINIAN: 'uk-UA',
+  };
   #page;
   #query;
+  #langCurrent;
 
   constructor(query) {
     this.#query = query;
     this.#page = 1;
+    this.#langCurrent = Movie.language.ENGLISH;
     axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
   }
 
@@ -38,10 +44,19 @@ export class Movie {
     return this.#query;
   }
 
+  get langCurrent() {
+    return this.#langCurrent;
+  }
+
+  set langCurrent(newLang) {
+    this.#langCurrent = newLang;
+  }
+
   async fetchTrend(timeOption = Movie.trendTime.DAY) {
     const options = new URLSearchParams({
       api_key: Movie.API_KEY,
       page: this.#page,
+      language: this.#langCurrent,
     });
     const response = await axios.get(
       `trending/${Movie.mediaType.MOVIE}/${
@@ -68,6 +83,7 @@ export class Movie {
   async fetchGenre() {
     const options = new URLSearchParams({
       api_key: Movie.API_KEY,
+      language: this.#langCurrent,
     });
     const response = await axios.get(
       `genre/${Movie.mediaType.MOVIE}/list?${options}`
