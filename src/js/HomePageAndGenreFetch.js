@@ -67,10 +67,11 @@ async function genreLoad(classInstance) {
   }
 }
 
-export function genreFind(genreList = [], langGenre = Movie.language.ENGLISH) {
+export function genreFind(genreList = []) {
   let genreLS = localStorage.getItem(LS_GENRE_KEY_EN);
   let noGenre = 'No genres';
   let genreOther = 'Other';
+  const langGenre = getLanguageFromLS();
 
   switch (langGenre) {
     case Movie.language.ENGLISH:
