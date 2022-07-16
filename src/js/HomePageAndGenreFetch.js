@@ -5,6 +5,7 @@ import {
   getLanguageFromLS,
   switchBtnLang,
 } from './languageSwitch';
+import { setCurrenDataToLS, getCurrenDataFromLS } from './currentPageData';
 
 const gallery = document.querySelector('.gallery');
 console.log('~ gallery', gallery);
@@ -34,9 +35,11 @@ export async function fetchAndMarkup(classIstance) {
     .fetchTrend()
     .then(data => {
       console.log(data);
+      setCurrenDataToLS(data.results);
       makeMarkupCard(data, classIstance.langCurrent);
     })
     .catch(error => console.log(error));
+  console.log(getCurrenDataFromLS());
 }
 
 async function genreLoad(classInstance) {
