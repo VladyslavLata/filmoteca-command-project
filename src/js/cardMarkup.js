@@ -17,7 +17,6 @@ export function makeMarkupCard(data, langCard = Movie.language.ENGLISH) {
               movieItem.genre_ids,
               langCard
             )} | ${parseInt(movieItem.release_date, 10)}
-            </p>
             <span class="card__vote">${
               Math.round(movieItem.vote_average * 10) / 10
             }</span>
