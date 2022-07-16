@@ -1,37 +1,36 @@
 import { Movie } from './fetchMovie';
 import { makeMarkupCard } from './cardMarkup';
 
-let keyword = '';
-
 const refs = {
   formEl: document.querySelector('.search-form'),
+  paragraphEl: document.querySelector('.warning-notification'),
 };
 
 refs.formEl.addEventListener('submit', onClickSubmit);
 
 async function onClickSubmit(event) {
-  event.preventDefault();
-  keyword = event.target.query.value.trim();
+  try {
+    event.preventDefault();
+    const keyword = event.target.query.value.trim();
 
-  const keywordMovies = new Movie(keyword);
-  await keywordMovies
-    .fetchSearch()
-    .then(data => {
-      console.log(data);
-      makeMarkupCard(data);
-    })
-    .catch(error => console.log(error));
+    if (keyword === '') {
+      refs.paragraphEl.innerHTML = `Enter the name in the search field`;
+      return;
+    }
+
+    const keywordMovies = new Movie(keyword);
+    const data = await keywordMovies.fetchSearch();
+
+    if (data.total_results === 0) {
+      event.target.reset();
+      refs.paragraphEl.innerHTML = `Search result not successful. Enter the correct movie name and try again.`;
+      return;
+    }
+
+    makeMarkupCard(data);
+    event.target.reset();
+    refs.paragraphEl.innerHTML = '';
+  } catch (error) {
+    console.log(error.message);
+  }
 }
-
-// try {
-//   event.preventDefault();
-//   keyword = event.target.query.value.trim();
-
-//   keywordMovies = new Movie(keyword);
-//   const data = await keywordMovies.fetchSearch();
-//   console.log(data);
-//   await makeMarkupCard(data);
-//   event.target.reset();
-// } catch (error) {
-//   console.log(error.message);
-// }
