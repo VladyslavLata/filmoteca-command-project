@@ -1,0 +1,281 @@
+body {
+
+    &.dark__theme {
+        background-color: #04002b;
+    }
+}
+
+.icon__button {
+    background-color: transparent;
+    border: none;
+}
+
+.icon__item--hidden {
+    display: none;
+}
+
+.header {
+    padding-top: 40px;
+    min-height: 230px;
+    background-color: rgba(0, 0, 0, 0.56);
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    @include mq(tablet) {
+        min-height: 216px;
+    }
+}
+
+.header-main {
+    background-image: 
+    // linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
+    url(/src/images/header-main-bg-mob.png);
+
+    @include mq(retina) {
+        background-image: 
+        // linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
+        url(/src/images/header-main-bg-mob-2x.png);
+    }
+
+    @include mq(tablet-only) {
+        background-image: 
+        // linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
+        url(/src/images/header-main-bg-tab.png);
+
+        @include mq(retina) {
+            background-image: 
+            // linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
+            url(/src/images/header-main-bg-tab-2x.png);
+        }
+    }
+
+    @include mq(desktop) {
+        min-height: 216px;
+        background-image: 
+        // linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
+        url(/src/images/header-main-bg-desk.png);
+
+        @include mq(retina) {
+            background-image: 
+            // linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
+            url(/src/images/header-main-bg-desk-2x.png);
+        }
+    }
+}
+
+.header-mylib {
+    background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+    url(/src/images/header-mylib-bg-mob.png);
+
+    @include mq(retina) {
+            background-image: 
+            linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+            url(/src/images/header-mylib-bg-mob-2x.png);
+        }
+    
+        @include mq(tablet-only) {
+            background-image: 
+            linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)), 
+            url(/src/images/header-mylib-bg-tab.png);
+    
+            @include mq(retina) {
+                background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)), 
+                url(/src/images/header-mylib-bg-tab-2x.png);
+            }
+        }
+    
+        @include mq(desktop) {
+            background-image: 
+            linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)), 
+            url(/src/images/header-mylib-bg-desk.png);
+    
+            @include mq(retina) {
+                background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)), 
+                url(/src/images/header-mylib-bg-desk-2x.png);
+            }
+        }
+}
+
+.header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 54px;
+
+    @include mq(tablet) {
+        margin-bottom: 40px;
+    }
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo__name {
+    margin-left: 10px;
+    @include fonts(500, 30px, 1.17, null);
+    color: $white-color;
+
+    @include mq(mobile-only) {
+        display: none;
+    }
+}
+
+.logo__icon {
+    stroke: $white-color;
+    transition: stroke 250ms $typical-cubic;
+
+    &:hover, &:focus {
+        stroke: $orange-color;
+    }
+}
+
+.site-nav {
+    display: flex;
+    align-items: center;
+}
+
+.site-nav__item:not(:last-child) {
+    margin-right: 40px;
+}
+
+.site-nav__link {
+    @include fonts(500, 12px, 1.17, null);
+    text-transform: uppercase;
+    color: $white-color;
+}
+
+.site-nav__link--current {
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 100%;
+        height: 3px;
+        border-radius: 2px;
+        background-color: $warning-text;
+    }
+}
+
+.search-form {
+    position: relative;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @include mq(tablet-only) {
+        width: 336px;
+    }
+        
+    @include mq(desktop) {
+        width: 394px;
+    }
+}
+
+.search-form__input {
+    width: 100%;
+    padding: 4px 20px 4px 0px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 0.5px solid $white-color;
+    outline: none;
+
+    background-color: transparent;
+
+    @include fonts(null, null, 1.14, null);
+    color: $white-color;
+
+    &::placeholder {
+        color: $white-color;
+    }
+
+    &:hover, &:focus {
+        border-bottom: 0.5px solid $orange-color;
+    }
+}
+
+.search-form__btn {
+    position: absolute;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    right: 0;
+    bottom: 4px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    
+}
+
+.search-form__btn-icon {
+    stroke: $white-color;
+    transition: stroke 250ms $typical-cubic;
+
+    &:hover, &:focus {
+        stroke: $orange-color;
+        cursor: pointer;
+    }
+}
+
+.warning-notification {
+    margin-left: auto;
+    margin-right: auto;
+
+    @include fonts(null, null, 1.14, null);
+    color: $warning-text;
+    text-align: center;
+}
+
+.filter-list {
+    display: flex;
+    justify-content: center;
+}
+
+.filter-list__item:not(:last-child) {
+    margin-right: 20px;
+
+    @include mq(tablet-only) {
+        margin-right: 32px;
+    }
+
+    @include mq(desktop) {
+        margin-right: 16px;
+    }
+}
+
+.filter-list__btn {
+    width: 130px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid $white-color;
+    border-radius: 5px;
+    background-color: transparent;
+    color: $white-color;
+    @include fonts(500, 12px, 1.33, null);
+    text-transform: uppercase;
+
+    &.is-active {
+        border: 1px solid $orange-color;
+        background-color: $orange-color;
+        box-shadow: (0px 8px 43px rgba(255, 107, 1, 0.6));
+    }
+
+    @include mq(tablet-only) {
+        width: 152px;
+    }
+
+    @include mq(desktop) {
+        width: 148px;
+        height: 42px;
+    }
+}

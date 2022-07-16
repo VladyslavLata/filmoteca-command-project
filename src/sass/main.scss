@@ -1,9 +1,11 @@
-@import './base/common';
-
 @import "./utils/container";
 @import "./utils/mixins";
 @import "./utils/variables";
 @import "./utils/placeholders";
 
 @import "./components/_header";
+@import "./components/_gallery";
+
 @import "./components/_footer";
+
+@import './base/_common';

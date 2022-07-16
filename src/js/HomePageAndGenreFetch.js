@@ -1,4 +1,9 @@
+import { makeMarkupCard } from './cardMarkup';
 import { Movie } from './fetchMovie';
+import { makeMarkupCard } from './cardMarkup';
+
+const gallery = document.querySelector('.gallery');
+console.log('~ gallery', gallery);
 
 const LS_GENRE_KEY = 'themoviedb.org-genre';
 
@@ -11,17 +16,7 @@ async function startPageVisit() {
     .fetchTrend()
     .then(data => {
       console.log(data);
-      data.results.map(movieItem => {
-        // console.log(movieItem);
-        console.log(`Poster: ${Movie.IMG_PATH + movieItem.poster_path}`);
-        console.log(`Title: ${movieItem.title}`);
-        console.log(
-          `${genreFind(movieItem.genre_ids)} | ${parseInt(
-            movieItem.release_date,
-            10
-          )}`
-        );
-      });
+      makeMarkupCard(data);
     })
     .catch(error => console.log(error));
 }
@@ -38,7 +33,7 @@ async function genreLoad(classInstance) {
   }
 }
 
-function genreFind(genreList = []) {
+export function genreFind(genreList = []) {
   const genreLS = localStorage.getItem(LS_GENRE_KEY);
   const noGenre = 'No genres';
   const genreOther = 'Other';
@@ -62,3 +57,15 @@ function genreFind(genreList = []) {
     return genreResult.join(', ');
   }
 }
+
+// data.results.map(movieItem => {
+//   // console.log(movieItem);
+//   console.log(`Poster: ${Movie.IMG_PATH + movieItem.poster_path}`);
+//   console.log(`Title: ${movieItem.title}`);
+//   console.log(
+//     `${genreFind(movieItem.genre_ids)} | ${parseInt(
+//       movieItem.release_date,
+//       10
+//     )}`
+//   );
+// });
