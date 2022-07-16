@@ -22,5 +22,5 @@ export function makeMarkupCard(data) {
         </li>`;
     })
     .join('');
-  gallery.insertAdjacentHTML('beforeend', makeMarkupCard);
+  gallery.innerHTML = makeMarkupCard;
 }
