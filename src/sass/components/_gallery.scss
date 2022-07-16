@@ -81,6 +81,10 @@ line-height: 1.33;
 
   .card__name {
     color: $black-color;
+
+    body.dark__theme & {
+      color: $white-color;
+    }
   }
 
   .card__description {
