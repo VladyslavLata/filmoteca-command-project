@@ -1,9 +1,11 @@
 import { Movie } from './fetchMovie';
 import { genreFind } from './HomePageAndGenreFetch';
 
+const gallery = document.querySelector('.gallery');
+
 export function makeMarkupCard(data) {
-  const gallery = document.querySelector('.gallery');
-  const makeMarkupCard = data.results
+  
+  const makeMarkupCard = data
     .map(movieItem => {
       return `<li class="card">
           <a class="card__link" href="">
@@ -24,3 +26,5 @@ export function makeMarkupCard(data) {
     .join('');
   gallery.innerHTML = makeMarkupCard;
 }
+
+

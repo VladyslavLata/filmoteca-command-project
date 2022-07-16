@@ -1,0 +1,1 @@
+import * as watchedMovies from './js/watchedMovies';

@@ -16,7 +16,7 @@ async function startPageVisit() {
     .fetchTrend()
     .then(data => {
       console.log(data);
-      makeMarkupCard(data);
+      makeMarkupCard(data.results);
     })
     .catch(error => console.log(error));
 }
