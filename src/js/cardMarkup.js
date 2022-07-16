@@ -18,7 +18,6 @@ export function makeMarkupCard(data) {
             )} | ${parseInt(movieItem.release_date, 10)}
             <span class="card__vote">${movieItem.vote_average}</span>
             </p>
-            
           </a>
         </li>`;
     })
