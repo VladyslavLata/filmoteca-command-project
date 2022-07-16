@@ -12,7 +12,7 @@ export function makeMarkupCard(data, langCard = Movie.language.ENGLISH) {
               Movie.IMG_PATH + movieItem.poster_path
               // : 'https://upload.wikimedia.org/wikipedia/commons/b/ba/No_image_available_400_x_600.svg'
             }" alt="${movieItem.title}" />
-            <p class="card__name">${movieItem.title}</p>
+            <p class="card__name">${movieItem.title.toUpperCase()}</p>
             <p class="card__description">${genreFind(
               movieItem.genre_ids,
               langCard
@@ -21,6 +21,7 @@ export function makeMarkupCard(data, langCard = Movie.language.ENGLISH) {
             <span class="card__vote">${
               Math.round(movieItem.vote_average * 10) / 10
             }</span>
+            </p>
           </a>
         </li>`;
     })

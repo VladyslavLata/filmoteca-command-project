@@ -21,9 +21,11 @@ h1, h2, h3, h4, h5, h6, p, ul {
 
 button {
 cursor: pointer;
+padding: 0;
 }
 
 img {
+  border-radius: 5px;
     display: block;
     width: 100%;
     object-fit: cover;
