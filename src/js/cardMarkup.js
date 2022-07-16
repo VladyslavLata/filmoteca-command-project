@@ -16,8 +16,9 @@ export function makeMarkupCard(data) {
             <p class="card__description">${genreFind(
               movieItem.genre_ids
             )} | ${parseInt(movieItem.release_date, 10)}
-            </p>
             <span class="card__vote">${movieItem.vote_average}</span>
+            </p>
+            
           </a>
         </li>`;
     })
