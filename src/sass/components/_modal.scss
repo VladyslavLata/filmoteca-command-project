@@ -1,13 +1,21 @@
 
 .backdrop {
     position: fixed;
-    top: 5%;
-    left: 10%;
+    // top: 5%;
+    // left: 10%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
 }
 .modal {
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background: $white-color;  
-    width: 280px;
+    min-width: 280px;
     height: 940px;
     padding: 48px 20px 40px; 
  @media screen and (min-width: 768px) { 
@@ -33,7 +41,6 @@
         width: 30px;
         height: 30px;
         border: none;
-        cursor: pointer;
       }
     .modal-info__container {
        @media screen and (min-width: 768px) {  
@@ -41,8 +48,6 @@
         }  
     }
      .modal-info__img {
-        border-radius: 5px;
-        object-fit: cover;
         width: 240px;
         height: 357px;  
     @media screen and (min-width: 768px) { 
@@ -67,7 +72,6 @@
       }
     
     .modal-info__movie-name {
-      font-style: normal;
       font-weight: 500;
       font-size: 20px;
       line-height: 1.15; 
@@ -104,10 +108,10 @@
       line-height: 1.16;
       color: $black-color;
     }
-    .text {
+    .modal-info__content--text {
       line-height: 1.33;
     }
-    .upper {
+    .modal-info__content--upper {
       text-transform: uppercase;
     }
     .modal-info__content-color {
@@ -144,7 +148,7 @@
     .container-btn {
       margin-top: 20px;
       display: flex;
-      justify-content: space-between
+      // justify-content: space-between
     }
     .btn {
       font-style: normal;
@@ -158,9 +162,18 @@
       border-radius: 5px;
       width: 110px;
       height: 44px;
+      &:first-child {
+        color: $white-color;
+      background-color: $orange-color;
+      border: 1px solid $orange-color;
+        margin-right: 20px;
+      }
     @media screen and (min-width: 768px) {  
       width: 125.03px;
       height: 44px;
+      &:first-child {
+        margin-right: 15px;
+      }
         }
       @media screen and (min-width: 1280px) {   
       width: 136px;
@@ -171,6 +184,5 @@
       color: $white-color;
       background-color: $orange-color;
       border: 1px solid $orange-color;
-      cursor: pointer;
     }
     
