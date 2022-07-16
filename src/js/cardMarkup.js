@@ -1,7 +1,7 @@
 import { Movie } from './fetchMovie';
 import { genreFind } from './HomePageAndGenreFetch';
 
-export function makeMarkupCard(data, langCard = Movie.language.ENGLISH) {
+export function makeMarkupCard(data) {
   const gallery = document.querySelector('.gallery');
   const makeMarkupCard = data.results
     .map(movieItem => {
@@ -14,8 +14,7 @@ export function makeMarkupCard(data, langCard = Movie.language.ENGLISH) {
             }" alt="${movieItem.title}" />
             <p class="card__name">${movieItem.title.toUpperCase()}</p>
             <p class="card__description">${genreFind(
-              movieItem.genre_ids,
-              langCard
+              movieItem.genre_ids
             )} | ${parseInt(movieItem.release_date, 10)}
             <span class="card__vote">${
               Math.round(movieItem.vote_average * 10) / 10
