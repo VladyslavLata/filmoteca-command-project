@@ -9,12 +9,10 @@ goToBtn.addEventListener('click', handleButtonClick);
 
 window.addEventListener('scroll', () => {
   if (scrollY > 230) {
-    themeSwitcherBtn.style.position = 'sticky';
-    themeSwitcherBtn.style.top = '10px';
+    themeSwitcherBtn.style.position = 'fixed';
   }
   if (scrollY < 230) {
     themeSwitcherBtn.style.position = 'absolute';
-    themeSwitcherBtn.style.top = '0';
   }
   if (scrollY > 300) {
     goToBtn.classList.remove('is-hidden');

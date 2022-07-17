@@ -1,7 +1,5 @@
 .backdrop {
     position: fixed;
-    // top: 5%;
-    // left: 10%;
     top: 0;
     left: 0;
     width: 100%;
@@ -32,19 +30,29 @@
     height: 558px;
     padding: 40px 12px;
     }  
+
+    body.dark__theme & {
+      background-color: #303030;
+    }
 }
     
     .modal__button {
-        background-color: $white-color;
+        background-color: transparent;
         position: absolute;
         top: 8px;
         right: 8px;
+
+        stroke: $black-color;
        
         /* display: inline-flex; */
         align-items: center;
         width: 30px;
         height: 30px;
         border: none;
+
+        body.dark__theme & {
+          stroke: $white-color;
+        }
       }
     .modal-info__container {
        @media screen and (min-width: 768px) {  
@@ -87,6 +95,10 @@
       font-size: 30px;
       line-height: 1.16;
         }  
+
+        body.dark__theme & {
+          color: $white-color;
+        }
     }  
     .modal-info__list {
       margin-top: 20px;
@@ -97,20 +109,32 @@
       margin-top: 8px;
       }
     .modal-info__title {
+      flex-basis: 40%;
       font-style: normal;
       font-weight: 500;
       font-size: 12px;
       line-height: 1.33;
       color: $modal-grey-text;
+
+      body.dark__theme & {
+        color: rgb(216, 213, 213);
+      }
+
+      @include mq(desktop) {
+        flex-basis: 34%;
+      }
     }
     .modal-info__content { 
-      /* flex-basis: 40%; */
       flex-grow: 1; 
       font-style: normal;
       font-weight: 500;
       font-size: 12px;
       line-height: 1.16;
       color: $black-color;
+
+      body.dark__theme & {
+        color: $white-color;
+      }
     }
     .modal-info__content--text {
       line-height: 1.33;
@@ -138,6 +162,10 @@
       text-transform: uppercase;
     
       color: $black-color;
+
+      body.dark__theme & {
+          color: $white-color;
+        }
     }
     .modal-info__article{
       margin-top: 8px;
@@ -148,6 +176,10 @@
       text-align: start;
     
       color: $black-color;
+
+      body.dark__theme & {
+          color: $white-color;
+        }
     }
     .container-btn {
       margin-top: 20px;

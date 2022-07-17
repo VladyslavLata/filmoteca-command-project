@@ -1,12 +1,12 @@
 body {
   &.dark__theme {
-    // background-color: #04002b;
     background-color: #303030;
   }
 
   &.dark__theme .up-btn {
     opacity: 1;
   }
+
 }
 
 .gallery-section {
@@ -15,19 +15,33 @@ body {
 
 .icon__button {
   position: absolute;
-  top: 0;
-  left: 96%;
   background-color: #ff6b01;
+
+  top: 20px;
+  right: 10%;
   width: 30px;
   height: 30px;
 
   border-radius: 50%;
   border: none;
-  margin-top: 5px;
+
+  opacity: 0.7;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  transition: $typical-transition-opacity;
+
+  @include mq(tablet) {
+    right: 3%;
+    width: 40px;
+      height: 40px;
+  }
+
+  &:hover, &:focus {
+    opacity: 1;
+  }
 }
 
 .icon__item--hidden {
