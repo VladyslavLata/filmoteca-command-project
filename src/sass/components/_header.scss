@@ -25,43 +25,36 @@ body {
     background-size: cover;
 
     @include mq(tablet) {
+        min-height: 219px;
+    }
+
+    @include mq(desktop) {
         min-height: 216px;
     }
 }
 
 .header-main {
-    background-image: 
-    // linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
-    url(/src/images/header-main-bg-mob.png);
+    background-image: url(/src/images/header-main-bg-mob.png);
 
     @include mq(retina) {
-        background-image: 
-        // linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
-        url(/src/images/header-main-bg-mob-2x.png);
+        background-image: url(/src/images/header-main-bg-mob-2x.png);
     }
 
     @include mq(tablet-only) {
-        background-image: 
-        // linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
-        url(/src/images/header-main-bg-tab.png);
+        background-image: url(/src/images/header-main-bg-tab.png);
 
         @include mq(retina) {
             background-image: 
-            // linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
             url(/src/images/header-main-bg-tab-2x.png);
         }
     }
 
     @include mq(desktop) {
         min-height: 216px;
-        background-image: 
-        // linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
-        url(/src/images/header-main-bg-desk.png);
+        background-image: url(/src/images/header-main-bg-desk.png);
 
         @include mq(retina) {
-            background-image: 
-            // linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
-            url(/src/images/header-main-bg-desk-2x.png);
+            background-image: url(/src/images/header-main-bg-desk-2x.png);
         }
     }
 }
@@ -113,6 +106,10 @@ body {
     }
 }
 
+.animate__bounceInDown, .animate__zoomIn {
+    animation-duration: 1500ms; 
+}
+
 .logo {
     display: flex;
     align-items: center;
@@ -150,6 +147,11 @@ body {
     @include fonts(500, 12px, 1.17, null);
     text-transform: uppercase;
     color: $white-color;
+    transition: stroke 250ms $typical-cubic;
+
+    &:hover, &:focus {
+        color: $orange-color;
+    }
 }
 
 .site-nav__link--current {
@@ -215,7 +217,6 @@ body {
     border: none;
     outline: none;
     background-color: transparent;
-    
 }
 
 .search-form__btn-icon {

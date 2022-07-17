@@ -1,6 +1,7 @@
 <header class="header header-mylib">
     <div class="header-container container">
-        <nav class="header-nav">
+      <div class="scroll-area"></div>
+        <nav class="header-nav animate__bounceInDown">
             <a class="logo" href="/src/index.html" lang="en">
                 <svg class="logo__icon" width="24" height="24">
                     <use href="/src/images/sprite.svg#film"></use>
@@ -16,7 +17,7 @@
                 </li>
             </ul>
         </nav>
-        <ul class="filter-list">
+        <ul class="filter-list animate__zoomIn">
             <li class="filter-list__item">
                 <button type="button" class="filter-list__btn is-active">Watched</button>
             </li>
@@ -30,5 +31,22 @@
                 <use class="icon__sun icon__item--hidden" href="./images/sprite.svg#icon-sun-fill"></use>
             </svg>
         </button>
-    </div>
+      </li>
+      <li class="filter-list__item">
+        <button type="button" class="filter-list__btn">Queue</button>
+      </li>
+    </ul>
+    <button type="button" class="icon__button">
+      <svg class="icon" width="20" height="20">
+        <use
+          class="icon__moon"
+          href="./images/sprite.svg#icon-moon-stars-fill"
+        ></use>
+        <use
+          class="icon__sun icon__item--hidden"
+          href="./images/sprite.svg#icon-sun-fill"
+        ></use>
+      </svg>
+    </button>
+  </div>
 </header>
