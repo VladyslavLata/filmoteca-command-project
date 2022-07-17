@@ -1,3 +1,40 @@
+body {
+
+  &.dark__theme {
+    // background-color: #04002b;
+    background-color: #303030;
+  }
+
+    &.dark__theme .up-btn {
+      opacity: 1;
+    }
+}
+
+.gallery-section {
+  position: relative;
+}
+
+.icon__button {
+  position: absolute;
+  top: 0;
+  left: 96%;
+  background-color: #6a78d1;
+  width: 30px;
+  height: 30px;
+
+  border-radius: 50%;
+  border: none;
+  margin-top: 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon__item--hidden {
+  display: none;
+}
+
 .container--space {
   padding-top: 20px;
   padding-bottom: 40px;
