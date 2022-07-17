@@ -6,12 +6,12 @@ export function makeMarkupCard(data) {
   const makeMarkupCard = data.results
     .map(movieItem => {
       return `<li class="card">
-          <a class="card__link" href="">
-            <img class="card__img" src="${
-              // ?
-              Movie.IMG_PATH + movieItem.poster_path
-              // : 'https://upload.wikimedia.org/wikipedia/commons/b/ba/No_image_available_400_x_600.svg'
-            }" alt="${movieItem.title}" />
+          <a class="card__link" href=""  >
+            <img data-id="${movieItem.id}" class="card__img" src="${
+        // ?
+        Movie.IMG_PATH + movieItem.poster_path
+        // : 'https://upload.wikimedia.org/wikipedia/commons/b/ba/No_image_available_400_x_600.svg'
+      }" alt="${movieItem.title}" />
             <p class="card__name">${movieItem.title.toUpperCase()}</p>
             <p class="card__description">${genreFind(
               movieItem.genre_ids
