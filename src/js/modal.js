@@ -6,16 +6,12 @@ const gallery = document.querySelector('.gallery');
 const backdrop = document.querySelector('.backdrop');
 const modalBtn = document.querySelector('.modal__button');
 const modal = document.querySelector('.modal-info__container');
-console.log('~ modal', modal);
-const movies = getCurrenDataFromLS();
-console.log('~ movies', movies);
-
-// movies.find(movie => movie.id === ID);
 
 gallery.addEventListener('click', onImageClick);
 modalBtn.addEventListener('click', onCloseClick);
 
 function onImageClick(e) {
+  const movies = getCurrenDataFromLS();
   e.preventDefault();
   let ID = Number(e.target.dataset.id);
 
