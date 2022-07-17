@@ -5,7 +5,8 @@ body {
   }
 
   &.dark__theme .up-btn {
-    opacity: 1;
+    fill: $white-color;
+        // opacity: 0.8;
   }
 }
 
@@ -20,7 +21,6 @@ body {
   background-color: #ff6b01;
   width: 30px;
   height: 30px;
-
   border-radius: 50%;
   border: none;
   margin-top: 5px;
@@ -28,6 +28,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: $typical-transition-opacity;
+
+  &:hover{
+    opacity: 1;
+  }
+}
+.icon-opacity {
+  opacity: 0.33;
 }
 
 .icon__item--hidden {
