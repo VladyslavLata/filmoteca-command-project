@@ -1,14 +1,31 @@
 import { getCurrenDataFromLS } from './currentPageData';
-// import { Movie } from './fetchMovie';
-// import { genreFind } from './HomePageAndGenreFetch';
+// Получить id ссылки при клике на карточку из data-id
 
-console.log(getCurrenDataFromLS());
+const cards = document.querySelector('.card__link');
+console.log(cards)
+cards.addEventListener('click', (card) => {
+let ID = card.dataset.id;
+console.log(ID)})
 
-
+// console.log([].map.call(document.querySelectorAll('.card__link[data-id]'), function(el) {
+//   return el.dataset.id;
+// }));
+// Найти (find) в массиве LocalStorage объект с нужным id
+// это массив объектов LocalStorage
+const movies = getCurrenDataFromLS();
+console.log (movies);
+// ищем 
+// movies.find((movie) => {
+  // let movieItem = {}
+//   if (movie.id === ID) {
+//   let movieItem = movie; }
+// });// 
+// movies.find(movie=> movie.id === ID);
 export function modalMarkup(data) {
   const modal = document.querySelector('.modal-info__container');
-  const makeMarkupModal = JSON.parse(localStorage.getItem('themoviedb-current-data'))
-    .map(movieItem => {
+  const makeMarkupModal = 
+  // JSmovieItemON.parse(localStorage.getItem('themoviedb-current-data')).map
+  (movieItem => {
       return `
       <img src="${
         // ?
@@ -18,16 +35,6 @@ export function modalMarkup(data) {
       <div class="modal-info">  
           <h2 class="modal-info__movie-name">${movieItem.title.toUpperCase()}</h2>
               <ul class="modal-info__list">
-                  <li class="modal-info__item">
-                      <p class="modal-info__title">Vote / Votes<p>
-                      <div class="modal-info__content">
-                          <span class="modal-info__content-color">${movieItem.vote_average}</span> / ${movieItem.vote_count}
-                      </div>
-                  </li>
-                  <li class="modal-info__item">
-                      <p class="modal-info__title">Popularity</p>
-                      <div class="modal-info__content">${movieItem.popularity}</div>
-                  </li>
                   <li class="modal-info__item">
                       <p class="modal-info__title">Original Title</p>
                       <div class="modal-info__content modal-info__content--text ">${movieItem.original_title.toUpperCase()}</div>
@@ -41,7 +48,6 @@ export function modalMarkup(data) {
               </ul>
                   <p class="modal-info__article-title">about</p>
                   <p class="modal-info__article">${movieItem.overview}</p>`;
-    })
-    .join('');
+    });
   modal.innerHTML(makeMarkupModal)
 }

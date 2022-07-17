@@ -1,12 +1,12 @@
 import { Movie } from './fetchMovie';
 import { genreFind } from './HomePageAndGenreFetch';
 
-export function makeMarkupCard(data) {
+export async function makeMarkupCard (data) {
   const gallery = document.querySelector('.gallery');
-  const makeMarkupCard = data.results
+  const makeMarkupCard  =  await data.results
     .map(movieItem => {
       return `<li class="card">
-          <a class="card__link" href="">
+          <a class="card__link" href="" data-id="${movieItem.id}" >
             <img class="card__img" src="${
               // ?
               Movie.IMG_PATH + movieItem.poster_path
@@ -24,5 +24,5 @@ export function makeMarkupCard(data) {
         </li>`;
     })
     .join('');
-  gallery.innerHTML = makeMarkupCard;
+ gallery.innerHTML = await makeMarkupCard;
 }
