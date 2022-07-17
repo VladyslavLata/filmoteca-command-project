@@ -9,7 +9,7 @@ goToBtn.addEventListener('click', handleButtonClick);
 
 window.addEventListener('scroll', () => {
   if (scrollY > 230) {
-    themeSwitcherBtn.style.position = 'sticky';
+    themeSwitcherBtn.style.position = 'fixed';
     themeSwitcherBtn.style.top = '10px';
   }
   if (scrollY < 230) {
