@@ -2,6 +2,7 @@ import { Movie } from './fetchMovie';
 import { makeMarkupCard } from './cardMarkup';
 import { getLanguageFromLS } from './languageSwitch';
 import { unlockBtnTrendTime } from './trendTime';
+import { setCurrenDataToLS, getCurrenDataFromLS } from './currentPageData';
 
 const refs = {
   formEl: document.querySelector('.search-form'),
@@ -36,6 +37,7 @@ async function onClickSubmit(event) {
     makeMarkupCard(data);
     event.target.reset();
     refs.paragraphEl.innerHTML = '';
+    setCurrenDataToLS(data.results);
     unlockBtnTrendTime();
   } catch (error) {
     console.log(error.message);
