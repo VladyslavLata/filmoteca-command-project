@@ -1,5 +1,6 @@
 import { Movie } from './fetchMovie';
 import { trendMovie, fetchAndMarkup } from './HomePageAndGenreFetch';
+import {goToStart} from './up-btn'
 
 const refs = {
   btnLoadPrevious: document.querySelector('.pagination-page__btn-previous'),
@@ -17,6 +18,8 @@ function onClickPrevious() {
   }
   workClassIstance.page -= 1;
   fetchAndMarkup(workClassIstance);
+
+  document.querySelector('.scroll-area').scrollIntoView({ block: "center", behavior: "smooth" });
 }
 
 function onClickNext() {
@@ -24,4 +27,6 @@ function onClickNext() {
 
   workClassIstance.page += 1;
   fetchAndMarkup(workClassIstance);
+  
+  document.querySelector('.scroll-area').scrollIntoView({ block: "center", behavior: "smooth" });
 }
