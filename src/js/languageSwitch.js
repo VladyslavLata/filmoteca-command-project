@@ -1,5 +1,7 @@
 import { Movie } from './fetchMovie';
-import { trendMovie, fetchAndMarkup } from './HomePageAndGenreFetch';
+import { fetchTrendAndMarkup, fetchSearchAndMarkup } from './fetchAndMarkup';
+import { trendMovie } from './homePage';
+import { keyword, keywordMovies } from './moviesKeyword';
 import { disabledEl, unlockEl } from './interfaceWork';
 
 export const keyLS = {
@@ -16,17 +18,23 @@ refs.btnSwitchEN.addEventListener('click', onClickEN);
 refs.btnSwitchUA.addEventListener('click', onClickUA);
 
 function onClickEN() {
-  const workClassIstance = trendMovie;
-
-  workClassIstance.langCurrent = setLanguageToLS(Movie.language.ENGLISH);
-  fetchAndMarkup(workClassIstance);
+  if (keyword === null) {
+    trendMovie.langCurrent = setLanguageToLS(Movie.language.ENGLISH);
+    fetchTrendAndMarkup(trendMovie);
+  } else {
+    keywordMovies.langCurrent = setLanguageToLS(Movie.language.ENGLISH);
+    fetchSearchAndMarkup(keywordMovies);
+  }
 }
 
 function onClickUA() {
-  const workClassIstance = trendMovie;
-
-  workClassIstance.langCurrent = setLanguageToLS(Movie.language.UKRAINIAN);
-  fetchAndMarkup(workClassIstance);
+  if (keyword === null) {
+    trendMovie.langCurrent = setLanguageToLS(Movie.language.UKRAINIAN);
+    fetchTrendAndMarkup(trendMovie);
+  } else {
+    keywordMovies.langCurrent = setLanguageToLS(Movie.language.UKRAINIAN);
+    fetchSearchAndMarkup(keywordMovies);
+  }
 }
 
 export function setLanguageToLS(newLanguage) {

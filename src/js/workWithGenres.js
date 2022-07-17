@@ -1,46 +1,8 @@
 import { Movie } from './fetchMovie';
-import { makeMarkupCard } from './cardMarkup';
-import {
-  setLanguageToLS,
-  getLanguageFromLS,
-  switchBtnLang,
-  keyLS,
-} from './languageSwitch';
-import { setCurrenDataToLS, getCurrenDataFromLS } from './currentPageData';
+import { keyLS } from './languageSwitch';
+import { getLanguageFromLS } from './languageSwitch';
 
-// const gallery = document.querySelector('.gallery');
-// console.log('~ gallery', gallery);
-
-export let trendMovie;
-
-startPageVisit();
-
-function startPageVisit() {
-  trendMovie = new Movie();
-  const language = getLanguageFromLS();
-  if (!language) {
-    trendMovie.langCurrent = setLanguageToLS(Movie.language.ENGLISH);
-  } else {
-    trendMovie.langCurrent = language;
-    switchBtnLang(trendMovie.langCurrent);
-  }
-  fetchAndMarkup(trendMovie);
-}
-
-export async function fetchAndMarkup(classIstance) {
-  await genreLoad(classIstance);
-  await classIstance
-    .fetchTrend()
-    .then(data => {
-      console.log(data);
-      setCurrenDataToLS(data.results);
-      makeMarkupCard(data, classIstance.langCurrent);
-    })
-    .catch(error => console.log(error));
-  console.log(getCurrenDataFromLS());
-}
-
-async function genreLoad(classInstance) {
+export async function genreLoad(classInstance) {
   const pageLang = classInstance.langCurrent;
   let GENRE_KEY = keyLS.LS_GENRE_KEY_EN;
 

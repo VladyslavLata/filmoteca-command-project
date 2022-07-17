@@ -3,11 +3,13 @@
 @import './utils/variables';
 @import './utils/placeholders';
 
-@import "./components/_header";
-@import "./components/_gallery";
-@import "./components/modal";
-@import "./components/_footer";
+@import './components/_header';
+@import './components/_gallery';
+@import './components/modal';
+@import './components/_footer';
 @import './components/language-switch';
+@import './components/trend-time';
 @import './components/pagination-page';
+@import'./components/up-btn';
 
 @import './base/_common';
