@@ -1,5 +1,5 @@
 import { Movie } from './fetchMovie';
-import { genreFind } from './HomePageAndGenreFetch';
+import { genreFind } from './workWithGenres';
 
 export function makeMarkupCard(data) {
   const gallery = document.querySelector('.gallery');

@@ -1,5 +1,7 @@
 import { Movie } from './fetchMovie';
-import { trendMovie, fetchAndMarkup } from './HomePageAndGenreFetch';
+import { fetchTrendAndMarkup, fetchSearchAndMarkup } from './fetchAndMarkup';
+import { trendMovie } from './homePage';
+import { keyword, keywordMovies } from './moviesKeyword';
 
 const refs = {
   btnLoadPrevious: document.querySelector('.pagination-page__btn-previous'),
@@ -10,18 +12,32 @@ refs.btnLoadPrevious.addEventListener('click', onClickPrevious);
 refs.btnLoadNext.addEventListener('click', onClickNext);
 
 function onClickPrevious() {
-  const workClassIstance = trendMovie;
-
-  if (workClassIstance.page === 1) {
-    return;
+  if (keyword === null) {
+    setPagePrevious(trendMovie);
+    fetchTrendAndMarkup(trendMovie);
+  } else {
+    setPagePrevious(keywordMovies);
+    fetchSearchAndMarkup(keywordMovies);
   }
-  workClassIstance.page -= 1;
-  fetchAndMarkup(workClassIstance);
 }
 
 function onClickNext() {
-  const workClassIstance = trendMovie;
+  if (keyword === null) {
+    setPageNext(trendMovie);
+    fetchTrendAndMarkup(trendMovie);
+  } else {
+    setPageNext(keywordMovies);
+    fetchSearchAndMarkup(keywordMovies);
+  }
+}
 
-  workClassIstance.page += 1;
-  fetchAndMarkup(workClassIstance);
+function setPagePrevious(classIstance) {
+  if (classIstance.page === 1) {
+    return;
+  }
+  classIstance.page -= 1;
+}
+
+function setPageNext(classIstance) {
+  classIstance.page += 1;
 }
