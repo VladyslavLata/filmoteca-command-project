@@ -2,7 +2,7 @@ import { Movie } from './fetchMovie';
 import { fetchTrendAndMarkup, fetchSearchAndMarkup } from './fetchAndMarkup';
 import { trendMovie } from './homePage';
 import { keyword, keywordMovies } from './moviesKeyword';
-import {goToStart} from './up-btn'
+import { goToStart } from './up-btnAndSwitcher';
 
 const refs = {
   btnLoadPrevious: document.querySelector('.pagination-page__btn-previous'),
@@ -37,10 +37,14 @@ function setPagePrevious(classIstance) {
     return;
   }
   classIstance.page -= 1;
-  document.querySelector('.scroll-area').scrollIntoView({ block: "center", behavior: "smooth" });
+  document
+    .querySelector('.scroll-area')
+    .scrollIntoView({ block: 'center', behavior: 'smooth' });
 }
 
 function setPageNext(classIstance) {
   classIstance.page += 1;
-  document.querySelector('.scroll-area').scrollIntoView({ block: "center", behavior: "smooth" });
+  document
+    .querySelector('.scroll-area')
+    .scrollIntoView({ block: 'center', behavior: 'smooth' });
 }
