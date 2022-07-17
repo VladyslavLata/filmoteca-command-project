@@ -1,7 +1,6 @@
 const hiddenElement = document.querySelector('.scroll-area');
 const goToBtn = document.querySelector('.up-btn');
 const themeSwitcherBtn = document.querySelector('.icon__button');
-console.log('~ themeSwitcherBtn', themeSwitcherBtn);
 
 function handleButtonClick() {
   hiddenElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
