@@ -18,13 +18,17 @@ export class Movie {
     UKRAINIAN: 'uk-UA',
   };
   #page;
+  #lastPage;
   #query;
   #langCurrent;
+  #currentTrendTime;
 
   constructor(query) {
     this.#query = query;
     this.#page = 1;
+    this.#lastPage = null;
     this.#langCurrent = Movie.language.ENGLISH;
+    this.#currentTrendTime = Movie.trendTime.DAY;
     axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
   }
 
@@ -34,6 +38,14 @@ export class Movie {
 
   set page(newPage) {
     this.#page = newPage;
+  }
+
+  get lastPage() {
+    return this.#lastPage;
+  }
+
+  set lastPage(newLastPage) {
+    this.#lastPage = newLastPage;
   }
 
   resetPage() {
@@ -52,18 +64,22 @@ export class Movie {
     this.#langCurrent = newLang;
   }
 
-  async fetchTrend(timeOption = Movie.trendTime.DAY) {
+  get currentTrendTime() {
+    return this.#currentTrendTime;
+  }
+
+  set currentTrendTime(newTrendTime) {
+    this.#currentTrendTime = newTrendTime;
+  }
+
+  async fetchTrend() {
     const options = new URLSearchParams({
       api_key: Movie.API_KEY,
       page: this.#page,
       language: this.#langCurrent,
     });
     const response = await axios.get(
-      `trending/${Movie.mediaType.MOVIE}/${
-        timeOption === Movie.trendTime.WEEK
-          ? Movie.trendTime.WEEK
-          : Movie.trendTime.DAY
-      }?${options}`
+      `trending/${Movie.mediaType.MOVIE}/${this.#currentTrendTime}?${options}`
     );
     return response.data;
   }
@@ -73,6 +89,7 @@ export class Movie {
       api_key: Movie.API_KEY,
       page: this.#page,
       query: this.#query,
+      language: this.#langCurrent,
     });
     const response = await axios.get(
       `search/${Movie.mediaType.MOVIE}?${options}`
@@ -87,6 +104,17 @@ export class Movie {
     });
     const response = await axios.get(
       `genre/${Movie.mediaType.MOVIE}/list?${options}`
+    );
+    return response.data;
+  }
+
+  async fetchById(idMovie) {
+    const options = new URLSearchParams({
+      api_key: Movie.API_KEY,
+      language: this.#langCurrent,
+    });
+    const response = await axios.get(
+      `${Movie.mediaType.MOVIE}/${idMovie}?${options}`
     );
     return response.data;
   }

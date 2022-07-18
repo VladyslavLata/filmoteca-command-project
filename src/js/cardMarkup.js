@@ -1,21 +1,21 @@
 import { Movie } from './fetchMovie';
-import { genreFind } from './HomePageAndGenreFetch';
+import { genreFind } from './workWithGenres';
+import { noYearVariableLang } from './languageSwitch';
 
-export function makeMarkupCard(data, langCard = Movie.language.ENGLISH) {
+export function makeMarkupCard(data) {
   const gallery = document.querySelector('.gallery');
   const makeMarkupCard = data.results.map(movieItem => {
       return `<li class="card">
-          <a class="card__link" href="">
-            <img class="card__img" src="${
-              // ?
-              Movie.IMG_PATH + movieItem.poster_path
-              // : 'https://upload.wikimedia.org/wikipedia/commons/b/ba/No_image_available_400_x_600.svg'
-            }" alt="${movieItem.title}" />
+          <a class="card__link" href=""  >
+            <img data-id="${movieItem.id}" class="card__img" src="${
+        movieItem.poster_path
+          ? Movie.IMG_PATH + movieItem.poster_path
+          : 'https://yt3.ggpht.com/AAKF_677TIvjFz_9xFF0R6PgiVd0kRpEtY6APSxSDRP65nXg8hkn9NFsz2bRd9_Z37DJ9D_b=s900-c-k-c0x00ffffff-no-rj'
+      }" alt="${movieItem.title}" />
             <p class="card__name">${movieItem.title.toUpperCase()}</p>
             <p class="card__description">${genreFind(
-              movieItem.genre_ids,
-              langCard
-            )} | ${parseInt(movieItem.release_date, 10)}
+              movieItem.genre_ids
+            )} | ${noYearVariableLang(movieItem.release_date)}
             <span class="card__vote">${
               Math.round(movieItem.vote_average * 10) / 10
             }</span>

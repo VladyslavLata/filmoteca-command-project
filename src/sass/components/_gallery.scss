@@ -1,3 +1,55 @@
+body {
+  &.dark__theme {
+    background-color: #303030;
+  }
+
+  &.dark__theme .up-btn {
+    fill: $white-color;
+        // opacity: 0.8;
+  }
+
+}
+
+.gallery-section {
+  position: relative;
+}
+
+.icon__button {
+  position: absolute;
+  background-color: #ff6b01;
+
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+
+  opacity: 0.7;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: $typical-transition-opacity;
+
+  &:hover{
+    opacity: 1;
+  }
+
+    @include mq(tablet) {
+      right: 3%;
+      width: 40px;
+      height: 40px;
+    }
+}
+.icon__button--opacity {
+  opacity: 0.33;
+}
+
+.icon__item--hidden {
+  display: none;
+}
+
 .container--space {
   padding-top: 20px;
   padding-bottom: 40px;
@@ -46,6 +98,7 @@
 }
 .card__img {
   margin-bottom: 8px;
+
   @media screen and (min-width: 320px) {
     height: 398px;
   }
@@ -57,6 +110,23 @@
   @media screen and (min-width: 1280px) {
     height: 574px;
   }
+}
+
+.card__link {
+  display: block;
+  border-radius: 5px;
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover,
+  &:focus {
+    transform: scale(1.03);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  }
+}
+
+.card__name,
+.card__description {
+  padding-left: 10px;
 }
 
 .card__name {
@@ -73,6 +143,7 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 1.33;
+  padding-bottom: 10px;
 
   @include mq(desktop) {
     font-size: 16;
