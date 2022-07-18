@@ -1,19 +1,29 @@
 .trend-time-switch {
   // display: flex;
   position: absolute;
-  top: 110px;
-  left: 200px;
+  top: 160px;
+  left: 20px;
+    
+  @include mq(tablet-only) {
+    top: 150px;
+    left: 32px;
+  }
+    
+  @include mq(desktop) {
+    top: 145px;
+    left: 32px;
+  }
 }
 
-.trend-time-label {
-  text-align: center;
-  // padding-left: 8px;
-  margin-bottom: 10px;
-  color: $white-color;
-}
+// .trend-time-label {
+//   text-align: center;
+//   // padding-left: 8px;
+//   margin-bottom: 10px;
+//   color: $white-color;
+// }
 
 .time-switch-day {
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 .time-switch-day,
