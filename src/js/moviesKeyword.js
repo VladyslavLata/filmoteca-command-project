@@ -37,6 +37,9 @@ async function onClickSubmit(event) {
     makeMarkupCard(data);
     event.target.reset();
     refs.paragraphEl.innerHTML = '';
+
+    console.log(data);
+    keywordMovies.lastPage = data.total_pages;
     setCurrenDataToLS(data.results);
     unlockBtnTrendTime();
   } catch (error) {

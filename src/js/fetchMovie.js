@@ -18,6 +18,7 @@ export class Movie {
     UKRAINIAN: 'uk-UA',
   };
   #page;
+  #lastPage;
   #query;
   #langCurrent;
   #currentTrendTime;
@@ -25,6 +26,7 @@ export class Movie {
   constructor(query) {
     this.#query = query;
     this.#page = 1;
+    this.#lastPage = null;
     this.#langCurrent = Movie.language.ENGLISH;
     this.#currentTrendTime = Movie.trendTime.DAY;
     axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
@@ -36,6 +38,14 @@ export class Movie {
 
   set page(newPage) {
     this.#page = newPage;
+  }
+
+  get lastPage() {
+    return this.#lastPage;
+  }
+
+  set lastPage(newLastPage) {
+    this.#lastPage = newLastPage;
   }
 
   resetPage() {
