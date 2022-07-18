@@ -43,6 +43,9 @@ function setPagePrevious(classIstance) {
 }
 
 function setPageNext(classIstance) {
+  if (classIstance.page === classIstance.lastPage) {
+    return;
+  }
   classIstance.page += 1;
   document
     .querySelector('.scroll-area')
