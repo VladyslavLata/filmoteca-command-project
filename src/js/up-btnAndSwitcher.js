@@ -9,9 +9,11 @@ goToBtn.addEventListener('click', handleButtonClick);
 
 window.addEventListener('scroll', () => {
   if (scrollY > 230) {
+    themeSwitcherBtn.classList.add('icon__button--opacity');
     themeSwitcherBtn.style.position = 'fixed';
   }
   if (scrollY < 230) {
+    themeSwitcherBtn.classList.remove('icon__button--opacity');
     themeSwitcherBtn.style.position = 'absolute';
   }
   if (scrollY > 300) {

@@ -4,7 +4,8 @@ body {
   }
 
   &.dark__theme .up-btn {
-    opacity: 1;
+    fill: $white-color;
+        // opacity: 0.8;
   }
 
 }
@@ -18,10 +19,9 @@ body {
   background-color: #ff6b01;
 
   top: 20px;
-  right: 10%;
+  right: 20px;
   width: 30px;
   height: 30px;
-
   border-radius: 50%;
   border: none;
 
@@ -30,18 +30,20 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-
   transition: $typical-transition-opacity;
 
-  @include mq(tablet) {
-    right: 3%;
-    width: 40px;
-      height: 40px;
-  }
-
-  &:hover, &:focus {
+  &:hover{
     opacity: 1;
   }
+
+    @include mq(tablet) {
+      right: 3%;
+      width: 40px;
+      height: 40px;
+    }
+}
+.icon__button--opacity {
+  opacity: 0.33;
 }
 
 .icon__item--hidden {
