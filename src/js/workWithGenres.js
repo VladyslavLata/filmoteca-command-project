@@ -43,7 +43,7 @@ export function genreFind(genreList = []) {
     case Movie.language.UKRAINIAN:
       genreLS = localStorage.getItem(keyLS.LS_GENRE_KEY_UA);
       noGenre = 'Жанри відсутні';
-      genreOther = 'Інщі';
+      genreOther = 'Інші';
       break;
   }
 
