@@ -27,6 +27,7 @@ export async function genreLoad(classInstance) {
       })
       .catch(error => console.log(error));
   }
+  classInstance.langCurrent = getLanguageFromLS();
 }
 
 export function genreFind(genreList = []) {
