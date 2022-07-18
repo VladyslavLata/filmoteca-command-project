@@ -2,8 +2,6 @@
     position: fixed;
     visibility: visible;
     opacity: 1;
-    // top: 5%;
-    // left: 10%;
     top: 0;
     left: 0;
     width: 100%;
@@ -43,12 +41,16 @@
         width: 1200px;
         // height: 558px;        
     }
+
+    body.dark__theme & {
+        background-color: #303030;
+    }
 }
 
 
 
 .modal-team__button {
-    background-color: $white-color;
+    background-color: transparent;
     position: absolute;
     top: 8px;
     right: 8px;
@@ -61,16 +63,21 @@
     order: 1;
 }
 
+.modal-team__icon {
+    stroke: $black-color;
+
+    body.dark__theme & {
+        stroke: $white-color;
+    }
+}
+
 .team__list {
     display: flex;
     flex-wrap: wrap;
     margin-left: auto;
-        margin-right: auto;
-        row-gap: 20px;
-    
-        @media screen and (min-width: 320px) {
-            width: 100%;
-        }
+    margin-right: auto;
+    row-gap: 20px;
+    width: 100%;
     
         @media screen and (min-width: 768px) {
             gap: 16px;
@@ -87,19 +94,23 @@
         flex-wrap: wrap;
         
 
-                width: 100%;
-        
-                @media screen and (min-width: 320px) {
-                    min-height: 438px;
-                }
-        
-                @media screen and (min-width: 768px) {
-                    flex-basis: calc((100% - 16px * 2) / 3);
-                    // min-height: 495px;
-                }
-        
-                @media screen and (min-width: 1280px) {
-                    flex-basis: calc((100% - 10px * 3) / 4);
-                    // min-height: 634px;
-                }
+    width: 100%;
+    @media screen and (min-width: 320px) {
+        min-height: 438px;
+    }
+    @media screen and (min-width: 768px) {
+        flex-basis: calc((100% - 16px * 2) / 3);
+        // min-height: 495px;
+    }
+    @media screen and (min-width: 1280px) {
+        flex-basis: calc((100% - 10px * 3) / 4);
+        // min-height: 634px;
+    }
+}
+
+.team__name, .team__role {
+
+    body.dark__theme & {
+        color: $white-color;
+    }
 }
