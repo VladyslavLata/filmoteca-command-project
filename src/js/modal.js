@@ -1,6 +1,7 @@
 import { Movie } from './fetchMovie';
 import { genreFind } from './workWithGenres';
 import { getCurrenDataFromLS } from './currentPageData';
+import { noYearVariableLang } from './languageSwitch';
 
 const gallery = document.querySelector('.gallery');
 const backdrop = document.querySelector('.backdrop');
@@ -73,7 +74,7 @@ function modalMarkup({
                       <p class="modal-info__title">Genre</p>
                       <div class="modal-info__content modal-info__content--text">${genreFind(
                         genre_ids
-                      )} | ${parseInt(release_date, 10)}</div>
+                      )} | ${noYearVariableLang(release_date)}</div>
                   </li>
               </ul>
                   <p class="modal-info__article-title">${original_title.toUpperCase()}</p>

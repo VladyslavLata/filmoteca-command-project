@@ -60,3 +60,15 @@ export function switchBtnLang(currentLang) {
       break;
   }
 }
+
+export function noYearVariableLang(yearValue) {
+  const currentLang = getLanguageFromLS();
+  switch (currentLang) {
+    case Movie.language.ENGLISH:
+      return !yearValue ? 'No year' : parseInt(yearValue, 10);
+
+    case Movie.language.UKRAINIAN:
+      return !yearValue ? 'Немає року' : parseInt(yearValue, 10);
+  }
+  return parseInt(yearValue, 10);
+}
