@@ -32,7 +32,6 @@
   }
 
   @include mq(desktop) {
-    min-height: 216px;
     background-image: url(/src/images/header-main-bg-desk.png);
 
     @include mq(retina) {
@@ -77,6 +76,10 @@
   }
 }
 
+.header-container {
+  position: relative;
+}
+
 .header-nav {
   display: flex;
   justify-content: space-between;
@@ -102,6 +105,11 @@
   margin-left: 10px;
   @include fonts(500, 30px, 1.17, null);
   color: $white-color;
+  transition: color 250ms $typical-cubic;
+
+  &:hover, &:focus {
+    color: $orange-color;
+  }
 
   @include mq(mobile-only) {
     display: none;
@@ -156,7 +164,7 @@
 
 .search-form {
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   margin-left: auto;
   margin-right: auto;
 

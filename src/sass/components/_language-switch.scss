@@ -1,11 +1,21 @@
 .language-switch {
   position: absolute;
-  top: 175px;
-  left: 208px;
+  top: 160px;
+  right: 20px;
+
+  @include mq(tablet-only) {
+    top: 150px;
+    right: 32px;
+  }
+
+  @include mq(desktop) {
+    top: 145px;
+    right: 32px;
+  }
 }
 
 .switch-EN {
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 .switch-EN,
