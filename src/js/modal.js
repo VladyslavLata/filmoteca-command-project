@@ -57,7 +57,7 @@ function modalMarkup({
                     <div class="modal-info__content">
                         <span class="modal-info__content-color"> ${
                           Math.round(vote_average * 10) / 10
-                        } </span> / ${vote_count} 
+                        } </span> / <span class="modal-info__content-color modal-info__content-color--votes">${vote_count}</span>
                     </div>
                 </li>
                 <li class="modal-info__item">
