@@ -6,17 +6,14 @@ const body = document.querySelector('body');
 team.addEventListener('click', onTeamClick);
 closeTeam.addEventListener('click', onCloseTeamClick);
 
-
-
 function onTeamClick(e) {
-    e.preventDefault();
-    backdropTeam.classList.remove('is-hidden');
-    body.classList.add('modal-team-open');
-
-};
+  e.preventDefault();
+  backdropTeam.classList.remove('is-hidden');
+  body.classList.add('modal-team-open');
+}
 
 function onCloseTeamClick(e) {
-    e.preventDefault();
-    backdropTeam.classList.add('is-hidden');
-    body.classList.remove('modal-team-open');
-    };
+  // e.preventDefault();
+  backdropTeam.classList.add('is-hidden');
+  body.classList.remove('modal-team-open');
+}
