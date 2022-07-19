@@ -1,4 +1,5 @@
 .backdrop {
+<<<<<<< Updated upstream
     position: fixed;
     // top: 5%;
     // left: 10%;
@@ -12,8 +13,31 @@
       opacity: 0;
       pointer-events: none;
     }
+=======
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  background: rgb(0,0,0, 0.25);
+  transition: opacity 500ms,visibility 500ms;
+  
+  &.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+>>>>>>> Stashed changes
 }
+
+// .backdrop.is-hidden.modal {
+//   transform: rotate(-300deg) scale(0.5);
+// }
 .modal {
+<<<<<<< Updated upstream
     position: absolute;
     top: 50%;
     left: 50%;
@@ -23,6 +47,21 @@
     height: 940px;
     padding: 48px 20px 40px; 
  @media screen and (min-width: 768px) { 
+=======
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 280px;
+  // width: 60%;
+  height: 940px;
+  max-height: 100%;
+  padding: 48px 20px 40px;
+  transform: translate(-50%, -50%);
+  transition: transform 500ms;
+  background: $white-color;
+
+  @media screen and (min-width: 768px) {
+>>>>>>> Stashed changes
     width: 704px;
     height: 552px;
     padding: 48px 70px 40px 36px;
@@ -31,6 +70,7 @@
     width: 806px;
     height: 558px;
     padding: 40px 12px;
+<<<<<<< Updated upstream
     }  
 }
     
@@ -50,6 +90,215 @@
        @media screen and (min-width: 768px) {  
         display: flex;
         }  
+=======
+  }
+
+  body.dark__theme & {
+    background-color: #303030;
+  }
+}
+
+.modal__button {
+  position: absolute;
+  z-index: 3;
+  top: 8px;
+  right: 8px;
+  background-color: transparent;
+  stroke: $black-color;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border: none;
+
+  body.dark__theme & {
+    stroke: $white-color;
+  }
+}
+.modal-info__container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 40px 12px;
+  overflow: auto;
+  
+  @media screen and (min-width: 768px) {
+    position: relative;
+    padding: 0px;
+    display: flex;
+  }
+
+}
+.modal-info__img {
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: 357px;
+
+  @media screen and (min-width: 768px) {
+    width: 264px;
+    height: 373.55px;
+  }
+  @media screen and (min-width: 1280px) {
+    width: 375px;
+    height: 478px;
+  }
+}
+.modal-info {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  @media screen and (min-width: 768px) {
+    margin-top: 0px;
+    margin-left: 68px;
+  }
+  @media screen and (min-width: 1280px) {
+    margin-left: 16px;
+  }
+}
+
+.modal-info__movie-name {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.15;
+  color: $black-color;
+  text-transform: uppercase;
+  text-align: left;
+
+  @media screen and (min-width: 1280px) {
+    font-size: 30px;
+    line-height: 1.16;
+  }
+
+  body.dark__theme & {
+    color: $white-color;
+  }
+}
+.modal-info__list {
+  margin-top: 20px;
+}
+
+.modal-info__item {
+  display: flex;
+  &:not(:first-child) {
+    margin-top: 8px;
+  }
+  
+}
+.modal-info__title {
+  flex-basis: 40%;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  color: $modal-grey-text;
+
+  body.dark__theme & {
+    color: rgb(216, 213, 213);
+  }
+
+  @include mq(desktop) {
+    flex-basis: 34%;
+  }
+  &:last-child {
+    flex-basis: 50%;
+  }
+}
+.modal-info__content {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.16;
+  color: $black-color;
+
+  body.dark__theme & {
+    color: $white-color;
+  }
+ 
+}
+
+.modal-info__content--text {
+  line-height: 1.33;
+}
+.modal-info__content--upper {
+  text-transform: uppercase;
+}
+.modal-info__content-color {
+  padding: 2px 8px;
+  border-radius: 5px;
+  margin-right: 3px;
+  color: $white-color;
+  background: $orange-color;
+}
+
+.modal-info__content-color--votes {
+  border-radius: 5px;
+  color: $black-color;
+  background-color: $modal-number-grey-bg;
+}
+
+.modal-info__article-title {
+  margin-top: 20px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  color: $black-color;
+
+  body.dark__theme & {
+    color: $white-color;
+  }
+}
+.modal-info__article {
+  margin-top: 8px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.67;
+  text-align: start;
+  color: $black-color;
+
+  body.dark__theme & {
+    color: $white-color;
+  }
+}
+.container-btn {
+  margin-top: 20px;
+  display: flex;
+  @include mq(desktop) {
+    padding-left: 8px;
+  }
+  
+}
+.btn {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  text-align: center;
+  text-transform: uppercase;
+  color: $black-color;
+  border: 1px solid $black-color;
+  border-radius: 5px;
+  width: 110px;
+  height: 44px;
+  padding: 6px;
+  &:first-child {
+    color: $white-color;
+    background-color: $orange-color;
+    border: 1px solid $orange-color;
+    margin-right: 20px;
+  }
+  @media screen and (min-width: 768px) {
+    width: 125.03px;
+    height: 44px;
+    &:first-child {
+      margin-right: 15px;
+>>>>>>> Stashed changes
     }
      .modal-info__img {
         width: 240px;

@@ -6,9 +6,11 @@ const gallery = document.querySelector('.gallery');
 const backdrop = document.querySelector('.backdrop');
 const modalBtn = document.querySelector('.modal__button');
 const modal = document.querySelector('.modal-info__container');
+const modalWindow = document.querySelector('.modal');
 
 gallery.addEventListener('click', onImageClick);
 modalBtn.addEventListener('click', onCloseClick);
+backdrop.addEventListener('click', onCloseClick);
 
 function onImageClick(e) {
   const movies = getCurrenDataFromLS();
@@ -28,6 +30,7 @@ function onImageClick(e) {
 }
 
 function onCloseClick(e) {
+  if (!modalWindow.contains(e.target) || modalBtn.contains(e.target))
   backdrop.classList.add('is-hidden');
 }
 
@@ -72,11 +75,15 @@ function modalMarkup({
                   <li class="modal-info__item">
                       <p class="modal-info__title">Genre</p>
                       <div class="modal-info__content modal-info__content--text">${genreFind(
+<<<<<<< Updated upstream
                         genre_ids
                       )} | ${parseInt(release_date, 10)}</div>
+=======
+                        genre_ids)}</div>
+>>>>>>> Stashed changes
                   </li>
               </ul>
-                  <p class="modal-info__article-title">${original_title.toUpperCase()}</p>
+                  <p class="modal-info__article-title">About</p>
                   <p class="modal-info__article">${overview}</p>
                   <div class="container-btn">
             <button type="button" class="btn">add to Watched</button>
