@@ -1,15 +1,19 @@
 import { Movie } from './fetchMovie';
 import { genreFind } from './workWithGenres';
 import { getCurrenDataFromLS } from './currentPageData';
-import { noYearVariableLang } from './languageSwitch';
+// import { noYearVariableLang } from './languageSwitch';
 
+const body = document.querySelector('body');
+console.log('~ body', body);
 const gallery = document.querySelector('.gallery');
 const backdrop = document.querySelector('.backdrop');
 const modalBtn = document.querySelector('.modal__button');
 const modal = document.querySelector('.modal-info__container');
+// const modalWindow = document.querySelector('.modal');
 
 gallery.addEventListener('click', onImageClick);
 modalBtn.addEventListener('click', onCloseClick);
+backdrop.addEventListener('click', onCloseClickBackdrop);
 
 function onImageClick(e) {
   const movies = getCurrenDataFromLS();
@@ -24,11 +28,20 @@ function onImageClick(e) {
   });
 
   if (e.target !== e.currentTarget) {
+    body.classList.add('modal-open');
     backdrop.classList.remove('is-hidden');
   }
 }
 
+function onCloseClickBackdrop(e) {
+  if (e.target === e.currentTarget) {
+    body.classList.remove('modal-open');
+    backdrop.classList.add('is-hidden');
+  }
+}
+
 function onCloseClick(e) {
+  body.classList.remove('modal-open');
   backdrop.classList.add('is-hidden');
 }
 
@@ -37,7 +50,6 @@ function modalMarkup({
   title,
   original_title,
   genre_ids,
-  release_date,
   overview,
   vote_count,
   vote_average,
@@ -57,7 +69,7 @@ function modalMarkup({
                     <div class="modal-info__content">
                         <span class="modal-info__content-color"> ${
                           Math.round(vote_average * 10) / 10
-                        } </span> / ${vote_count} 
+                        } </span> / <span class="modal-info__content-color modal-info__content-color--votes">${vote_count}</span>
                     </div>
                 </li>
                 <li class="modal-info__item">
@@ -74,10 +86,10 @@ function modalMarkup({
                       <p class="modal-info__title">Genre</p>
                       <div class="modal-info__content modal-info__content--text">${genreFind(
                         genre_ids
-                      )} | ${noYearVariableLang(release_date)}</div>
+                      )}</div>
                   </li>
               </ul>
-                  <p class="modal-info__article-title">${original_title.toUpperCase()}</p>
+                  <p class="modal-info__article-title">About</p>
                   <p class="modal-info__article">${overview}</p>
                   <div class="container-btn">
             <button type="button" class="btn">add to Watched</button>
