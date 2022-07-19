@@ -7,23 +7,6 @@ import { genreFind, noYearVariableLang } from './genresAndYearFind'
 // import { noYearVariableLang } from './languageSwitch';
 
 
-
-// const refss = {
-//   btnSwitchEN: document.querySelector('.switch-EN'),
-//   btnSwitchUA: document.querySelector('.switch-UA'),
-// };
-
-// refss.btnSwitchEN.addEventListener('click', onClickEN);
-// refss.btnSwitchUA.addEventListener('click', onClickUA);
-
-// switchBtnLang(getLanguageFromLS());
-// function onClickEN() {
-
-// }
-// function onClickUA() {
-
-// }
-
 const filmLocal = [
   {
     adult: false,
