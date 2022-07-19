@@ -1,20 +1,23 @@
 import { Movie } from './fetchMovie';
 import { genreFind } from './workWithGenres';
 import { getCurrenDataFromLS } from './currentPageData';
-import { noYearVariableLang } from './languageSwitch';
+// import { noYearVariableLang } from './languageSwitch';
+
+const body = document.querySelector('body');
 
 const gallery = document.querySelector('.gallery');
 const backdrop = document.querySelector('.backdrop');
 const modalBtn = document.querySelector('.modal__button');
 const modal = document.querySelector('.modal-info__container');
+// const modalWindow = document.querySelector('.modal');
 
 let ID = 0;
 let movieToAdd = {};
 
-
 gallery.addEventListener('click', onImageClick);
 modalBtn.addEventListener('click', onCloseClick);
 modal.addEventListener('click', onBtnClick);
+backdrop.addEventListener('click', onCloseClickBackdrop);
 
 function onImageClick(e) {
   const movies = getCurrenDataFromLS();
@@ -23,18 +26,27 @@ function onImageClick(e) {
 
   movies.map(movie => {
     if (movie.id !== ID) {
-      return; 
+      return;
     }
     modalMarkup(movie);
     movieToAdd = movie;
   });
 
   if (e.target !== e.currentTarget) {
+    body.classList.add('modal-open');
     backdrop.classList.remove('is-hidden');
   }
 }
 
+function onCloseClickBackdrop(e) {
+  if (e.target === e.currentTarget) {
+    body.classList.remove('modal-open');
+    backdrop.classList.add('is-hidden');
+  }
+}
+
 function onCloseClick(e) {
+  body.classList.remove('modal-open');
   backdrop.classList.add('is-hidden');
 }
 
@@ -43,7 +55,6 @@ function modalMarkup({
   title,
   original_title,
   genre_ids,
-  release_date,
   overview,
   vote_count,
   vote_average,
@@ -51,9 +62,9 @@ function modalMarkup({
 }) {
   const makeMarkupModal = `
       <img src="${
-        // ?
-        Movie.IMG_PATH + poster_path
-        // : 'https://upload.wikimedia.org/wikipedia/commons/b/ba/No_image_available_400_x_600.svg'
+        poster_path
+          ? Movie.IMG_PATH + poster_path
+          : 'https://yt3.ggpht.com/AAKF_677TIvjFz_9xFF0R6PgiVd0kRpEtY6APSxSDRP65nXg8hkn9NFsz2bRd9_Z37DJ9D_b=s900-c-k-c0x00ffffff-no-rj'
       }" alt="${title}" class="modal-info__img">
       <div class="modal-info">
           <h2 class="modal-info__movie-name">${title.toUpperCase()}</h2>
@@ -63,7 +74,7 @@ function modalMarkup({
                     <div class="modal-info__content">
                         <span class="modal-info__content-color"> ${
                           Math.round(vote_average * 10) / 10
-                        } </span> / ${vote_count} 
+                        } </span> / <span class="modal-info__content-color modal-info__content-color--votes">${vote_count}</span>
                     </div>
                 </li>
                 <li class="modal-info__item">
@@ -80,10 +91,10 @@ function modalMarkup({
                       <p class="modal-info__title">Genre</p>
                       <div class="modal-info__content modal-info__content--text">${genreFind(
                         genre_ids
-                      )} | ${noYearVariableLang(release_date)}</div>
+                      )}</div>
                   </li>
               </ul>
-                  <p class="modal-info__article-title">${original_title.toUpperCase()}</p>
+                  <p class="modal-info__article-title">About</p>
                   <p class="modal-info__article">${overview}</p>
                   <div class="container-btn">
             <button type="button" class="btn" name="watched">add to watched</button>
@@ -96,22 +107,20 @@ let watchedArr = [];
 let queueArr = [];
 
 const LS_WATHED_DATA_KEY = 'themovie-watched-lib';
-const LS_QUEUE_DATA_KEY = 'themovie-queue-lib'
+const LS_QUEUE_DATA_KEY = 'themovie-queue-lib';
 
 function onBtnClick(evt) {
-  if (evt.target.name === "watched") {
+  if (evt.target.name === 'watched') {
     addToWatched();
-  } else
-    if (evt.target.name === "queue") {
-      addToQueue();
-    }
+  } else if (evt.target.name === 'queue') {
+    addToQueue();
+  }
 }
 
 const addToWatched = () => {
-      
   watchedArr = JSON.parse(localStorage.getItem(LS_WATHED_DATA_KEY)) || [];
   const watchedArrId = [];
-  
+
   watchedArr.map(mov => {
     return watchedArrId.push(mov.id);
   });
@@ -121,11 +130,10 @@ const addToWatched = () => {
   }
   watchedArr.push(movieToAdd);
   localStorage.setItem(LS_WATHED_DATA_KEY, JSON.stringify(watchedArr));
-  console.log('watched:  '+ watchedArrId)
- }
-  
-const addToQueue = () => {
+  console.log('watched:  ' + watchedArrId);
+};
 
+const addToQueue = () => {
   queueArr = JSON.parse(localStorage.getItem(LS_QUEUE_DATA_KEY)) || [];
   const queueArrId = [];
   queueArr.map(mov => {
@@ -133,11 +141,10 @@ const addToQueue = () => {
   });
 
   if (queueArrId.includes(ID)) {
-    console.log('есть уже')
-    return
+    console.log('есть уже');
+    return;
   }
   queueArr.push(movieToAdd);
   localStorage.setItem(LS_QUEUE_DATA_KEY, JSON.stringify(queueArr));
-  console.log('queue:  '+ queueArrId);
-}
-
+  console.log('queue:  ' + queueArrId);
+};
