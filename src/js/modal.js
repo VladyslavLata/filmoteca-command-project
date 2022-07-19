@@ -57,9 +57,9 @@ function modalMarkup({
 }) {
   const makeMarkupModal = `
       <img src="${
-        // ?
-        Movie.IMG_PATH + poster_path
-        // : 'https://upload.wikimedia.org/wikipedia/commons/b/ba/No_image_available_400_x_600.svg'
+        poster_path
+          ? Movie.IMG_PATH + poster_path
+          : 'https://yt3.ggpht.com/AAKF_677TIvjFz_9xFF0R6PgiVd0kRpEtY6APSxSDRP65nXg8hkn9NFsz2bRd9_Z37DJ9D_b=s900-c-k-c0x00ffffff-no-rj'
       }" alt="${title}" class="modal-info__img">
       <div class="modal-info">
           <h2 class="modal-info__movie-name">${title.toUpperCase()}</h2>
