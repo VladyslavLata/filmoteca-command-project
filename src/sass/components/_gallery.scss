@@ -91,6 +91,10 @@ body {
   &:focus {
     transform: scale(1.03);
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    body.dark__theme & {
+      box-shadow: 0 14px 28px rgba(255, 255, 255, 0.25),
+        0 10px 10px rgba(255, 255, 255, 0.22);
+    }
   }
   @media screen and (min-width: 320px) {
     min-height: 438px;
@@ -119,6 +123,11 @@ body {
 
   @media screen and (min-width: 1280px) {
     height: 574px;
+  }
+
+  body.dark__theme & {
+    box-shadow: 0 14px 28px rgba(255, 255, 255, 0.25),
+      0 10px 10px rgba(255, 255, 255, 0.22);
   }
 }
 
