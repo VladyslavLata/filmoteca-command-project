@@ -8,19 +8,25 @@ const backdrop = document.querySelector('.backdrop');
 const modalBtn = document.querySelector('.modal__button');
 const modal = document.querySelector('.modal-info__container');
 
+let ID = 0;
+let movieToAdd = {};
+
+
 gallery.addEventListener('click', onImageClick);
 modalBtn.addEventListener('click', onCloseClick);
+modal.addEventListener('click', onBtnClick);
 
 function onImageClick(e) {
   const movies = getCurrenDataFromLS();
   e.preventDefault();
-  let ID = Number(e.target.dataset.id);
+  ID = Number(e.target.dataset.id);
 
   movies.map(movie => {
     if (movie.id !== ID) {
-      return;
+      return; 
     }
     modalMarkup(movie);
+    movieToAdd = movie;
   });
 
   if (e.target !== e.currentTarget) {
@@ -80,8 +86,58 @@ function modalMarkup({
                   <p class="modal-info__article-title">${original_title.toUpperCase()}</p>
                   <p class="modal-info__article">${overview}</p>
                   <div class="container-btn">
-            <button type="button" class="btn">add to Watched</button>
-            <button type="button" class="btn">add to queue</button>
+            <button type="button" class="btn" name="watched">add to watched</button>
+            <button type="button" class="btn" name="queue">add to queue</button>
         </div>`;
   return (modal.innerHTML = makeMarkupModal);
 }
+
+let watchedArr = [];
+let queueArr = [];
+
+const LS_WATHED_DATA_KEY = 'themovie-watched-lib';
+const LS_QUEUE_DATA_KEY = 'themovie-queue-lib'
+
+function onBtnClick(evt) {
+  if (evt.target.name === "watched") {
+    addToWatched();
+  } else
+    if (evt.target.name === "queue") {
+      addToQueue();
+    }
+}
+
+const addToWatched = () => {
+      
+  watchedArr = JSON.parse(localStorage.getItem(LS_WATHED_DATA_KEY)) || [];
+  const watchedArrId = [];
+  
+  watchedArr.map(mov => {
+    return watchedArrId.push(mov.id);
+  });
+
+  if (watchedArrId.includes(ID)) {
+    return;
+  }
+  watchedArr.push(movieToAdd);
+  localStorage.setItem(LS_WATHED_DATA_KEY, JSON.stringify(watchedArr));
+  console.log('watched:  '+ watchedArrId)
+ }
+  
+const addToQueue = () => {
+
+  queueArr = JSON.parse(localStorage.getItem(LS_QUEUE_DATA_KEY)) || [];
+  const queueArrId = [];
+  queueArr.map(mov => {
+    return queueArrId.push(mov.id);
+  });
+
+  if (queueArrId.includes(ID)) {
+    console.log('есть уже')
+    return
+  }
+  queueArr.push(movieToAdd);
+  localStorage.setItem(LS_QUEUE_DATA_KEY, JSON.stringify(queueArr));
+  console.log('queue:  '+ queueArrId);
+}
+
