@@ -29,6 +29,10 @@ ul {
 button {
   cursor: pointer;
   padding: 0;
+
+  &:disabled {
+    cursor: auto;
+  }
 }
 
 img {

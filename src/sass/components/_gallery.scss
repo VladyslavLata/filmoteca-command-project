@@ -146,12 +146,14 @@ body {
 
 .card__wrapper {
   flex-grow: 1;
+  padding-left: 10px;
+  padding-bottom: 10px;
 }
 
-.card__name,
-.card__description {
-  padding-left: 10px;
-}
+// .card__name,
+// .card__description {
+//   padding-left: 10px;
+// }
 
 .card__name {
   font-weight: 500;
@@ -167,7 +169,7 @@ body {
   font-weight: 500;
   font-size: 12px;
   line-height: 1.33;
-  padding-bottom: 10px;
+  // padding-bottom: 10px;
 
   @include mq(desktop) {
     font-size: 16;
