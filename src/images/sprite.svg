@@ -16,7 +16,7 @@
 <path fill="none" stroke="#fff" style="stroke: var(--color1)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.6667" d="M14.667 25.333c5.891 0 10.667-4.776 10.667-10.667s-4.776-10.667-10.667-10.667v0c-5.891 0-10.667 4.776-10.667 10.667s4.776 10.667 10.667 10.667v0zM28 28l-5.8-5.8"></path>
 </symbol>
 <symbol id="icon-close" viewBox="0 0 32 32">
-<path fill="#000000" stroke="#000000" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" stroke-width="2.1333" d="M8.533 8.533l14.933 14.933M8.533 23.467l14.933-14.933"></path>
+<path stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" stroke-width="2.1333" d="M8.533 8.533l14.933 14.933M8.533 23.467l14.933-14.933"></path>
 </symbol>
 <symbol id="icon-angel-up" viewBox="0 0 32 32">
 <path d="M31.681 21.933l-14.943-14.942c-0.213-0.214-0.459-0.321-0.737-0.321s-0.524 0.107-0.738 0.321l-14.942 14.942c-0.214 0.214-0.321 0.46-0.321 0.738s0.107 0.524 0.321 0.737l1.603 1.603c0.214 0.214 0.46 0.321 0.738 0.321s0.524-0.107 0.738-0.321l12.602-12.601 12.602 12.602c0.214 0.214 0.46 0.32 0.737 0.32s0.524-0.107 0.738-0.32l1.603-1.603c0.214-0.214 0.32-0.46 0.32-0.737s-0.106-0.524-0.32-0.738z"></path>

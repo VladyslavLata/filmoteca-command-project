@@ -1,9 +1,40 @@
 .trend-time-switch {
+  // display: flex;
   position: absolute;
-  top: 50px;
-  left: 100px;
+  top: 160px;
+  left: 20px;
+    
+  @include mq(tablet-only) {
+    top: 150px;
+    left: 32px;
+  }
+    
+  @include mq(desktop) {
+    top: 145px;
+    left: 32px;
+  }
 }
 
-.trend-time-label {
-  color: $white-color;
+// .trend-time-label {
+//   text-align: center;
+//   // padding-left: 8px;
+//   margin-bottom: 10px;
+//   color: $white-color;
+// }
+
+.time-switch-day {
+  margin-right: 5px;
+}
+
+.time-switch-day,
+.time-switch-week {
+  opacity: 0.7;
+  border-radius: 5px;
+  padding: 2px;
+  border: none;
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover,
+  &:focus {
+    transform: scale(1.3);
+  }
 }

@@ -3,28 +3,31 @@ import { keyLS } from './languageSwitch';
 import { getLanguageFromLS } from './languageSwitch';
 
 export async function genreLoad(classInstance) {
-  const pageLang = classInstance.langCurrent;
-  let GENRE_KEY = keyLS.LS_GENRE_KEY_EN;
-
-  switch (pageLang) {
-    case Movie.language.ENGLISH:
-      GENRE_KEY = keyLS.LS_GENRE_KEY_EN;
-      break;
-
-    case Movie.language.UKRAINIAN:
-      GENRE_KEY = keyLS.LS_GENRE_KEY_UA;
-      break;
-  }
-
-  const genre = localStorage.getItem(GENRE_KEY);
+  const genre = localStorage.getItem(keyLS.LS_GENRE_KEY_EN);
   if (!genre) {
-    await classInstance
+    classInstance.langCurrent = keyLS.LS_GENRE_KEY_EN;
+    classInstance
       .fetchGenre()
       .then(data => {
-        localStorage.setItem(GENRE_KEY, JSON.stringify(data.genres));
+        localStorage.setItem(
+          keyLS.LS_GENRE_KEY_EN,
+          JSON.stringify(data.genres)
+        );
+      })
+      .catch(error => console.log(error));
+
+    classInstance.langCurrent = keyLS.LS_GENRE_KEY_UA;
+    classInstance
+      .fetchGenre()
+      .then(data => {
+        localStorage.setItem(
+          keyLS.LS_GENRE_KEY_UA,
+          JSON.stringify(data.genres)
+        );
       })
       .catch(error => console.log(error));
   }
+  classInstance.langCurrent = getLanguageFromLS();
 }
 
 export function genreFind(genreList = []) {
@@ -43,7 +46,7 @@ export function genreFind(genreList = []) {
     case Movie.language.UKRAINIAN:
       genreLS = localStorage.getItem(keyLS.LS_GENRE_KEY_UA);
       noGenre = 'Жанри відсутні';
-      genreOther = 'Інщі';
+      genreOther = 'Інші';
       break;
   }
 

@@ -4,25 +4,27 @@ import { genreLoad } from './workWithGenres';
 import { setCurrenDataToLS, getCurrenDataFromLS } from './currentPageData';
 
 export async function fetchTrendAndMarkup(classIstance) {
-  await genreLoad(classIstance);
-  await classIstance
-    .fetchTrend()
-    .then(data => {
-      console.log(data);
-      setCurrenDataToLS(data.results);
-      makeMarkupCard(data, classIstance.langCurrent);
-    })
-    .catch(error => console.log(error));
+  try {
+    await genreLoad(classIstance);
+    const data = await classIstance.fetchTrend();
+    console.log(data);
+    setCurrenDataToLS(data.results);
+    makeMarkupCard(data);
+    classIstance.lastPage = data.total_pages;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function fetchSearchAndMarkup(classIstance) {
-  await genreLoad(classIstance);
-  await classIstance
-    .fetchSearch()
-    .then(data => {
-      console.log(data);
-      setCurrenDataToLS(data.results);
-      makeMarkupCard(data, classIstance.langCurrent);
-    })
-    .catch(error => console.log(error));
+  try {
+    await genreLoad(classIstance);
+    const data = await classIstance.fetchSearch();
+    console.log(data);
+    setCurrenDataToLS(data.results);
+    makeMarkupCard(data, classIstance.langCurrent);
+    classIstance.lastPage = data.total_pages;
+  } catch (error) {
+    console.log(error);
+  }
 }

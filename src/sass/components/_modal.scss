@@ -1,19 +1,20 @@
 .backdrop {
-<<<<<<< Updated upstream
-    position: fixed;
-    // top: 5%;
-    // left: 10%;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow-y: scroll;
+// <<<<<<< HEAD
+// // <<<<<<< Updated upstream
+//     position: fixed;
+//     // top: 5%;
+//     // left: 10%;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//     overflow-y: scroll;
 
-    &.is-hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-=======
+//     &.is-hidden {
+//       opacity: 0;
+//       pointer-events: none;
+//     }
+// =======
   position: fixed;
   top: 0;
   left: 0;
@@ -30,24 +31,38 @@
     pointer-events: none;
     visibility: hidden;
   }
->>>>>>> Stashed changes
+// >>>>>>> Stashed changes
+// =======
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   overflow-y: scroll;
+
+//   &.is-hidden {
+//     opacity: 0;
+//     pointer-events: none;
+//   }
+// >>>>>>> main
 }
 
 // .backdrop.is-hidden.modal {
 //   transform: rotate(-300deg) scale(0.5);
 // }
 .modal {
-<<<<<<< Updated upstream
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: $white-color;  
-    min-width: 280px;
-    height: 940px;
-    padding: 48px 20px 40px; 
- @media screen and (min-width: 768px) { 
-=======
+// <<<<<<< HEAD
+// // <<<<<<< Updated upstream
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     background: $white-color;  
+//     min-width: 280px;
+//     height: 940px;
+//     padding: 48px 20px 40px; 
+//  @media screen and (min-width: 768px) { 
+// =======
   position: absolute;
   top: 50%;
   left: 50%;
@@ -60,61 +75,103 @@
   transition: transform 500ms;
   background: $white-color;
 
+//   @media screen and (min-width: 768px) {
+// // >>>>>>> Stashed changes
+// // =======
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   background: $white-color;
+//   min-width: 280px;
+//   height: 940px;
+//   padding: 48px 20px 40px;
+//   }
   @media screen and (min-width: 768px) {
->>>>>>> Stashed changes
+// >>>>>>> main
     width: 704px;
     height: 552px;
     padding: 48px 70px 40px 36px;
-    } 
-@media screen and (min-width: 1280px) {   
+  }
+  @media screen and (min-width: 1280px) {
     width: 806px;
     height: 558px;
     padding: 40px 12px;
-<<<<<<< Updated upstream
+// <<<<<<< HEAD
+// <<<<<<< Updated upstream
     }  
+        body.dark__theme & {
+          background-color: #303030;
+        }
 }
     
     .modal__button {
-        background-color: $white-color;
+        background-color: transparent;
         position: absolute;
         top: 8px;
         right: 8px;
+
+        // z-index: 3;
        
+        stroke: $black-color;
         /* display: inline-flex; */
         align-items: center;
         width: 30px;
         height: 30px;
         border: none;
+
+        body.dark__theme & {
+            stroke: $white-color;
+          }
       }
     .modal-info__container {
        @media screen and (min-width: 768px) {  
         display: flex;
         }  
-=======
+// =======
   }
 
-  body.dark__theme & {
-    background-color: #303030;
-  }
-}
+//   body.dark__theme & {
+//     background-color: #303030;
+//   }
+// }
 
-.modal__button {
-  position: absolute;
-  z-index: 3;
-  top: 8px;
-  right: 8px;
-  background-color: transparent;
-  stroke: $black-color;
-  align-items: center;
-  width: 30px;
-  height: 30px;
-  border: none;
+// .modal__button {
+//   position: absolute;
+//   z-index: 3;
+//   top: 8px;
+//   right: 8px;
+//   background-color: transparent;
+//   stroke: $black-color;
+// =======
+//   }
 
-  body.dark__theme & {
-    stroke: $white-color;
-  }
-}
+//   body.dark__theme & {
+//     background-color: #303030;
+//   }
+// }
+
+// .modal__button {
+//   background-color: transparent;
+//   position: absolute;
+//   top: 8px;
+//   right: 8px;
+
+//   stroke: $black-color;
+
+//   /* display: inline-flex; */
+// >>>>>>> main
+//   align-items: center;
+//   width: 30px;
+//   height: 30px;
+//   border: none;
+
+//   body.dark__theme & {
+//     stroke: $white-color;
+//   }
+// }
 .modal-info__container {
+// <<<<<<< HEAD
   position: absolute;
   top: 0;
   left: 0;
@@ -131,12 +188,21 @@
 
 }
 .modal-info__img {
-  object-fit: cover;
-  display: block;
+  // object-fit: cover;
+  // display: block;
   margin: 0 auto;
-  width: 100%;
+  width: 240px;
   height: 357px;
 
+// =======
+//   @media screen and (min-width: 768px) {
+//     display: flex;
+//   }
+// }
+// .modal-info__img {
+//   width: 240px;
+//   height: 357px;
+// >>>>>>> main
   @media screen and (min-width: 768px) {
     width: 264px;
     height: 373.55px;
@@ -181,10 +247,14 @@
 
 .modal-info__item {
   display: flex;
+// <<<<<<< HEAD
   &:not(:first-child) {
     margin-top: 8px;
   }
   
+// =======
+//   margin-top: 8px;
+// >>>>>>> main
 }
 .modal-info__title {
   flex-basis: 40%;
@@ -201,21 +271,34 @@
   @include mq(desktop) {
     flex-basis: 34%;
   }
+// <<<<<<< HEAD
   &:last-child {
     flex-basis: 50%;
   }
 }
+// .modal-info__content {
+// =======
+// }
 .modal-info__content {
-  font-style: normal;
+//   // flex-grow: 1;
+// >>>>>>> main
+  // font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 1.16;
+// <<<<<<< HEAD
+// =======
+
+// >>>>>>> main
   color: $black-color;
 
   body.dark__theme & {
     color: $white-color;
   }
+// <<<<<<< HEAD
  
+// =======
+// >>>>>>> main
 }
 
 .modal-info__content--text {
@@ -226,6 +309,11 @@
 }
 .modal-info__content-color {
   padding: 2px 8px;
+// <<<<<<< HEAD
+// =======
+  // width: 36px;
+  // height: 16px;
+// >>>>>>> main
   border-radius: 5px;
   margin-right: 3px;
   color: $white-color;
@@ -240,13 +328,21 @@
 
 .modal-info__article-title {
   margin-top: 20px;
-  font-style: normal;
+  // font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 1.33;
+// <<<<<<< HEAD
+//   display: flex;
+//   align-items: center;
+//   text-transform: uppercase;
+// =======
+
   display: flex;
   align-items: center;
   text-transform: uppercase;
+
+// >>>>>>> main
   color: $black-color;
 
   body.dark__theme & {
@@ -260,6 +356,10 @@
   font-size: 12px;
   line-height: 1.67;
   text-align: start;
+// <<<<<<< HEAD
+// =======
+
+// >>>>>>> main
   color: $black-color;
 
   body.dark__theme & {
@@ -269,13 +369,17 @@
 .container-btn {
   margin-top: 20px;
   display: flex;
+// <<<<<<< HEAD
   @include mq(desktop) {
     padding-left: 8px;
   }
   
+// =======
+//   // justify-content: space-between
+// >>>>>>> main
 }
 .btn {
-  font-style: normal;
+  // font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 1.33;
@@ -286,7 +390,10 @@
   border-radius: 5px;
   width: 110px;
   height: 44px;
+// <<<<<<< HEAD
   padding: 6px;
+// =======
+// >>>>>>> main
   &:first-child {
     color: $white-color;
     background-color: $orange-color;
@@ -298,144 +405,20 @@
     height: 44px;
     &:first-child {
       margin-right: 15px;
->>>>>>> Stashed changes
+// <<<<<<< HEAD
+// >>>>>>> Stashed changes
+// =======
+// >>>>>>> main
     }
-     .modal-info__img {
-        width: 240px;
-        height: 357px;  
-    @media screen and (min-width: 768px) { 
-        width: 264px;
-        height: 373.55px;
-         } 
-      @media screen and (min-width: 1280px) {   
-        width: 375px;
-        height: 478px;
-        }  
-      }
-      .modal-info {
-      margin-top: 20px;
-        margin-bottom: 20px; 
-    @media screen and (min-width: 768px) { 
-      margin-top: 0px;
-      margin-left: 68px;
-         }
-      @media screen and (min-width: 1280px) {   
-       margin-left: 16px;
-        }   
-      }
-    
-    .modal-info__movie-name {
-      font-weight: 500;
-      font-size: 20px;
-      line-height: 1.15; 
-      color: $black-color;
-      text-transform: uppercase;
-      text-align: left;
-    
-       @media screen and (min-width: 1280px) {    
-      font-size: 30px;
-      line-height: 1.16;
-        }  
-    }  
-    .modal-info__list {
-      margin-top: 20px;
-    }
-    
-    .modal-info__item {
-      display: flex; 
-      margin-top: 8px;
-      }
-    .modal-info__title {
-      font-style: normal;
-      font-weight: 500;
-      font-size: 12px;
-      line-height: 1.33;
-      color: $modal-grey-text;
-    }
-    .modal-info__content { 
-      /* flex-basis: 40%; */
-      flex-grow: 1; 
-      font-style: normal;
-      font-weight: 500;
-      font-size: 12px;
-      line-height: 1.16;
-      color: $black-color;
-    }
-    .modal-info__content--text {
-      line-height: 1.33;
-    }
-    .modal-info__content--upper {
-      text-transform: uppercase;
-    }
-    .modal-info__content-color {
-      width: 36px;
-      height: 16px;
-      background: $orange-color;
-      border-radius: 5px;
-    }
-    
-    .modal-info__article-title {
-      margin-top: 20px;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 12px;
-      line-height: 1.33;
-    
-    
-      display: flex;
-      align-items: center;
-      text-transform: uppercase;
-    
-      color: $black-color;
-    }
-    .modal-info__article{
-      margin-top: 8px;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 12px;
-      line-height: 1.67;
-      text-align: start;
-    
-      color: $black-color;
-    }
-    .container-btn {
-      margin-top: 20px;
-      display: flex;
-      // justify-content: space-between
-    }
-    .btn {
-      font-style: normal;
-      font-weight: 500;
-      font-size: 12px;
-      line-height: 1.33;
-      text-align: center;
-      text-transform: uppercase;
-      color: $black-color;
-      border: 1px solid $black-color;
-      border-radius: 5px;
-      width: 110px;
-      height: 44px;
-      &:first-child {
-        color: $white-color;
-      background-color: $orange-color;
-      border: 1px solid $orange-color;
-        margin-right: 20px;
-      }
-    @media screen and (min-width: 768px) {  
-      width: 125.03px;
-      height: 44px;
-      &:first-child {
-        margin-right: 15px;
-      }
-        }
-      @media screen and (min-width: 1280px) {   
-      width: 136px;
-      height: 44px;
-        }   
-    }
-    .btn:hover, .btn:hover {
-      color: $white-color;
-      background-color: $orange-color;
-      border: 1px solid $orange-color;
-    }
-    
+  }
+  @media screen and (min-width: 1280px) {
+    width: 136px;
+    height: 44px;
+  }
+}
+.btn:hover,
+.btn:hover {
+  color: $white-color;
+  background-color: $orange-color;
+  border: 1px solid $orange-color;
+}
