@@ -49,8 +49,13 @@ export function genreFind(genreList = []) {
 }
 // <-----------------genre
 
-function getLanguageFromLS() {
-  return JSON.parse(localStorage.getItem(keyLS.LS_LANGUAGE_KEY));
+export function getLanguageFromLS() {
+  try {
+     return JSON.parse(localStorage.getItem(keyLS.LS_LANGUAGE_KEY));
+  } catch (error) {
+    console.error(error.message);
+  }
+ 
 }
 
 export function noYearVariableLang(yearValue) {

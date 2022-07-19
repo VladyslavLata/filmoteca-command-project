@@ -1,5 +1,6 @@
 import { Movie } from './fetchMovie';
-import { genreFind, noYearVariableLang } from './genresAndYearFind'
+import { genreFind, noYearVariableLang, getLanguageFromLS } from './genresAndYearFind'
+// import { getLanguageFromLS } from './languageSwitch';
 // import { genreFind } from './workWithGenres';
 // import {keyLS } from './languageSwitch';
 // import {  getLanguageFromLS  } from './languageSwitch';
@@ -200,7 +201,68 @@ const filmLocal = [
   },
 ];
 
+const filmLocalUA = [
+  {
+    adult: false,
+    backdrop_path: '/9eAn20y26wtB3aet7w9lHjuSgZ3.jpg',
+    genre_ids: [12, 28, 878],
+    length: 3,
+    id: 507086,
+    media_type: 'movie',
+    original_language: 'en',
+    original_title: 'Jurassic World Dominion',
+    overview:
+      'Культова франшиза продовжиться! Нова глава з життя динозаврів у ХХІ столітті. Давні ящери і сучасні люди намагаються співіснувати в одній екосистемі. Та час це призводить до фатальних наслідків.',
+    popularity: 6252.796,
+    poster_path: '/bm7TuFVqUBLZ2nPMiVm2zBYnNuL.jpg',
+    release_date: '2022-06-01',
+    title: '1Світ УКР',
+    video: false,
+    vote_average: 6.877,
+    vote_count: 1416,
+  },
+  {
+    adult: false,
+    backdrop_path: '/9eAn20y26wtB3aet7w9lHjuSgZ3.jpg',
+    genre_ids: [12, 28, 878],
+    length: 3,
+    id: 507086,
+    media_type: 'movie',
+    original_language: 'en',
+    original_title: 'Jurassic World Dominion',
+    overview:
+      'Культова франшиза продовжиться! Нова глава з життя динозаврів у ХХІ столітті. Давні ящери і сучасні люди намагаються співіснувати в одній екосистемі. Та час це призводить до фатальних наслідків.',
+    popularity: 6252.796,
+    poster_path: '',
+    release_date: '',
+    title: '2Світ УКР',
+    video: false,
+    vote_average: 6.877,
+    vote_count: 1416,
+  },
+  {
+    adult: false,
+    backdrop_path: '/9eAn20y26wtB3aet7w9lHjuSgZ3.jpg',
+    genre_ids: [12, 28, 878],
+    length: 3,
+    id: 507086,
+    media_type: 'movie',
+    original_language: 'en',
+    original_title: 'Jurassic World Dominion',
+    overview:
+      'Культова франшиза продовжиться! Нова глава з життя динозаврів у ХХІ столітті. Давні ящери і сучасні люди намагаються співіснувати в одній екосистемі. Та час це призводить до фатальних наслідків.',
+    popularity: 6252.796,
+    poster_path: '/bm7TuFVqUBLZ2nPMiVm2zBYnNuL.jpg',
+    release_date: '2022-06-01',
+    title: '3Світ УКР',
+    video: false,
+    vote_average: 6.877,
+    vote_count: 1416,
+  },];
+
+
 localStorage.setItem('FILM', JSON.stringify(filmLocal));
+localStorage.setItem('FILMUA', JSON.stringify(filmLocalUA));
 
 const mediaQueryMob = window.matchMedia('(max-width: 767px)');
 const mediaQueryTab = window.matchMedia(
@@ -212,6 +274,8 @@ const DESKTOP_FILMS = 9;
 const TABLET_FILMS = 8;
 const MOBILE_FILMS = 4;
 let currentTotalFilmsInPage = 9;
+let currentLangLibrary = Movie.language.ENGLISH;
+let currentLSWatchedFilms = 'FILM';
 
 const watchedMovieBtnEl = document.querySelector('.watched');
 const galleryEl = document.querySelector('.gallery');
@@ -224,17 +288,32 @@ mediaQueryTab.addListener(handledChangeTablet);
 mediaQueryDesk.addListener(handledChangeDeskTop);
 watchedMovieBtnEl.addEventListener('click', onClickWatchedBtnMarkupFilms);
 
+currentLangLibrary = getLanguageFromLS();
+getCurrentLSWatchedFilms();
+
 handledChangeMobile(mediaQueryMob);
 handledChangeTablet(mediaQueryTab);
 handledChangeDeskTop(mediaQueryDesk);
 
+
 function onClickWatchedBtnMarkupFilms() {
   clearGallery();
-  createMarkupFilms();
+  createMarkupFilms(currentLSWatchedFilms);
 }
 
-function createMarkupFilms() {
-  watchedFilms = getWatchedFilmsLocalStorage();
+function getCurrentLSWatchedFilms() {
+    if (currentLangLibrary ===  Movie.language.ENGLISH) {
+      currentLSWatchedFilms = 'FILM';
+      console.log('eeeeennnn');
+  } else  if (currentLangLibrary === Movie.language.UKRAINIAN) {
+      currentLSWatchedFilms = 'FILMUA';
+      console.log('uuuuaaaa');
+    }
+}
+
+
+function createMarkupFilms(currentLSWatchedFilms) {
+  watchedFilms = getWatchedFilmsLocalStorage(currentLSWatchedFilms);
   console.log('2', watchedFilms);
   if (watchedFilms === null) {
     noFilmsMessage();
@@ -253,15 +332,17 @@ function createMarkupFilms() {
   }
 }
 
-function getWatchedFilmsLocalStorage() {
+function getWatchedFilmsLocalStorage(currentLSWatchedFilms) {
   try {
-    const getWatchedFilms = localStorage.getItem('FILM');
+    const getWatchedFilms = localStorage.getItem(currentLSWatchedFilms);
       return getWatchedFilms === null ? null : JSON.parse(getWatchedFilms);
   } catch (error) {
     errorMessage();
     console.error('Get state error: ', error.message);
   }
 }
+
+
 
 function markupCards(datas) {
   return datas
@@ -305,7 +386,7 @@ function handledChangeMobile(e) {
   if (e.matches) {
     currentTotalFilmsInPage = MOBILE_FILMS;
     clearGallery();
-    createMarkupFilms();
+    createMarkupFilms(currentLSWatchedFilms);
     console.log('Media Query M = ', e.matches);
   }
 }
@@ -314,7 +395,7 @@ function handledChangeTablet(e) {
   if (e.matches) {
     currentTotalFilmsInPage = TABLET_FILMS;
     clearGallery();
-    createMarkupFilms();
+    createMarkupFilms(currentLSWatchedFilms);
     console.log('Media Query T = ', e.matches);
   }
 }
@@ -323,7 +404,7 @@ function handledChangeDeskTop(e) {
   if (e.matches) {
     currentTotalFilmsInPage = DESKTOP_FILMS;
     clearGallery();
-    createMarkupFilms();
+    createMarkupFilms(currentLSWatchedFilms);
     console.log('Media Query D = ', e.matches);
   }
 }
