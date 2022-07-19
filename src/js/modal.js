@@ -3,6 +3,8 @@ import { genreFind } from './workWithGenres';
 import { getCurrenDataFromLS } from './currentPageData';
 // import { noYearVariableLang } from './languageSwitch';
 
+const body = document.querySelector('body');
+console.log('~ body', body);
 const gallery = document.querySelector('.gallery');
 const backdrop = document.querySelector('.backdrop');
 const modalBtn = document.querySelector('.modal__button');
@@ -26,17 +28,20 @@ function onImageClick(e) {
   });
 
   if (e.target !== e.currentTarget) {
+    body.classList.add('modal-open');
     backdrop.classList.remove('is-hidden');
   }
 }
 
 function onCloseClickBackdrop(e) {
   if (e.target === e.currentTarget) {
+    body.classList.remove('modal-open');
     backdrop.classList.add('is-hidden');
   }
 }
 
 function onCloseClick(e) {
+  body.classList.remove('modal-open');
   backdrop.classList.add('is-hidden');
 }
 
