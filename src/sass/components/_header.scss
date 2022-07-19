@@ -102,10 +102,13 @@
   padding-top: 17px;
   padding-bottom: 17px;
   stroke: $white-color;
-  transition: stroke 250ms $typical-cubic;
+  color: $white-color;
+  transition: stroke 250ms $typical-cubic,
+  color 250ms $typical-cubic;
   
   &:hover, &:focus {
     stroke: $orange-color;
+    color: $orange-color;
   }
 
   @include mq(tablet) {
@@ -117,12 +120,6 @@
 .logo__name {
   margin-left: 10px;
   @include fonts(500, 30px, 1.17, null);
-  color: $white-color;
-  transition: color 250ms $typical-cubic;
-
-  &:hover, &:focus {
-    color: $orange-color;
-  }
 
   @include mq(mobile-only) {
     display: none;
