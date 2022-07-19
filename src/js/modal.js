@@ -1,17 +1,17 @@
 import { Movie } from './fetchMovie';
 import { genreFind } from './workWithGenres';
 import { getCurrenDataFromLS } from './currentPageData';
-import { noYearVariableLang } from './languageSwitch';
+// import { noYearVariableLang } from './languageSwitch';
 
 const gallery = document.querySelector('.gallery');
 const backdrop = document.querySelector('.backdrop');
 const modalBtn = document.querySelector('.modal__button');
 const modal = document.querySelector('.modal-info__container');
-const modalWindow = document.querySelector('.modal');
+// const modalWindow = document.querySelector('.modal');
 
 gallery.addEventListener('click', onImageClick);
 modalBtn.addEventListener('click', onCloseClick);
-backdrop.addEventListener('click', onCloseClick);
+backdrop.addEventListener('click', onCloseClickBackdrop);
 
 function onImageClick(e) {
   const movies = getCurrenDataFromLS();
@@ -30,9 +30,14 @@ function onImageClick(e) {
   }
 }
 
-function onCloseClick(e) {
-  if (!modalWindow.contains(e.target) || modalBtn.contains(e.target))
+function onCloseClickBackdrop(e) {
+  if (e.target === e.currentTarget) {
     backdrop.classList.add('is-hidden');
+  }
+}
+
+function onCloseClick(e) {
+  backdrop.classList.add('is-hidden');
 }
 
 function modalMarkup({
@@ -40,7 +45,6 @@ function modalMarkup({
   title,
   original_title,
   genre_ids,
-  release_date,
   overview,
   vote_count,
   vote_average,
@@ -78,14 +82,6 @@ function modalMarkup({
                       <div class="modal-info__content modal-info__content--text">${genreFind(
                         genre_ids
                       )}</div>
-// <<<<<<< HEAD
-//                       )} | ${parseInt(release_date, 10)}</div>
-// =======
-//                         genre_ids)}</div>
-// >>>>>>> Stashed changes
-// =======
-//                       )} | ${noYearVariableLang(release_date)}</div>
-// >>>>>>> main
                   </li>
               </ul>
                   <p class="modal-info__article-title">About</p>

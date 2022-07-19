@@ -1,20 +1,6 @@
 .backdrop {
-// <<<<<<< HEAD
-// // <<<<<<< Updated upstream
-//     position: fixed;
-//     // top: 5%;
-//     // left: 10%;
-//     top: 0;
-//     left: 0;
-//     width: 100%;
-//     height: 100%;
-//     overflow-y: scroll;
-
-//     &.is-hidden {
-//       opacity: 0;
-//       pointer-events: none;
-//     }
-// =======
+padding-top: 20px;
+padding-bottom: 20px;
   position: fixed;
   top: 0;
   left: 0;
@@ -24,6 +10,7 @@
   height: 100%;
   overflow-y: scroll;
   background: rgb(0,0,0, 0.25);
+
   transition: opacity 500ms,visibility 500ms;
   
   &.is-hidden {
@@ -31,64 +18,23 @@
     pointer-events: none;
     visibility: hidden;
   }
-// >>>>>>> Stashed changes
-// =======
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   overflow-y: scroll;
-
-//   &.is-hidden {
-//     opacity: 0;
-//     pointer-events: none;
-//   }
-// >>>>>>> main
 }
 
 // .backdrop.is-hidden.modal {
 //   transform: rotate(-300deg) scale(0.5);
 // }
 .modal {
-// <<<<<<< HEAD
-// // <<<<<<< Updated upstream
-//     position: absolute;
-//     top: 50%;
-//     left: 50%;
-//     transform: translate(-50%, -50%);
-//     background: $white-color;  
-//     min-width: 280px;
-//     height: 940px;
-//     padding: 48px 20px 40px; 
-//  @media screen and (min-width: 768px) { 
-// =======
-  position: absolute;
+  position: relative;
   top: 50%;
   left: 50%;
-  min-width: 280px;
-  // width: 60%;
-  height: 940px;
-  max-height: 100%;
+  width: 280px;
+  height: 100%;
   padding: 48px 20px 40px;
   transform: translate(-50%, -50%);
   transition: transform 500ms;
   background: $white-color;
 
-//   @media screen and (min-width: 768px) {
-// // >>>>>>> Stashed changes
-// // =======
-//   position: absolute;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   background: $white-color;
-//   min-width: 280px;
-//   height: 940px;
-//   padding: 48px 20px 40px;
-//   }
   @media screen and (min-width: 768px) {
-// >>>>>>> main
     width: 704px;
     height: 552px;
     padding: 48px 70px 40px 36px;
@@ -97,8 +43,6 @@
     width: 806px;
     height: 558px;
     padding: 40px 12px;
-// <<<<<<< HEAD
-// <<<<<<< Updated upstream
     }  
         body.dark__theme & {
           background-color: #303030;
@@ -111,11 +55,13 @@
         top: 8px;
         right: 8px;
 
-        // z-index: 3;
+        z-index: 3;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
        
         stroke: $black-color;
-        /* display: inline-flex; */
-        align-items: center;
         width: 30px;
         height: 30px;
         border: none;
@@ -124,85 +70,28 @@
             stroke: $white-color;
           }
       }
-    .modal-info__container {
-       @media screen and (min-width: 768px) {  
-        display: flex;
-        }  
-// =======
-  }
 
-//   body.dark__theme & {
-//     background-color: #303030;
-//   }
-// }
-
-// .modal__button {
-//   position: absolute;
-//   z-index: 3;
-//   top: 8px;
-//   right: 8px;
-//   background-color: transparent;
-//   stroke: $black-color;
-// =======
-//   }
-
-//   body.dark__theme & {
-//     background-color: #303030;
-//   }
-// }
-
-// .modal__button {
-//   background-color: transparent;
-//   position: absolute;
-//   top: 8px;
-//   right: 8px;
-
-//   stroke: $black-color;
-
-//   /* display: inline-flex; */
-// >>>>>>> main
-//   align-items: center;
-//   width: 30px;
-//   height: 30px;
-//   border: none;
-
-//   body.dark__theme & {
-//     stroke: $white-color;
-//   }
-// }
 .modal-info__container {
-// <<<<<<< HEAD
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+  // position: relative;
+  // top: 0;
+  // left: 0;
+  // width: 100%;
   height: 100%;
-  padding: 40px 12px;
+  // padding: 40px 12px;
   overflow: auto;
   
   @media screen and (min-width: 768px) {
-    position: relative;
-    padding: 0px;
+    // position: relative;
+    // padding: 0px;
     display: flex;
   }
 
 }
 .modal-info__img {
-  // object-fit: cover;
-  // display: block;
   margin: 0 auto;
   width: 240px;
   height: 357px;
 
-// =======
-//   @media screen and (min-width: 768px) {
-//     display: flex;
-//   }
-// }
-// .modal-info__img {
-//   width: 240px;
-//   height: 357px;
-// >>>>>>> main
   @media screen and (min-width: 768px) {
     width: 264px;
     height: 373.55px;
@@ -247,14 +136,10 @@
 
 .modal-info__item {
   display: flex;
-// <<<<<<< HEAD
   &:not(:first-child) {
     margin-top: 8px;
   }
   
-// =======
-//   margin-top: 8px;
-// >>>>>>> main
 }
 .modal-info__title {
   flex-basis: 40%;
@@ -271,34 +156,20 @@
   @include mq(desktop) {
     flex-basis: 34%;
   }
-// <<<<<<< HEAD
   &:last-child {
     flex-basis: 50%;
   }
 }
-// .modal-info__content {
-// =======
-// }
+
 .modal-info__content {
-//   // flex-grow: 1;
-// >>>>>>> main
-  // font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 1.16;
-// <<<<<<< HEAD
-// =======
-
-// >>>>>>> main
   color: $black-color;
 
   body.dark__theme & {
     color: $white-color;
   }
-// <<<<<<< HEAD
- 
-// =======
-// >>>>>>> main
 }
 
 .modal-info__content--text {
@@ -309,11 +180,6 @@
 }
 .modal-info__content-color {
   padding: 2px 8px;
-// <<<<<<< HEAD
-// =======
-  // width: 36px;
-  // height: 16px;
-// >>>>>>> main
   border-radius: 5px;
   margin-right: 3px;
   color: $white-color;
@@ -328,21 +194,14 @@
 
 .modal-info__article-title {
   margin-top: 20px;
-  // font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 1.33;
-// <<<<<<< HEAD
-//   display: flex;
-//   align-items: center;
-//   text-transform: uppercase;
-// =======
 
   display: flex;
   align-items: center;
   text-transform: uppercase;
 
-// >>>>>>> main
   color: $black-color;
 
   body.dark__theme & {
@@ -356,10 +215,7 @@
   font-size: 12px;
   line-height: 1.67;
   text-align: start;
-// <<<<<<< HEAD
-// =======
 
-// >>>>>>> main
   color: $black-color;
 
   body.dark__theme & {
@@ -369,17 +225,13 @@
 .container-btn {
   margin-top: 20px;
   display: flex;
-// <<<<<<< HEAD
+
   @include mq(desktop) {
     padding-left: 8px;
   }
   
-// =======
-//   // justify-content: space-between
-// >>>>>>> main
 }
 .btn {
-  // font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 1.33;
@@ -390,10 +242,8 @@
   border-radius: 5px;
   width: 110px;
   height: 44px;
-// <<<<<<< HEAD
   padding: 6px;
-// =======
-// >>>>>>> main
+
   &:first-child {
     color: $white-color;
     background-color: $orange-color;
@@ -405,10 +255,6 @@
     height: 44px;
     &:first-child {
       margin-right: 15px;
-// <<<<<<< HEAD
-// >>>>>>> Stashed changes
-// =======
-// >>>>>>> main
     }
   }
   @media screen and (min-width: 1280px) {
