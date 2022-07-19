@@ -1,25 +1,39 @@
 .backdrop {
+padding-top: 20px;
+padding-bottom: 20px;
   position: fixed;
   top: 0;
   left: 0;
+  bottom: 0;
+  right: 0;
   width: 100%;
   height: 100%;
   overflow-y: scroll;
+  background: rgb(0,0,0, 0.25);
 
+  transition: opacity 500ms,visibility 500ms;
+  
   &.is-hidden {
     opacity: 0;
     pointer-events: none;
+    visibility: hidden;
   }
 }
+
+// .backdrop.is-hidden.modal {
+//   transform: rotate(-300deg) scale(0.5);
+// }
 .modal {
-  position: absolute;
+  position: relative;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  background: $white-color;
-  min-width: 280px;
-  height: 940px;
+  width: 280px;
+  height: 100%;
   padding: 48px 20px 40px;
+  transform: translate(-50%, -50%);
+  transition: transform 500ms;
+  background: $white-color;
+
   @media screen and (min-width: 768px) {
     width: 704px;
     height: 552px;
@@ -29,39 +43,55 @@
     width: 806px;
     height: 558px;
     padding: 40px 12px;
-  }
-
-  body.dark__theme & {
-    background-color: #303030;
-  }
+    }  
+        body.dark__theme & {
+          background-color: #303030;
+        }
 }
+    
+    .modal__button {
+        background-color: transparent;
+        position: absolute;
+        top: 8px;
+        right: 8px;
 
-.modal__button {
-  background-color: transparent;
-  position: absolute;
-  top: 8px;
-  right: 8px;
+        z-index: 3;
 
-  stroke: $black-color;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+       
+        stroke: $black-color;
+        width: 30px;
+        height: 30px;
+        border: none;
 
-  /* display: inline-flex; */
-  align-items: center;
-  width: 30px;
-  height: 30px;
-  border: none;
+        body.dark__theme & {
+            stroke: $white-color;
+          }
+      }
 
-  body.dark__theme & {
-    stroke: $white-color;
-  }
-}
 .modal-info__container {
+  // position: relative;
+  // top: 0;
+  // left: 0;
+  // width: 100%;
+  height: 100%;
+  // padding: 40px 12px;
+  overflow: auto;
+  
   @media screen and (min-width: 768px) {
+    // position: relative;
+    // padding: 0px;
     display: flex;
   }
+
 }
 .modal-info__img {
+  margin: 0 auto;
   width: 240px;
   height: 357px;
+
   @media screen and (min-width: 768px) {
     width: 264px;
     height: 373.55px;
@@ -106,7 +136,10 @@
 
 .modal-info__item {
   display: flex;
-  margin-top: 8px;
+  &:not(:first-child) {
+    margin-top: 8px;
+  }
+  
 }
 .modal-info__title {
   flex-basis: 40%;
@@ -123,14 +156,15 @@
   @include mq(desktop) {
     flex-basis: 34%;
   }
+  &:last-child {
+    flex-basis: 50%;
+  }
 }
+
 .modal-info__content {
-  // flex-grow: 1;
-  font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 1.16;
-
   color: $black-color;
 
   body.dark__theme & {
@@ -146,8 +180,6 @@
 }
 .modal-info__content-color {
   padding: 2px 8px;
-  // width: 36px;
-  // height: 16px;
   border-radius: 5px;
   margin-right: 3px;
   color: $white-color;
@@ -162,7 +194,6 @@
 
 .modal-info__article-title {
   margin-top: 20px;
-  font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 1.33;
@@ -194,10 +225,13 @@
 .container-btn {
   margin-top: 20px;
   display: flex;
-  // justify-content: space-between
+
+  @include mq(desktop) {
+    padding-left: 8px;
+  }
+  
 }
 .btn {
-  font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 1.33;
@@ -208,6 +242,8 @@
   border-radius: 5px;
   width: 110px;
   height: 44px;
+  padding: 6px;
+
   &:first-child {
     color: $white-color;
     background-color: $orange-color;
