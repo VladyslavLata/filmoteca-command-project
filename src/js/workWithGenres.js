@@ -1,6 +1,6 @@
 import { Movie } from './fetchMovie';
-import { keyLS } from './languageSwitch';
-import { getLanguageFromLS } from './languageSwitch';
+import { keyLS, getLanguageFromLS } from './languageSwitch';
+
 
 export async function genreLoad(classInstance) {
   try {

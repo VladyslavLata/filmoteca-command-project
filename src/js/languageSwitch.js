@@ -8,7 +8,8 @@ export const keyLS = {
   LS_LANGUAGE_KEY: 'themoviedb-current-language',
   LS_GENRE_KEY_EN: 'themoviedb-genre-EN',
   LS_GENRE_KEY_UA: 'themoviedb-genre-UA',
-};
+}
+
 const refs = {
   btnSwitchEN: document.querySelector('.switch-EN'),
   btnSwitchUA: document.querySelector('.switch-UA'),
