@@ -7,4 +7,3 @@ import * as moviesKeyword from './js/moviesKeyword';
 import * as modal from './js/modal';
 import * as button from './js/up-btnAndSwitcher';
 import * as modalTeam from './js/modal-team';
-
