@@ -1,3 +1,4 @@
+import * as loader from './js/loader';
 import * as homePage from './js/homePage';
 import * as languageIndex from './js/languageIndex';
 import * as trendTime from './js/trendTime';
