@@ -36,21 +36,40 @@
 }
 
 .sign-up__email {
+    background-color: inherit;
+    color: $black-color;
     margin-top: 20px;
     padding: 5px;
     height: 40px;
     width: 80%;
 
+    border-radius: 5px;
+
     border: 1px solid $orange-color;
+
+    outline: none;
+
+    body.dark__theme & {
+        color: $white-color;
+    }
 }
 
 .sign-up__password {
+    background-color: inherit;
+    color: $black-color;
     margin-top: 20px;
     padding: 5px;
-        height: 40px;
-        width: 80%;
-    
-        border: 1px solid $orange-color;
+    height: 40px;
+    width: 80%;
+    border-radius: 5px;
+
+    border: 1px solid $orange-color;
+
+    outline: none;
+
+    body.dark__theme & {
+            color: $white-color;
+        }
 }
 
 .sign-up__button {
