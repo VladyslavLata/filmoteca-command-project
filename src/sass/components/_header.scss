@@ -1,5 +1,5 @@
 .header {
-  padding-top: 40px;
+  padding-top: 20px;
   min-height: 230px;
   background-color: rgba(0, 0, 0, 0.56);
 
@@ -84,10 +84,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 54px;
+  margin-bottom: 34px;
 
   @include mq(tablet) {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
 }
 
@@ -99,36 +99,38 @@
 .logo {
   display: flex;
   align-items: center;
+  padding-top: 17px;
+  padding-bottom: 17px;
+  stroke: $white-color;
+  color: $white-color;
+  transition: stroke 250ms $typical-cubic,
+  color 250ms $typical-cubic;
+  
+  &:hover, &:focus {
+    stroke: $orange-color;
+    color: $orange-color;
+  }
+
+  @include mq(tablet) {
+    padding-top: 11px;
+    padding-bottom: 11px;
+  }
 }
 
 .logo__name {
   margin-left: 10px;
   @include fonts(500, 30px, 1.17, null);
-  color: $white-color;
-  transition: color 250ms $typical-cubic;
-
-  &:hover, &:focus {
-    color: $orange-color;
-  }
 
   @include mq(mobile-only) {
     display: none;
   }
 }
 
-.logo__icon {
-  stroke: $white-color;
-  transition: stroke 250ms $typical-cubic;
-
-  &:hover,
-  &:focus {
-    stroke: $orange-color;
-  }
-}
-
 .site-nav {
   display: flex;
   align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .site-nav__item:not(:last-child) {
@@ -136,6 +138,8 @@
 }
 
 .site-nav__link {
+  padding-top: 20px;
+  padding-bottom: 20px;
   @include fonts(500, 12px, 1.17, null);
   text-transform: uppercase;
   color: $white-color;
@@ -154,7 +158,7 @@
     content: '';
     position: absolute;
     left: 0;
-    bottom: -2px;
+    bottom: 18px;
     width: 100%;
     height: 3px;
     border-radius: 2px;
@@ -164,12 +168,17 @@
 
 .search-form {
   position: relative;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   margin-left: auto;
   margin-right: auto;
 
   @include mq(tablet-only) {
     width: 336px;
+    margin-bottom: 20px;
+  }
+
+  @include mq(tablet) {
+    margin-bottom: 20px;
   }
 
   @include mq(desktop) {
