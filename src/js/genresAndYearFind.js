@@ -1,38 +1,20 @@
 import { Movie } from './fetchMovie';
-import { keyLS, getLanguageFromLS } from './languageSwitch';
 
+export const keyLS = {
+  LS_LANGUAGE_KEY: 'themoviedb-current-language',
+  LS_GENRE_KEY_EN: 'themoviedb-genre-EN',
+  LS_GENRE_KEY_UA: 'themoviedb-genre-UA',
+  LS_WATHED_DATA_KEY: 'themovie-watched-lib',
+  LS_QUEUE_DATA_KEY: 'themovie-queue-lib',
+};
 
-export async function genreLoad(classInstance) {
-  try {
-    const genre = localStorage.getItem(keyLS.LS_GENRE_KEY_EN);
-    if (!genre) {
-      classInstance.langCurrent = Movie.language.ENGLISH;
-      const dataEN = await classInstance.fetchGenre();
-
-      localStorage.setItem(
-        keyLS.LS_GENRE_KEY_EN,
-        JSON.stringify(dataEN.genres)
-      );
-
-      classInstance.langCurrent = Movie.language.UKRAINIAN;
-      const dataUA = await classInstance.fetchGenre();
-
-      localStorage.setItem(
-        keyLS.LS_GENRE_KEY_UA,
-        JSON.stringify(dataUA.genres)
-      );
-    }
-    classInstance.langCurrent = getLanguageFromLS();
-  } catch (error) {
-    console.log(error);
-  }
-}
+//  genre--------------->
 
 export function genreFind(genreList = []) {
   let genreLS = localStorage.getItem(keyLS.LS_GENRE_KEY_EN);
   let noGenre = 'No genres';
   let genreOther = 'Other';
-  const langGenre = getLanguageFromLS();
+  let langGenre = getLanguageFromLS();
 
   switch (langGenre) {
     case Movie.language.ENGLISH:
@@ -47,8 +29,7 @@ export function genreFind(genreList = []) {
       genreOther = 'Інші';
       break;
   }
-  console.log(langGenre);
-  console.log(genreLS);
+
   if (!genreLS || genreList.length === 0) {
     return noGenre;
   }
@@ -67,4 +48,26 @@ export function genreFind(genreList = []) {
   } else {
     return genreResult.join(', ');
   }
+}
+// <-----------------genre
+
+export function getLanguageFromLS() {
+  try {
+     return JSON.parse(localStorage.getItem(keyLS.LS_LANGUAGE_KEY));
+  } catch (error) {
+    console.error(error.message);
+  }
+ 
+}
+
+export function noYearVariableLang(yearValue) {
+  const currentLang = getLanguageFromLS();
+  switch (currentLang) {
+    case Movie.language.ENGLISH:
+      return !yearValue ? 'No year' : parseInt(yearValue, 10);
+
+    case Movie.language.UKRAINIAN:
+      return !yearValue ? 'Немає року' : parseInt(yearValue, 10);
+  }
+  return parseInt(yearValue, 10);
 }

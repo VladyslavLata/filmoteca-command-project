@@ -29,6 +29,8 @@ const refs = {
 
 export const LS_LOGIN_KEY = 'keep_logged_as';
 
+sessionStorage.removeItem(LS_LOGIN_KEY);
+
 // console.log(refs.checkbox.checked);
 checkIfLogged();
 
@@ -57,11 +59,11 @@ const loginEmailPassword = async () => {
     );
     userCredential.user.displayName = refs.loginUsername.value;
     const username = userCredential.user.displayName;
-    // if (refs.checkbox.checked) {
-    localStorage.setItem(LS_LOGIN_KEY, `${username}`);
-    // } else if (!refs.checkbox.checked) {
-    //   localStorage.removeItem(LS_LOGIN_KEY);
-    // }
+    if (refs.checkbox.checked) {
+      localStorage.setItem(LS_LOGIN_KEY, `${username}`);
+    } else if (!refs.checkbox.checked) {
+      sessionStorage.setItem(LS_LOGIN_KEY, `${username}`);
+    }
     console.log(username);
     monitorAuthState();
   } catch (error) {
@@ -99,6 +101,7 @@ refs.signupBtn.addEventListener('click', createAccount);
 async function monitorAuthState() {
   onAuthStateChanged(auth, user => {
     const username = localStorage.getItem(LS_LOGIN_KEY);
+    const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
     // if (user) {
     //   refs.logoutText.innerHTML = `You are logged in as ${username}`;
     // }
@@ -110,6 +113,11 @@ async function monitorAuthState() {
       refs.loginForm.classList.add('logout-modal--hidden');
       refs.logoutModal.classList.remove('logout-modal--hidden');
       refs.logoutText.innerHTML = `You are logged in as ${username}`;
+    }
+    if (usernameSS) {
+      refs.loginForm.classList.add('logout-modal--hidden');
+      refs.logoutModal.classList.remove('logout-modal--hidden');
+      refs.logoutText.innerHTML = `You are logged in as ${usernameSS}`;
     }
     // if (user && !username) {
     //   refs.loginForm.classList.add('logout-modal--hidden');
@@ -133,7 +141,8 @@ refs.logoutBtn.addEventListener('click', logout);
 
 function checkIfLogged() {
   const username = localStorage.getItem(LS_LOGIN_KEY);
-  if (username) {
+  const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
+  if (username || usernameSS) {
     refs.loginForm.classList.add('logout-modal--hidden');
     refs.logoutModal.classList.remove('logout-modal--hidden');
     refs.logoutText.innerHTML = `You are logged in as ${username}`;

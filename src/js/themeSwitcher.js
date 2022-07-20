@@ -12,14 +12,14 @@ iconButton.addEventListener('click', toggleTheme);
 
 const enableDarkMode = () => {
   body.classList.add('dark__theme');
-  iconMoon.classList.add('icon__item--hidden');
-  iconSun.classList.remove('icon__item--hidden');
+  iconMoon.classList.remove('icon__item--hidden');
+  iconSun.classList.add('icon__item--hidden');
 };
 
 const enableLightMode = () => {
   body.classList.remove('dark__theme');
-  iconMoon.classList.remove('icon__item--hidden');
-  iconSun.classList.add('icon__item--hidden');
+  iconMoon.classList.add('icon__item--hidden');
+  iconSun.classList.remove('icon__item--hidden');
 };
 
 startTheme();
