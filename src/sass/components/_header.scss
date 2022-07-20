@@ -134,7 +134,11 @@
 }
 
 .site-nav__item:not(:last-child) {
-  margin-right: 40px;
+  margin-right: 20px;
+
+  @include mq(tablet) {
+    margin-right: 40px;
+  }
 }
 
 .site-nav__link {
@@ -163,6 +167,77 @@
     height: 3px;
     border-radius: 2px;
     background-color: $warning-text;
+  }
+}
+
+.registration__button {
+  width: 30px;
+  height: 30px;
+  @include center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border: none;
+  background-color: transparent;
+  fill: $white-color;
+  transition: fill 250ms $typical-cubic;
+
+  &:hover, &:focus {
+    fill: $orange-color;
+  }
+
+  @include mq(tablet) {
+    display: none;
+  }
+}
+
+.registration__menu {
+  display: none;
+
+  @include mq(tablet) {
+    display: block;
+  }
+}
+
+.signup__button {
+  width: 50px;
+  height: 23px;
+  opacity: 0.7;
+  border-radius: 5px;
+  padding: 2px;
+  border: none;
+  margin-right: 5px;
+  @include fonts(500, 12px, 1.17, null);
+  text-align: center;
+  transition: color 250ms $typical-cubic,
+    background-color 250ms $typical-cubic,
+    transform 250ms $typical-cubic;
+
+  &:hover,
+  &:focus {
+    color: $white-color;
+    background-color: $orange-color;
+    transform: scale(1.1);
+  }
+}
+
+.login__button {
+  width: 50px;
+  height: 23px;
+  opacity: 0.7;
+  border-radius: 5px;
+  padding: 2px;
+  border: none;
+  @include fonts(500, 12px, 1.17, null);
+  text-align: center;
+  transition: color 250ms $typical-cubic,
+    background-color 250ms $typical-cubic,
+    transform 250ms $typical-cubic;
+
+  &:hover,
+  &:focus {
+    color: $white-color;
+    background-color: $orange-color;
+    transform: scale(1.1);
   }
 }
 
