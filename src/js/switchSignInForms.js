@@ -24,6 +24,7 @@ function onChangeLinkClick(e) {
 }
 
 function onCloseModal(e) {
+  body.classList.remove('modal-open');
   loginOverlay.classList.add('log-in__overlay--hidden');
   signupOverlay.classList.add('sign-up__overlay--hidden');
 }
