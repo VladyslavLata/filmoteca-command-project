@@ -1,0 +1,60 @@
+.log-in__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.log-in__overlay--hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.log-in-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $white-color;
+    min-width: 280px;
+    height: 940px;
+    padding: 48px 20px 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media screen and (min-width: 768px) {
+        width: 704px;
+        height: 552px;
+        padding: 48px 70px 40px 36px;
+    }
+
+    @media screen and (min-width: 1280px) {
+        width: 806px;
+        height: 558px;
+        padding: 40px 12px;
+    }
+
+    body.dark__theme & {
+        background-color: #303030;
+    }
+}
+
+.form-check {
+    display: flex !important;
+    align-items: center;
+}
+
+.close-login__button {
+    @extend .modal__button;
+}
+
+.login__form--hidden {
+    display: none;
+}
+
+.logout-modal--hidden {
+    display: none;
+}

@@ -1,9 +1,11 @@
 import { Movie } from './fetchMovie';
 import { genreFind } from './workWithGenres';
 import { getCurrenDataFromLS } from './currentPageData';
+import { LS_LOGIN_KEY } from './authAndLogIn';
 // import { noYearVariableLang } from './languageSwitch';
 
 const body = document.querySelector('body');
+const username = localStorage.getItem(LS_LOGIN_KEY);
 
 const gallery = document.querySelector('.gallery');
 const backdrop = document.querySelector('.backdrop');
@@ -109,10 +111,16 @@ const LS_WATHED_DATA_KEY = 'themovie-watched-lib';
 const LS_QUEUE_DATA_KEY = 'themovie-queue-lib';
 
 function onBtnClick(evt) {
-  if (evt.target.name === 'watched') {
-    addToWatched();
-  } else if (evt.target.name === 'queue') {
-    addToQueue();
+  if (username) {
+    if (evt.target.name === 'watched') {
+      addToWatched();
+    } else if (evt.target.name === 'queue') {
+      addToQueue();
+    }
+  } else {
+    alert(
+      'If you want to add movie to your library then you have to log in first.'
+    );
   }
 }
 
