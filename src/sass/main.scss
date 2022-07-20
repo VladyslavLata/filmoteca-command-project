@@ -2,6 +2,8 @@
 @import './utils/mixins';
 @import './utils/variables';
 @import './utils/placeholders';
+@import './components/preloader';
+@import './components/loader';
 
 @import './components/_header';
 @import './components/_gallery';

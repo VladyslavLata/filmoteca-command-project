@@ -1,0 +1,34 @@
+.loader__absolute-top {
+    top: 26px;
+    position: absolute;
+}
+
+.loader__absolute-bottom {
+    bottom: 10px;
+    position: absolute;
+}
+
+@keyframes glow {
+    50% {
+        border-color: $orange-color;
+        width: 95%;
+        box-shadow: 0px 0px 10px 5px $warning-text;
+    }
+
+    100% {
+        border-color: $warning-text;
+        width: 5%;
+        box-shadow: 0px 0px 10px -2px $warning-text;
+    }
+}
+
+.loader {
+    width: 5%;
+    border-bottom: 2px solid $warning-text;
+    margin-bottom: 20px;
+    animation: glow 8s infinite;
+}
+
+.is-off {
+    display: none;
+}
