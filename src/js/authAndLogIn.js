@@ -57,11 +57,11 @@ const loginEmailPassword = async () => {
     );
     userCredential.user.displayName = refs.loginUsername.value;
     const username = userCredential.user.displayName;
-    if (refs.checkbox.checked) {
-      localStorage.setItem(LS_LOGIN_KEY, `${username}`);
-    } else if (!refs.checkbox.checked) {
-      localStorage.removeItem(LS_LOGIN_KEY);
-    }
+    // if (refs.checkbox.checked) {
+    localStorage.setItem(LS_LOGIN_KEY, `${username}`);
+    // } else if (!refs.checkbox.checked) {
+    //   localStorage.removeItem(LS_LOGIN_KEY);
+    // }
     console.log(username);
     monitorAuthState();
   } catch (error) {
@@ -99,20 +99,23 @@ refs.signupBtn.addEventListener('click', createAccount);
 async function monitorAuthState() {
   onAuthStateChanged(auth, user => {
     const username = localStorage.getItem(LS_LOGIN_KEY);
-    if (!user) {
-      refs.loginForm.classList.remove('logout-modal--hidden');
-      refs.logoutModal.classList.add('logout-modal--hidden');
-    }
+    // if (user) {
+    //   refs.logoutText.innerHTML = `You are logged in as ${username}`;
+    // }
+    // if (!user) {
+    //   refs.loginForm.classList.remove('logout-modal--hidden');
+    //   refs.logoutModal.classList.add('logout-modal--hidden');
+    // }
     if (username) {
       refs.loginForm.classList.add('logout-modal--hidden');
       refs.logoutModal.classList.remove('logout-modal--hidden');
       refs.logoutText.innerHTML = `You are logged in as ${username}`;
     }
-    if (user && !username) {
-      refs.loginForm.classList.add('logout-modal--hidden');
-      refs.logoutModal.classList.remove('logout-modal--hidden');
-      refs.logoutText.innerHTML = `You are logged in as ${user.displayName}`;
-    }
+    // if (user && !username) {
+    //   refs.loginForm.classList.add('logout-modal--hidden');
+    //   refs.logoutModal.classList.remove('logout-modal--hidden');
+    //   refs.logoutText.innerHTML = `You are logged in as ${user.displayName}`;
+    // }
   });
 }
 

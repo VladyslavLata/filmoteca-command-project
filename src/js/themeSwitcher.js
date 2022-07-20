@@ -6,7 +6,7 @@ export const themeKey = {
   LS_KEY: 'theme-mode',
   LIGHT: 'light',
   DARK: 'dark',
-};
+}
 
 iconButton.addEventListener('click', toggleTheme);
 
