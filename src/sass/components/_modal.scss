@@ -33,6 +33,7 @@ body.modal-open {
   width: 280px;
   height: 100%;
   padding: 48px 20px 40px;
+  border-radius: 5px;
   transform: translate(-50%, -50%) scale(1.0);
   transition: transform 500ms;
   background: $white-color;
