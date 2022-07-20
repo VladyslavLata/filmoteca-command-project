@@ -9,7 +9,7 @@ const gallery = document.querySelector('.gallery');
 const backdrop = document.querySelector('.backdrop');
 const modalBtn = document.querySelector('.modal__button');
 const modal = document.querySelector('.modal-info__container');
-// const modalWindow = document.querySelector('.modal');
+const modalWindow = document.querySelector('.modal');
 
 let ID = 0;
 let movieToAdd = {};
@@ -17,7 +17,7 @@ let movieToAdd = {};
 gallery.addEventListener('click', onImageClick);
 modalBtn.addEventListener('click', onCloseClick);
 modal.addEventListener('click', onBtnClick);
-backdrop.addEventListener('click', onCloseClickBackdrop);
+backdrop.addEventListener('click', onCloseClick);
 
 function onImageClick(e) {
   const movies = getCurrenDataFromLS();
@@ -38,16 +38,20 @@ function onImageClick(e) {
   }
 }
 
-function onCloseClickBackdrop(e) {
-  if (e.target === e.currentTarget) {
+// function onCloseClickBackdrop(e) {
+//   if (e.target === e.currentTarget) {
+//     body.classList.remove('modal-open');
+//     backdrop.classList.add('is-hidden');
+//   }
+// }
+
+function onCloseClick(e) {
+  if (!modalWindow.contains(e.target) || modalBtn.contains(e.target)) {
     body.classList.remove('modal-open');
     backdrop.classList.add('is-hidden');
   }
-}
-
-function onCloseClick(e) {
-  body.classList.remove('modal-open');
-  backdrop.classList.add('is-hidden');
+  // body.classList.remove('modal-open');
+  // backdrop.classList.add('is-hidden');
 }
 
 function modalMarkup({
@@ -77,8 +81,7 @@ function modalMarkup({
               </tr>
               <tr class="modal-info__item">
                 <td class="modal-info__title">Popularity</td>
-                <td class="modal-info__content">${popularity.toFixed(
-                  1)}
+                <td class="modal-info__content">${popularity.toFixed(1)}
                 </td>
               </tr>
               <tr class="modal-info__item">
@@ -87,9 +90,7 @@ function modalMarkup({
               </tr>
               <tr class="modal-info__item">
                 <td class="modal-info__title">Genre</td>
-                <td class="modal-info__content">${genreFind(
-                  genre_ids
-                )}</td>
+                <td class="modal-info__content">${genreFind(genre_ids)}</td>
               </tr>
               </table>            
                   <p class="modal-info__article-title">About</p>
