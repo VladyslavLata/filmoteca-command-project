@@ -9,7 +9,7 @@ const gallery = document.querySelector('.gallery');
 const backdrop = document.querySelector('.backdrop');
 const modalBtn = document.querySelector('.modal__button');
 const modal = document.querySelector('.modal-info__container');
-// const modalWindow = document.querySelector('.modal');
+const modalWindow = document.querySelector('.modal');
 
 let ID = 0;
 let movieToAdd = {};
@@ -17,7 +17,7 @@ let movieToAdd = {};
 gallery.addEventListener('click', onImageClick);
 modalBtn.addEventListener('click', onCloseClick);
 modal.addEventListener('click', onBtnClick);
-backdrop.addEventListener('click', onCloseClickBackdrop);
+backdrop.addEventListener('click', onCloseClick);
 
 function onImageClick(e) {
   const movies = getCurrenDataFromLS();
@@ -38,16 +38,20 @@ function onImageClick(e) {
   }
 }
 
-function onCloseClickBackdrop(e) {
-  if (e.target === e.currentTarget) {
+// function onCloseClickBackdrop(e) {
+//   if (e.target === e.currentTarget) {
+//     body.classList.remove('modal-open');
+//     backdrop.classList.add('is-hidden');
+//   }
+// }
+
+function onCloseClick(e) {
+  if (!modalWindow.contains(e.target) || modalBtn.contains(e.target)) {
     body.classList.remove('modal-open');
     backdrop.classList.add('is-hidden');
   }
-}
-
-function onCloseClick(e) {
-  body.classList.remove('modal-open');
-  backdrop.classList.add('is-hidden');
+  // body.classList.remove('modal-open');
+  // backdrop.classList.add('is-hidden');
 }
 
 function modalMarkup({
@@ -68,32 +72,27 @@ function modalMarkup({
       }" alt="${title}" class="modal-info__img">
       <div class="modal-info">
           <h2 class="modal-info__movie-name">${title.toUpperCase()}</h2>
-              <ul class="modal-info__list">
-              <li class="modal-info__item">
-                    <p class="modal-info__title">Vote / Votes<p>
-                    <div class="modal-info__content">
-                        <span class="modal-info__content-color"> ${
-                          Math.round(vote_average * 10) / 10
-                        } </span> / <span class="modal-info__content-color modal-info__content-color--votes">${vote_count}</span>
-                    </div>
-                </li>
-                <li class="modal-info__item">
-                    <p class="modal-info__title">Popularity</p>
-                    <div class="modal-info__content">${popularity.toFixed(
-                      1
-                    )}</div>
-                </li>
-                  <li class="modal-info__item">
-                      <p class="modal-info__title">Original Title</p>
-                      <div class="modal-info__content modal-info__content--text ">${original_title.toUpperCase()}</div>
-                  </li>
-                  <li class="modal-info__item">
-                      <p class="modal-info__title">Genre</p>
-                      <div class="modal-info__content modal-info__content--text">${genreFind(
-                        genre_ids
-                      )}</div>
-                  </li>
-              </ul>
+          <table class="modal-info__list" >
+              <tr class="modal-info__item">
+                <th class="modal-info__title">Vote / Votes</th>
+                <th class="modal-info__content"><span class="modal-info__content-color"> ${
+                  Math.round(vote_average * 10) / 10
+                } </span> / <span class="modal-info__content-color modal-info__content-color--votes">${vote_count}</span></th>
+              </tr>
+              <tr class="modal-info__item">
+                <td class="modal-info__title">Popularity</td>
+                <td class="modal-info__content">${popularity.toFixed(1)}
+                </td>
+              </tr>
+              <tr class="modal-info__item">
+                <td class="modal-info__title">Original Title</td>
+                <td class="modal-info__content modal-info__content--text">${original_title.toUpperCase()}</td>
+              </tr>
+              <tr class="modal-info__item">
+                <td class="modal-info__title">Genre</td>
+                <td class="modal-info__content">${genreFind(genre_ids)}</td>
+              </tr>
+              </table>            
                   <p class="modal-info__article-title">About</p>
                   <p class="modal-info__article">${overview}</p>
                   <div class="container-btn">
