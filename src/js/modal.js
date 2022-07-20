@@ -5,7 +5,8 @@ import { LS_LOGIN_KEY } from './authAndLogIn';
 // import { noYearVariableLang } from './languageSwitch';
 
 const body = document.querySelector('body');
-const username = localStorage.getItem(LS_LOGIN_KEY);
+
+// console.log('~ username', username);
 
 const gallery = document.querySelector('.gallery');
 const backdrop = document.querySelector('.backdrop');
@@ -110,9 +111,10 @@ let queueArr = [];
 const LS_WATHED_DATA_KEY = 'themovie-watched-lib';
 const LS_QUEUE_DATA_KEY = 'themovie-queue-lib';
 
-function onBtnClick(evt) {
+async function onBtnClick(evt) {
+  const username = await localStorage.getItem(LS_LOGIN_KEY);
   if (evt.target.name === 'watched') {
-    if (username) {
+    if (username !== '' && username) {
       addToWatched();
     } else {
       alert(
@@ -121,7 +123,7 @@ function onBtnClick(evt) {
     }
   }
   if (evt.target.name === 'queue') {
-    if (username) {
+    if (username !== '' && username) {
       addToQueue();
     } else {
       alert(
