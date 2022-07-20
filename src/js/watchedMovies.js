@@ -179,6 +179,8 @@ function onClickWatchedBtnMarkupFilms() {
   getCurrentLSWatchedFilms()
   clearGallery();
   createMarkupFilms(currentLSWatchedFilms);
+  watchedMovieBtnEl.classList.add('is-active');
+  queueMovieBtnEl.classList.remove('is-active');
 }
 
 function onClickQueueBtnMarkupFilms() {
@@ -186,6 +188,8 @@ function onClickQueueBtnMarkupFilms() {
   getCurrentLSQueueFilms();
   clearGallery();
   createMarkupFilms(currentLSWatchedFilms);
+  queueMovieBtnEl.classList.add('is-active');
+  watchedMovieBtnEl.classList.remove('is-active');
 }
 
 function getCurrentLSWatchedFilms() {
