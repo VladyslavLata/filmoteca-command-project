@@ -113,8 +113,9 @@ const LS_QUEUE_DATA_KEY = 'themovie-queue-lib';
 
 async function onBtnClick(evt) {
   const username = await localStorage.getItem(LS_LOGIN_KEY);
+  const usernameSS = await sessionStorage.getItem(LS_LOGIN_KEY);
   if (evt.target.name === 'watched') {
-    if (username !== '' && username) {
+    if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
       addToWatched();
     } else {
       alert(
@@ -123,7 +124,7 @@ async function onBtnClick(evt) {
     }
   }
   if (evt.target.name === 'queue') {
-    if (username !== '' && username) {
+    if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
       addToQueue();
     } else {
       alert(
