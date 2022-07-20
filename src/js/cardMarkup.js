@@ -1,6 +1,9 @@
 import { Movie } from './fetchMovie';
 import { genreFind } from './workWithGenres';
 import { noYearVariableLang } from './languageSwitch';
+import Loader from './loader';
+
+const loader = new Loader();
 
 export function makeMarkupCard(data) {
   const gallery = document.querySelector('.gallery');
@@ -26,4 +29,6 @@ export function makeMarkupCard(data) {
     })
     .join('');
   gallery.innerHTML = makeMarkupCard;
+  loader.refs.preloader.classList.add('is-off');
+  loader.enable();
 }

@@ -1,3 +1,4 @@
+import * as loader from './js/loader';
 import * as movie from './js/homePage';
 import * as language from './js/languageSwitch';
 import * as trendTime from './js/trendTime';

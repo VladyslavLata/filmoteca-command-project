@@ -3,6 +3,9 @@ import { fetchTrendAndMarkup, fetchSearchAndMarkup } from './fetchAndMarkup';
 import { trendMovie } from './homePage';
 import { keyword, keywordMovies } from './moviesKeyword';
 import { handleButtonClick as goToStart } from './up-btnAndSwitcher';
+import Loader from './loader';
+
+const loader = new Loader();
 
 const refs = {
   btnLoadPrevious: document.querySelector('.pagination-page__btn-previous'),
@@ -13,7 +16,9 @@ refs.btnLoadPrevious.addEventListener('click', onClickPrevious);
 refs.btnLoadNext.addEventListener('click', onClickNext);
 
 function onClickPrevious() {
+  loader.disable();
   if (keyword === null ? trendMovie.page === 1 : keywordMovies.page === 1) {
+    loader.enable();
     return;
   }
   setPagePrevious();
@@ -22,6 +27,7 @@ function onClickPrevious() {
 }
 
 function onClickNext() {
+  loader.disable();
   if (
     keyword === null
       ? trendMovie.page === trendMovie.lastPage
