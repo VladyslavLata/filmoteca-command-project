@@ -16,6 +16,7 @@ export function makeMarkupCard(data) {
           ? Movie.IMG_PATH + movieItem.poster_path
           : 'https://yt3.ggpht.com/AAKF_677TIvjFz_9xFF0R6PgiVd0kRpEtY6APSxSDRP65nXg8hkn9NFsz2bRd9_Z37DJ9D_b=s900-c-k-c0x00ffffff-no-rj'
       }" alt="${movieItem.title}" loading="lazy"/>
+      <div class="card__wrapper">
             <p class="card__name">${movieItem.title.toUpperCase()}</p>
             <p class="card__description">${genreFind(
               movieItem.genre_ids
@@ -24,6 +25,7 @@ export function makeMarkupCard(data) {
               Math.round(movieItem.vote_average * 10) / 10
             }</span>
             </p>
+            </div>
           </a>
         </li>`;
     })
