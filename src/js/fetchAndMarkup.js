@@ -22,7 +22,7 @@ export async function fetchSearchAndMarkup(classIstance) {
     const data = await classIstance.fetchSearch();
     console.log(data);
     setCurrenDataToLS(data.results);
-    makeMarkupCard(data, classIstance.langCurrent);
+    makeMarkupCard(data);
     classIstance.lastPage = data.total_pages;
   } catch (error) {
     console.log(error);
