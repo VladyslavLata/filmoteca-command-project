@@ -4,6 +4,8 @@ export const keyLS = {
   LS_LANGUAGE_KEY: 'themoviedb-current-language',
   LS_GENRE_KEY_EN: 'themoviedb-genre-EN',
   LS_GENRE_KEY_UA: 'themoviedb-genre-UA',
+  LS_WATHED_DATA_KEY: 'themovie-watched-lib',
+  LS_QUEUE_DATA_KEY: 'themovie-queue-lib',
 };
 
 //  genre--------------->
@@ -12,7 +14,7 @@ export function genreFind(genreList = []) {
   let genreLS = localStorage.getItem(keyLS.LS_GENRE_KEY_EN);
   let noGenre = 'No genres';
   let genreOther = 'Other';
-  const langGenre = getLanguageFromLS();
+  let langGenre = getLanguageFromLS();
 
   switch (langGenre) {
     case Movie.language.ENGLISH:
