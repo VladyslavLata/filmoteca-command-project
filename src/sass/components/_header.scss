@@ -285,6 +285,15 @@
   }
 }
 
+.search-form__input:-webkit-autofill,
+.search-form__input:-webkit-autofill:hover,
+.search-form__input:-webkit-autofill:focus,
+.search-form__input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: 0 0 0px 1000px inherit inset;
+  -webkit-text-fill-color: #ffffff;
+}
+
 .search-form__btn {
   position: absolute;
   padding: 0;
