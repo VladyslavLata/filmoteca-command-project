@@ -111,16 +111,23 @@ const LS_WATHED_DATA_KEY = 'themovie-watched-lib';
 const LS_QUEUE_DATA_KEY = 'themovie-queue-lib';
 
 function onBtnClick(evt) {
-  if (username) {
-    if (evt.target.name === 'watched') {
+  if (evt.target.name === 'watched') {
+    if (username) {
       addToWatched();
-    } else if (evt.target.name === 'queue') {
-      addToQueue();
+    } else {
+      alert(
+        'If you want to add movie to "Watched" then you have to log in first.'
+      );
     }
-  } else {
-    alert(
-      'If you want to add movie to your library then you have to log in first.'
-    );
+  }
+  if (evt.target.name === 'queue') {
+    if (username) {
+      addToQueue();
+    } else {
+      alert(
+        'If you want to add movie to "Queue" then you have to log in first.'
+      );
+    }
   }
 }
 
