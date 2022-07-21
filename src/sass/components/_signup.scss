@@ -33,6 +33,11 @@
 .sign-up__title {
     margin-top: 20px;
     font-size: 30px;
+    color: $black-color;
+
+    body.dark__theme & {
+            color: $white-color;
+        }
 }
 
 .sign-up__email {

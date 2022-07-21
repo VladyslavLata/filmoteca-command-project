@@ -184,8 +184,19 @@
   }
 
   @include mq(tablet) {
-    display: none;
+    margin-left: 10px;
+    margin-right: 10px;
   }
+}
+
+.registration__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-nick {
+  color: $white-color;
 }
 
 .registration__menu {

@@ -20,13 +20,14 @@ const refs = {
   loginPassword: document.querySelector('#login-password'),
   signupPassword: document.querySelector('#signup-password'),
   loginBtn: document.querySelector('#login__button'),
+  loginHeaderBtn: document.querySelector('.login__button'),
   signupBtn: document.querySelector('#signup__button'),
   logoutBtn: document.querySelector('#logout__button'),
   logoutText: document.querySelector('.logout-modal__text'),
   logoutModal: document.querySelector('.logout-modal'),
   checkbox: document.querySelector('.form-check-input'),
+  usernick: document.querySelector('.user-nick'),
 };
-
 export const LS_LOGIN_KEY = 'keep_logged_as';
 
 sessionStorage.removeItem(LS_LOGIN_KEY);
@@ -64,6 +65,8 @@ const loginEmailPassword = async () => {
     } else if (!refs.checkbox.checked) {
       sessionStorage.setItem(LS_LOGIN_KEY, `${username}`);
     }
+    refs.loginHeaderBtn.textContent = 'Log Out';
+    refs.usernick.textContent = `${username}`;
     console.log(username);
     monitorAuthState();
   } catch (error) {
@@ -112,11 +115,14 @@ async function monitorAuthState() {
     if (username) {
       refs.loginForm.classList.add('logout-modal--hidden');
       refs.logoutModal.classList.remove('logout-modal--hidden');
+      // loginHeaderBtn.innerText = 'Log Out';
+
       refs.logoutText.innerHTML = `You are logged in as ${username}`;
     }
     if (usernameSS) {
       refs.loginForm.classList.add('logout-modal--hidden');
       refs.logoutModal.classList.remove('logout-modal--hidden');
+      // loginHeaderBtn.textContent = 'Log Out';
       refs.logoutText.innerHTML = `You are logged in as ${usernameSS}`;
     }
     // if (user && !username) {
@@ -132,6 +138,8 @@ async function monitorAuthState() {
 const logout = async () => {
   await signOut(auth);
   localStorage.removeItem(LS_LOGIN_KEY);
+  refs.loginHeaderBtn.textContent = 'Log In';
+  refs.usernick.textContent = ``;
   refs.loginForm.classList.remove('logout-modal--hidden');
   refs.logoutModal.classList.add('logout-modal--hidden');
   alert("You're not logged in anymore");
@@ -145,9 +153,13 @@ function checkIfLogged() {
   if (username || usernameSS) {
     refs.loginForm.classList.add('logout-modal--hidden');
     refs.logoutModal.classList.remove('logout-modal--hidden');
+    refs.loginHeaderBtn.textContent = 'Log Out';
+    refs.usernick.textContent = `${username}`;
     refs.logoutText.innerHTML = `You are logged in as ${username}`;
   } else {
     refs.loginForm.classList.remove('logout-modal--hidden');
     refs.logoutModal.classList.add('logout-modal--hidden');
+    refs.loginHeaderBtn.textContent = 'Log In';
+    refs.usernick.textContent = ``;
   }
 }

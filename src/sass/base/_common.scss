@@ -4,6 +4,8 @@
 body {
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
+
+  transition: background-color 500ms $typical-cubic, color 500ms $typical-cubic;
 }
 
 ul {
