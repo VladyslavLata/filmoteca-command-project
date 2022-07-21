@@ -9,6 +9,7 @@ const loginOverlay = document.querySelector('.log-in__overlay');
 const loginBtn = document.querySelector('.login__button');
 const signupBtn = document.querySelector('.signup__button');
 const body = document.querySelector('body');
+const regUserMobileBtn = document.querySelector('.registration__button');
 
 switchFormLinkLogin.addEventListener('click', onChangeLinkClick);
 switchFormLinkSignUp.addEventListener('click', onChangeLinkClick);
@@ -16,6 +17,7 @@ closeBtn.addEventListener('click', onCloseModal);
 loginCloseBtn.addEventListener('click', onCloseModal);
 loginBtn.addEventListener('click', onLoginOpen);
 signupBtn.addEventListener('click', onSignupOpen);
+regUserMobileBtn.addEventListener('click', onSignupOpen);
 
 function onChangeLinkClick(e) {
   e.preventDefault();
