@@ -33,7 +33,6 @@ backdrop.addEventListener('click', onCloseClick);
 
 function onImageClick(e) {
   e.preventDefault();
- 
 
   const currentPage = getCurrentPageFromLS();
   if (currentPage === keyLS.VALUE_PAGE_INDEX) {
@@ -44,7 +43,6 @@ function onImageClick(e) {
   }
 
   ID = Number(e.target.dataset.id);
-   
 
   movies.map(movie => {
     if (movie.id !== ID) {
@@ -53,9 +51,8 @@ function onImageClick(e) {
     modalMarkup(movie);
     buttonTextContent();
     movieToAdd = movie;
-   
   });
- 
+
   if (e.target !== e.currentTarget) {
     body.classList.add('modal-open');
     backdrop.classList.remove('is-hidden');
@@ -136,7 +133,6 @@ async function onBtnClick(evt) {
   const usernameSS = await sessionStorage.getItem(LS_LOGIN_KEY);
 
   if (evt.target.name === 'watched') {
-    addToWatched();
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
       addToWatched();
     } else {
@@ -146,7 +142,6 @@ async function onBtnClick(evt) {
     }
   }
   if (evt.target.name === 'queue') {
-    addToQueue();
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
       addToQueue();
     } else {
@@ -158,18 +153,20 @@ async function onBtnClick(evt) {
 }
 function buttonTextContent() {
   const modalButtons = document.querySelector('.container-btn');
-    watchedBtn = modalButtons.children[0];
-    queueBtn = modalButtons.children[1];
+  watchedBtn = modalButtons.children[0];
+  queueBtn = modalButtons.children[1];
   if (watchedArrCurrentLang.some(value => value.id === ID)) {
-    watchedBtn.textContent = 'delete from watched'
+    watchedBtn.textContent = 'delete from watched';
     return;
   } else {
-    (watchedBtn.textContent = 'add to watched');
-    };
+    watchedBtn.textContent = 'add to watched';
+  }
   if (queueArrCurrentLang.some(value => value.id === ID)) {
-    queueBtn.textContent = 'delete from queue'
+    queueBtn.textContent = 'delete from queue';
     return;
-  }else{(queueBtn.textContent = 'add to queue')};
+  } else {
+    queueBtn.textContent = 'add to queue';
+  }
 }
 ////// ADD TO WATCHED   ///////
 async function addToWatched() {
@@ -188,19 +185,24 @@ async function addToWatched() {
     altLang = Movie.language.UKRAINIAN;
   }
 
-  watchedArrCurrentLang = JSON.parse(localStorage.getItem(dataCurrentKey)) || [];
+  watchedArrCurrentLang =
+    JSON.parse(localStorage.getItem(dataCurrentKey)) || [];
   watchedArrAltLang = JSON.parse(localStorage.getItem(dataAltKey)) || [];
 
   if (watchedArrCurrentLang.some(value => value.id === ID)) {
     console.log('этот фильм уже есть, удаляем');
-    watchedBtn.textContent = 'add to watched'
-  const filteredWatchedArr = watchedArrCurrentLang.filter(value => value.id !== ID);
-  localStorage.setItem(dataCurrentKey, JSON.stringify(filteredWatchedArr));
-  const filteredWatchedArrAlt = watchedArrAltLang.filter(value => value.id !== ID);
-  localStorage.setItem(dataAltKey, JSON.stringify(filteredWatchedArrAlt));
-  return;
-  };
-    
+    watchedBtn.textContent = 'add to watched';
+    const filteredWatchedArr = watchedArrCurrentLang.filter(
+      value => value.id !== ID
+    );
+    localStorage.setItem(dataCurrentKey, JSON.stringify(filteredWatchedArr));
+    const filteredWatchedArrAlt = watchedArrAltLang.filter(
+      value => value.id !== ID
+    );
+    localStorage.setItem(dataAltKey, JSON.stringify(filteredWatchedArrAlt));
+    return;
+  }
+
   watchedArrCurrentLang.push(filtrCurrentData(movieToAdd));
   localStorage.setItem(dataCurrentKey, JSON.stringify(watchedArrCurrentLang));
   console.log('watched:');
@@ -226,29 +228,32 @@ async function addToQueue() {
     dataCurrentKey = keyLS.LS_QUEUE_EN_DATA_KEY;
     dataAltKey = keyLS.LS_QUEUE_UA_DATA_KEY;
     altLang = Movie.language.UKRAINIAN;
-
   }
-  
+
   queueArrCurrentLang = JSON.parse(localStorage.getItem(dataCurrentKey)) || [];
   queueArrAltLang = JSON.parse(localStorage.getItem(dataAltKey)) || [];
 
   if (queueArrCurrentLang.some(value => value.id === ID)) {
     console.log('этот фильм уже есть, удаляем');
-    queueBtn.innerHTML='add to queue'
-    const filteredQueueArr = queueArrCurrentLang.filter(value => value.id !== ID);
+    queueBtn.innerHTML = 'add to queue';
+    const filteredQueueArr = queueArrCurrentLang.filter(
+      value => value.id !== ID
+    );
     localStorage.setItem(dataCurrentKey, JSON.stringify(filteredQueueArr));
-    const filteredQueueArrAlt = queueArrAltLang.filter(value => value.id !== ID);
+    const filteredQueueArrAlt = queueArrAltLang.filter(
+      value => value.id !== ID
+    );
     localStorage.setItem(dataAltKey, JSON.stringify(filteredQueueArrAlt));
     return;
-  };
-  
+  }
+
   queueArrCurrentLang.push(filtrCurrentData(movieToAdd));
   localStorage.setItem(dataCurrentKey, JSON.stringify(queueArrCurrentLang));
   console.log('queue:');
   const altLangData = await fetchAltLangByID(ID, altLang);
   queueArrAltLang.push(altLangData);
   localStorage.setItem(dataAltKey, JSON.stringify(queueArrAltLang));
-  queueBtn.innerHTML='delete from queue'
+  queueBtn.innerHTML = 'delete from queue';
 }
 
 async function fetchAltLangByID(movieID, language) {
