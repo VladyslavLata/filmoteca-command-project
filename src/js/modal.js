@@ -91,7 +91,7 @@ function modalMarkup({
   vote_average,
   popularity,
 }) {
-  backdrop.style.background = `url(${
+  backdrop.style.background = `linear-gradient(#0000004d, #000000b3), url(${
     poster_path
       ? Movie.IMG_PATH + poster_path
       : 'https://yt3.ggpht.com/AAKF_677TIvjFz_9xFF0R6PgiVd0kRpEtY6APSxSDRP65nXg8hkn9NFsz2bRd9_Z37DJ9D_b=s900-c-k-c0x00ffffff-no-rj'

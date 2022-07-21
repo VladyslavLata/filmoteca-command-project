@@ -24,16 +24,16 @@ body.modal-open {
     pointer-events: none;
     visibility: hidden;
   }
-  &:after {
-    content: "";
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(rgb(0,0,0, 0.3),rgb(0,0,0, 0.7)),
-  }
+  // &:after {
+  //   content: "";
+  //   position: absolute;
+  //   z-index: 1;
+  //   left: 0;
+  //   top: 0;
+  //   width: 100%;
+  //   height: 100%;
+  //   background-image: linear-gradient(rgb(0,0,0, 0.3),rgb(0,0,0, 0.7)),
+  // }
 }
 
 .backdrop.is-hidden .modal {
