@@ -26,7 +26,7 @@ let movies = '';
 gallery.addEventListener('click', onImageClick);
 modalBtn.addEventListener('click', onCloseClick);
 modal.addEventListener('click', onBtnClick);
-backdrop.addEventListener('click', onCloseClick);
+backdrop.addEventListener('click', onCloseClickBackdrop);
 
 function onImageClick(e) {
   e.preventDefault();
@@ -50,25 +50,30 @@ function onImageClick(e) {
   });
 
   if (e.target !== e.currentTarget) {
+    window.addEventListener('keydown', onEscKeyPress); 
     body.classList.add('modal-open');
     backdrop.classList.remove('is-hidden');
   }
 }
 
-// function onCloseClickBackdrop(e) {
-//   if (e.target === e.currentTarget) {
-//     body.classList.remove('modal-open');
-//     backdrop.classList.add('is-hidden');
-//   }
-// }
+function onCloseClickBackdrop(e) {
+if(e.target == e.currentTarget) {
+  body.classList.remove('modal-open');
+  backdrop.classList.add('is-hidden');}
+}
 
 function onCloseClick(e) {
-  if (!modalWindow.contains(e.target) || modalBtn.contains(e.target)) {
-    body.classList.remove('modal-open');
-    backdrop.classList.add('is-hidden');
+  window.removeEventListener('keydown', onEscKeyPress);   
+  body.classList.remove('modal-open');
+  backdrop.classList.add('is-hidden');
+}
+
+function onEscKeyPress(e) { 
+  console.log(e)
+  console.log(e.code)
+  if (e.code === "Escape") {
+    onCloseClick()
   }
-  // body.classList.remove('modal-open');
-  // backdrop.classList.add('is-hidden');
 }
 
 function modalMarkup({
@@ -81,8 +86,12 @@ function modalMarkup({
   vote_average,
   popularity,
 }) {
+  
+  backdrop.style.background = `url(${poster_path? Movie.IMG_PATH + poster_path: 'https://yt3.ggpht.com/AAKF_677TIvjFz_9xFF0R6PgiVd0kRpEtY6APSxSDRP65nXg8hkn9NFsz2bRd9_Z37DJ9D_b=s900-c-k-c0x00ffffff-no-rj'})`;
+  backdrop.style.backgroundRepeat = "no-repeat";
+  backdrop.style.backgroundSize = "cover";
   const makeMarkupModal = `
-      <img src="${
+      <img src="${ 
         poster_path
           ? Movie.IMG_PATH + poster_path
           : 'https://yt3.ggpht.com/AAKF_677TIvjFz_9xFF0R6PgiVd0kRpEtY6APSxSDRP65nXg8hkn9NFsz2bRd9_Z37DJ9D_b=s900-c-k-c0x00ffffff-no-rj'
@@ -118,7 +127,6 @@ function modalMarkup({
         </div>`;
   return (modal.innerHTML = makeMarkupModal);
 }
-
 // let watchedArr = [];
 // let queueArr = [];
 let watchedArrCurrentLang = [];
