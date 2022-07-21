@@ -17,7 +17,7 @@ closeBtn.addEventListener('click', onCloseModal);
 loginCloseBtn.addEventListener('click', onCloseModal);
 loginBtn.addEventListener('click', onLoginOpen);
 signupBtn.addEventListener('click', onSignupOpen);
-regUserMobileBtn.addEventListener('click', onSignupOpen);
+regUserMobileBtn.addEventListener('click', onLoginOpen);
 
 function onChangeLinkClick(e) {
   e.preventDefault();

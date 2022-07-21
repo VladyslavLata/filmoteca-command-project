@@ -30,8 +30,17 @@
     display: none;
 }
 
+.logout-modal {
+    @extend .login__form;
+    justify-content: center;
+}
+
 .logout-modal--hidden {
     display: none;
+}
+
+.logout-modal__text {
+    margin-top: 20px;
 }
 
 .login__title {

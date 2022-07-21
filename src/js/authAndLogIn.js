@@ -58,17 +58,21 @@ const loginEmailPassword = async () => {
       loginEmail,
       loginPassword
     );
-    userCredential.user.displayName = refs.loginUsername.value;
-    const username = userCredential.user.displayName;
-    if (refs.checkbox.checked) {
-      localStorage.setItem(LS_LOGIN_KEY, `${username}`);
-    } else if (!refs.checkbox.checked) {
-      sessionStorage.setItem(LS_LOGIN_KEY, `${username}`);
+    if (refs.loginUsername.value.length > 9) {
+      alert('Your nickname is too long. Make it 9 characters maximum.');
+    } else {
+      userCredential.user.displayName = refs.loginUsername.value;
+      const username = userCredential.user.displayName;
+      if (refs.checkbox.checked) {
+        localStorage.setItem(LS_LOGIN_KEY, `${username}`);
+      } else if (!refs.checkbox.checked) {
+        sessionStorage.setItem(LS_LOGIN_KEY, `${username}`);
+      }
+      refs.loginHeaderBtn.textContent = 'Log Out';
+      refs.usernick.textContent = `${username}`;
+      console.log(username);
+      monitorAuthState();
     }
-    refs.loginHeaderBtn.textContent = 'Log Out';
-    refs.usernick.textContent = `${username}`;
-    console.log(username);
-    monitorAuthState();
   } catch (error) {
     showLoginError(error);
   }

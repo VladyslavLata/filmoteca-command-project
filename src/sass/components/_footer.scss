@@ -50,7 +50,15 @@
       } 
 }
 
-.footer-text__icon {margin: 0 10px;}
+.footer-text__icon {
+  margin: 0 10px;
+}
+
+.animate__heartBeat {
+  animation-duration: 1500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: $typical-cubic;
+}
 
 .wrap {
   min-height: 100vh;
