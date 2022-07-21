@@ -48,7 +48,12 @@
         margin-right: 0px;
         margin-top: 0px;
       } 
-    
 }
 
 .footer-text__icon {margin: 0 10px;}
+
+.wrap {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
