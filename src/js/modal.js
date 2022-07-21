@@ -1,8 +1,13 @@
 import { Movie } from './fetchMovie';
 import { genreFind } from './workWithGenres';
-import { getCurrenDataFromLS } from './currentPageData';
+import { getCurrenDataFromLS, getDataFromLibraryLS } from './currentPageData';
 import { LS_LOGIN_KEY } from './authAndLogIn';
 // import { noYearVariableLang } from './languageSwitch';
+import {
+  keyLS,
+  getLanguageFromLS,
+  getCurrentPageFromLS,
+} from './languageSwitch';
 
 const body = document.querySelector('body');
 
@@ -16,6 +21,7 @@ const modalWindow = document.querySelector('.modal');
 
 let ID = 0;
 let movieToAdd = {};
+let movies = '';
 
 gallery.addEventListener('click', onImageClick);
 modalBtn.addEventListener('click', onCloseClick);
@@ -23,8 +29,16 @@ modal.addEventListener('click', onBtnClick);
 backdrop.addEventListener('click', onCloseClick);
 
 function onImageClick(e) {
-  const movies = getCurrenDataFromLS();
   e.preventDefault();
+
+  const currentPage = getCurrentPageFromLS();
+  if (currentPage === keyLS.VALUE_PAGE_INDEX) {
+    movies = getCurrenDataFromLS();
+  } else {
+    const currentLanguage = getLanguageFromLS();
+    movies = getDataFromLibraryLS(currentLanguage);
+  }
+
   ID = Number(e.target.dataset.id);
 
   movies.map(movie => {
@@ -105,11 +119,15 @@ function modalMarkup({
   return (modal.innerHTML = makeMarkupModal);
 }
 
-let watchedArr = [];
-let queueArr = [];
+// let watchedArr = [];
+// let queueArr = [];
+let watchedArrCurrentLang = [];
+let watchedArrAltLang = [];
+let queueArrCurrentLang = [];
+let queueArrAltLang = [];
 
-const LS_WATHED_DATA_KEY = 'themovie-watched-lib';
-const LS_QUEUE_DATA_KEY = 'themovie-queue-lib';
+// const LS_WATHED_DATA_KEY = 'themovie-watched-lib';
+// const LS_QUEUE_DATA_KEY = 'themovie-queue-lib';
 
 async function onBtnClick(evt) {
   const username = await localStorage.getItem(LS_LOGIN_KEY);
@@ -134,34 +152,172 @@ async function onBtnClick(evt) {
   }
 }
 
-const addToWatched = () => {
-  watchedArr = JSON.parse(localStorage.getItem(LS_WATHED_DATA_KEY)) || [];
+async function addToWatched() {
+  const currentLanguage = getLanguageFromLS();
+  let dataCurrentKey = keyLS.LS_WATHED_EN_DATA_KEY;
+  let dataAltKey = keyLS.LS_WATHED_UA_DATA_KEY;
+  let altLang = Movie.language.UKRAINIAN;
+
+  if (currentLanguage === Movie.language.UKRAINIAN) {
+    dataCurrentKey = keyLS.LS_WATHED_UA_DATA_KEY;
+    dataAltKey = keyLS.LS_WATHED_EN_DATA_KEY;
+    altLang = Movie.language.ENGLISH;
+  } else {
+    dataCurrentKey = keyLS.LS_WATHED_EN_DATA_KEY;
+    dataAltKey = keyLS.LS_WATHED_UA_DATA_KEY;
+    altLang = Movie.language.UKRAINIAN;
+  }
+
+  watchedArrCurrentLang =
+    JSON.parse(localStorage.getItem(dataCurrentKey)) || [];
+  watchedArrAltLang = JSON.parse(localStorage.getItem(dataAltKey)) || [];
   const watchedArrId = [];
 
-  watchedArr.map(mov => {
+  watchedArrCurrentLang.map(mov => {
     return watchedArrId.push(mov.id);
   });
 
   if (watchedArrId.includes(ID)) {
     return;
   }
-  watchedArr.push(movieToAdd);
-  localStorage.setItem(LS_WATHED_DATA_KEY, JSON.stringify(watchedArr));
-  console.log('watched:  ' + watchedArrId);
-};
+  watchedArrCurrentLang.push(filtrCurrentData(movieToAdd));
+  localStorage.setItem(dataCurrentKey, JSON.stringify(watchedArrCurrentLang));
 
-const addToQueue = () => {
-  queueArr = JSON.parse(localStorage.getItem(LS_QUEUE_DATA_KEY)) || [];
+  const altLangData = await fetchAltLangByID(ID, altLang);
+  watchedArrAltLang.push(altLangData);
+  localStorage.setItem(dataAltKey, JSON.stringify(watchedArrAltLang));
+}
+
+async function addToQueue() {
+  const currentLanguage = getLanguageFromLS();
+  let dataCurrentKey = keyLS.LS_QUEUE_EN_DATA_KEY;
+  let dataAltKey = keyLS.LS_QUEUE_UA_DATA_KEY;
+  let altLang = Movie.language.UKRAINIAN;
+
+  if (currentLanguage === Movie.language.UKRAINIAN) {
+    dataCurrentKey = keyLS.LS_QUEUE_UA_DATA_KEY;
+    dataAltKey = keyLS.LS_QUEUE_EN_DATA_KEY;
+    altLang = Movie.language.ENGLISH;
+  } else {
+    dataCurrentKey = keyLS.LS_QUEUE_EN_DATA_KEY;
+    dataAltKey = keyLS.LS_QUEUE_UA_DATA_KEY;
+    altLang = Movie.language.UKRAINIAN;
+  }
+
+  queueArrCurrentLang = JSON.parse(localStorage.getItem(dataCurrentKey)) || [];
+  queueArrAltLang = JSON.parse(localStorage.getItem(dataAltKey)) || [];
   const queueArrId = [];
-  queueArr.map(mov => {
+  queueArrCurrentLang.map(mov => {
     return queueArrId.push(mov.id);
   });
 
   if (queueArrId.includes(ID)) {
-    console.log('есть уже');
     return;
   }
-  queueArr.push(movieToAdd);
-  localStorage.setItem(LS_QUEUE_DATA_KEY, JSON.stringify(queueArr));
+  queueArrCurrentLang.push(filtrCurrentData(movieToAdd));
+  localStorage.setItem(dataCurrentKey, JSON.stringify(queueArrCurrentLang));
   console.log('queue:  ' + queueArrId);
-};
+
+  const altLangData = await fetchAltLangByID(ID, altLang);
+  queueArrAltLang.push(altLangData);
+  localStorage.setItem(dataAltKey, JSON.stringify(queueArrAltLang));
+}
+
+async function fetchAltLangByID(movieID, language) {
+  try {
+    const movieByID = new Movie();
+    movieByID.langCurrent = language;
+    const data = await movieByID.fetchById(movieID);
+    return filtrAltData(data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function filtrCurrentData({
+  id,
+  poster_path,
+  title,
+  original_title,
+  genre_ids,
+  overview,
+  vote_count,
+  vote_average,
+  popularity,
+  release_date,
+}) {
+  return {
+    id,
+    poster_path,
+    title,
+    original_title,
+    genre_ids,
+    overview,
+    vote_count,
+    vote_average,
+    popularity,
+    release_date,
+  };
+}
+
+function filtrAltData({
+  id,
+  poster_path,
+  title,
+  original_title,
+  genres,
+  overview,
+  vote_count,
+  vote_average,
+  popularity,
+  release_date,
+}) {
+  const genre_ids = [];
+  genres.map(item => {
+    genre_ids.push(item.id);
+  });
+  return {
+    id,
+    poster_path,
+    title,
+    original_title,
+    genre_ids,
+    overview,
+    vote_count,
+    vote_average,
+    popularity,
+    release_date,
+  };
+}
+
+// const addToWatched = () => {
+//   watchedArr = JSON.parse(localStorage.getItem(LS_WATHED_DATA_KEY)) || [];
+//   const watchedArrId = [];
+
+//   watchedArr.map(mov => {
+//     return watchedArrId.push(mov.id);
+//   });
+
+//   if (watchedArrId.includes(ID)) {
+//     return;
+//   }
+//   watchedArr.push(movieToAdd);
+//   localStorage.setItem(LS_WATHED_DATA_KEY, JSON.stringify(watchedArr));
+//   console.log('watched:  ' + watchedArrId);
+// };
+
+// const addToQueue = () => {
+//   queueArr = JSON.parse(localStorage.getItem(LS_QUEUE_DATA_KEY)) || [];
+//   const queueArrId = [];
+//   queueArr.map(mov => {
+//     return queueArrId.push(mov.id);
+//   });
+
+//   if (queueArrId.includes(ID)) {
+//     console.log('есть уже');
+//     return;
+//   }
+//   queueArr.push(movieToAdd);
+//   localStorage.setItem(LS_QUEUE_DATA_KEY, JSON.stringify(queueArr));
+//   console.log('queue:  ' + queueArrId);
+// };
