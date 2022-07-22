@@ -41,6 +41,11 @@
 
 .logout-modal__text {
     margin-top: 20px;
+    color: $black-color;
+
+    body.dark__theme & {
+        color: $white-color;
+    }
 }
 
 .login__title {
