@@ -15,7 +15,7 @@ import {
 } from './languageSwitch';
 // import { genreFind } from './workWithGenres';
 import { makeMarkupCard } from './cardMarkup';
-import { modal } from './modal';
+import { modal, btnNameKey } from './modal';
 // import Loader from './loader';
 
 modal.addEventListener('click', refreshLibraryOnClickBtnModal);
@@ -394,12 +394,12 @@ function handledChangeDeskTop(e) {
 
 function refreshLibraryOnClickBtnModal(evt) {
   const currentPage = getCurrentPageFromLS();
-  if (evt.target.name === 'watched') {
+  if (evt.target.name === btnNameKey.WATCHED) {
     if (currentPage === keyLS.VALUE_PAGE_LIBRARY_W) {
       onClickWatchedBtnMarkupFilms();
     }
   }
-  if (evt.target.name === 'queue') {
+  if (evt.target.name === btnNameKey.QUEUE) {
     if (currentPage === keyLS.VALUE_PAGE_LIBRARY_Q) {
       onClickQueueBtnMarkupFilms();
     }
