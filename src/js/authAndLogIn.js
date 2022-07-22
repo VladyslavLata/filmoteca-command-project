@@ -2,22 +2,28 @@ import { initializeApp } from 'firebase/app';
 import {
   AuthErrorCodes,
   getAuth,
-  //   connectAuthEmulator,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
 } from 'firebase/auth';
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  addDoc,
+  collection,
+} from 'firebase/firestore';
 
 const refs = {
-  //   signupForm: document.querySelector('.sign-up__form'),
+  emptyLibText: document.querySelector('.not-logged-gallery'),
+  libContainer: document.querySelector('.container-library'),
+  libGallery: document.querySelector('.gallery-library'),
   loginForm: document.querySelector('.login__form'),
   loginUsername: document.querySelector('#login-username'),
-  //   name: document.querySelector('#nameInp'),
   loginEmail: document.querySelector('#login-email'),
-  signupEmail: document.querySelector('#signup-email'),
-  //   username: document.querySelector('#userInp'),
   loginPassword: document.querySelector('#login-password'),
+  signupEmail: document.querySelector('#signup-email'),
   signupPassword: document.querySelector('#signup-password'),
   loginBtn: document.querySelector('#login__button'),
   loginHeaderBtn: document.querySelector('.login__button'),
@@ -32,7 +38,6 @@ export const LS_LOGIN_KEY = 'keep_logged_as';
 
 sessionStorage.removeItem(LS_LOGIN_KEY);
 
-// console.log(refs.checkbox.checked);
 checkIfLogged();
 
 const firebaseConfig = {
@@ -47,7 +52,31 @@ const firebaseConfig = {
 
 const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
-// connectAuthEmulator(auth, 'http://localhost:9099');
+
+// ------------------------------------------------------------------------------------------------
+const firestore = getFirestore(firebaseApp);
+
+const watchedCollection = doc(firestore, 'watched/collection');
+
+async function writeTestCollectionFunction() {
+  const docData = {
+    array: ['1', '2'],
+  };
+  setDoc(watchedCollection, docData);
+  // try {
+  //   const docRef = await addDoc(collection(firestore, 'users'), {
+  //     first: 'Ada',
+  //     last: 'Lovelace',
+  //     born: 1815,
+  //   });
+  //   console.log('Document written with ID: ', docRef.id);
+  // } catch (e) {
+  //   console.error('Error adding document: ', e);
+  // }
+}
+
+writeTestCollectionFunction();
+// -------------------------------------------------------------------------------------------------
 
 const loginEmailPassword = async () => {
   const loginEmail = refs.loginEmail.value;
@@ -72,6 +101,7 @@ const loginEmailPassword = async () => {
       refs.usernick.textContent = `${username}`;
       console.log(username);
       monitorAuthState();
+      resetLogin();
     }
   } catch (error) {
     showLoginError(error);
@@ -88,7 +118,7 @@ function showLoginError(error) {
 
 refs.loginBtn.addEventListener('click', loginEmailPassword);
 
-const createAccount = async () => {
+const createAccount = async e => {
   const signupEmail = refs.signupEmail.value;
   const signupPassword = refs.signupPassword.value;
   try {
@@ -98,6 +128,7 @@ const createAccount = async () => {
       signupPassword
     );
     alert('You are signed up now');
+    resetSignup();
   } catch (error) {
     showLoginError(error);
   }
@@ -109,38 +140,29 @@ async function monitorAuthState() {
   onAuthStateChanged(auth, user => {
     const username = localStorage.getItem(LS_LOGIN_KEY);
     const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
-    // if (user) {
-    //   refs.logoutText.innerHTML = `You are logged in as ${username}`;
-    // }
-    // if (!user) {
-    //   refs.loginForm.classList.remove('logout-modal--hidden');
-    //   refs.logoutModal.classList.add('logout-modal--hidden');
-    // }
+    if (refs.libGallery) {
+      refs.emptyLibText.style.display = 'none';
+      refs.libGallery.style.display = 'flex';
+    }
     if (username) {
       refs.loginForm.classList.add('logout-modal--hidden');
       refs.logoutModal.classList.remove('logout-modal--hidden');
-      // loginHeaderBtn.innerText = 'Log Out';
-
       refs.logoutText.innerHTML = `You are logged in as ${username}`;
     }
     if (usernameSS) {
       refs.loginForm.classList.add('logout-modal--hidden');
       refs.logoutModal.classList.remove('logout-modal--hidden');
-      // loginHeaderBtn.textContent = 'Log Out';
       refs.logoutText.innerHTML = `You are logged in as ${usernameSS}`;
     }
-    // if (user && !username) {
-    //   refs.loginForm.classList.add('logout-modal--hidden');
-    //   refs.logoutModal.classList.remove('logout-modal--hidden');
-    //   refs.logoutText.innerHTML = `You are logged in as ${user.displayName}`;
-    // }
   });
 }
 
-// monitorAuthState();
-
 const logout = async () => {
   await signOut(auth);
+  if (refs.libGallery) {
+    refs.emptyLibText.style.display = 'flex';
+    refs.libGallery.style.display = 'none';
+  }
   localStorage.removeItem(LS_LOGIN_KEY);
   refs.loginHeaderBtn.textContent = 'Log In';
   refs.usernick.textContent = ``;
@@ -155,15 +177,35 @@ function checkIfLogged() {
   const username = localStorage.getItem(LS_LOGIN_KEY);
   const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
   if (username || usernameSS) {
+    if (refs.libGallery) {
+      refs.emptyLibText.style.display = 'none';
+      refs.libGallery.style.display = 'flex';
+    }
     refs.loginForm.classList.add('logout-modal--hidden');
     refs.logoutModal.classList.remove('logout-modal--hidden');
     refs.loginHeaderBtn.textContent = 'Log Out';
     refs.usernick.textContent = `${username}`;
     refs.logoutText.innerHTML = `You are logged in as ${username}`;
   } else {
+    if (refs.libGallery) {
+      refs.emptyLibText.style.display = 'flex';
+      refs.libGallery.style.display = 'none';
+    }
     refs.loginForm.classList.remove('logout-modal--hidden');
     refs.logoutModal.classList.add('logout-modal--hidden');
     refs.loginHeaderBtn.textContent = 'Log In';
     refs.usernick.textContent = ``;
   }
+}
+
+function resetLogin() {
+  refs.loginUsername.value = '';
+  refs.loginEmail.value = '';
+  refs.loginPassword.value = '';
+  refs.checkbox.checked = false;
+}
+
+function resetSignup() {
+  refs.signupPassword.value = '';
+  refs.signupEmail.value = '';
 }
