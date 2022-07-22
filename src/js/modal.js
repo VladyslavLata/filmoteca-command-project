@@ -2,7 +2,7 @@ import { Movie } from './fetchMovie';
 import { genreFind } from './workWithGenres';
 import { getCurrenDataFromLS, getDataFromLibraryLS } from './currentPageData';
 import { LS_LOGIN_KEY } from './authAndLogIn';
-// import { noYearVariableLang } from './languageSwitch';
+import { writeTestCollectionFunction } from './firestore';
 import {
   keyLS,
   getLanguageFromLS,
@@ -21,6 +21,16 @@ const btnText = {
   QUEUE_ADD_UA: 'додати до черги',
 };
 
+const dataActionKey = {
+  DEL: 'del',
+  ADD: 'add',
+};
+
+export const btnNameKey = {
+  WATCHED: 'watched',
+  QUEUE: 'queue',
+};
+
 const body = document.querySelector('body');
 
 // console.log('~ username', username);
@@ -36,8 +46,8 @@ let movieToAdd = {};
 let movies = '';
 let watchedBtn = '';
 let queueBtn = '';
-let watchedDataAttr = 'add';
-let queueDataAttr = 'add';
+let watchedDataAttr = dataActionKey.ADD;
+let queueDataAttr = dataActionKey.ADD;
 
 gallery.addEventListener('click', onImageClick);
 modalBtn.addEventListener('click', onCloseClick);
@@ -144,8 +154,12 @@ function modalMarkup({
                   <p class="modal-info__article-title">About</p>
                   <p class="modal-info__article">${overview}</p>
                   <div class="container-btn">
-            <button type="button" class="btn" name="watched" data-action="${watchedDataAttr}">${watchedBtn}</button>
-            <button type="button" class="btn" name="queue" data-action="${queueDataAttr}">${queueBtn}</button>
+            <button type="button" class="btn" name="${
+              btnNameKey.WATCHED
+            }" data-action="${watchedDataAttr}">${watchedBtn}</button>
+            <button type="button" class="btn" name="${
+              btnNameKey.QUEUE
+            }" data-action="${queueDataAttr}">${queueBtn}</button>
         </div>`;
   return (modal.innerHTML = makeMarkupModal);
 }
@@ -159,20 +173,23 @@ async function onBtnClick(evt) {
   const username = await localStorage.getItem(LS_LOGIN_KEY);
   const usernameSS = await sessionStorage.getItem(LS_LOGIN_KEY);
 
-  if (evt.target.name === 'watched') {
+  if (evt.target.name === btnNameKey.WATCHED) {
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
+      // addToWatched(evt);
       addToWatched(evt);
-      evt.target.setAttribute("data-action", "del");
+      evt.target.setAttribute('data-action', 'del');
+      writeTestCollectionFunction();
     } else {
       alert(
         'If you want to add movie to "Watched" then you have to log in first.'
       );
     }
   }
-  if (evt.target.name === 'queue') {
+  if (evt.target.name === btnNameKey.QUEUE) {
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
       addToQueue(evt);
-      evt.target.setAttribute("data-action", "del");
+      evt.target.setAttribute('data-action', 'del');
+      writeTestCollectionFunction();
     } else {
       alert(
         'If you want to add movie to "Queue" then you have to log in first.'
@@ -189,13 +206,13 @@ function buttonTextContent(currentID) {
     JSON.parse(localStorage.getItem(keyLS.LS_QUEUE_EN_DATA_KEY)) || [];
 
   if (watchedArr.some(value => value.id === currentID)) {
-    watchedDataAttr = 'del';
+    watchedDataAttr = dataActionKey.DEL;
     watchedBtn =
       currentLanguage === Movie.language.UKRAINIAN
         ? btnText.WATCHED_DEL_UA
         : btnText.WATCHED_DEL_EN;
   } else {
-    watchedDataAttr = 'add';
+    watchedDataAttr = dataActionKey.ADD;
     watchedBtn =
       currentLanguage === Movie.language.UKRAINIAN
         ? btnText.WATCHED_ADD_UA
@@ -203,13 +220,13 @@ function buttonTextContent(currentID) {
   }
 
   if (queueArr.some(value => value.id === currentID)) {
-    queueDataAttr = 'del';
+    queueDataAttr = dataActionKey.DEL;
     queueBtn =
       currentLanguage === Movie.language.UKRAINIAN
         ? btnText.QUEUE_DEL_UA
         : btnText.QUEUE_DEL_EN;
   } else {
-    queueDataAttr = 'add';
+    queueDataAttr = dataActionKey.ADD;
     queueBtn =
       currentLanguage === Movie.language.UKRAINIAN
         ? btnText.QUEUE_ADD_UA
@@ -262,6 +279,7 @@ async function addToWatched(evt) {
       currentLanguage === Movie.language.UKRAINIAN
         ? btnText.WATCHED_ADD_UA
         : btnText.WATCHED_ADD_EN;
+    evt.target.dataset.action = dataActionKey.ADD;
     const filteredWatchedArr = watchedArrCurrentLang.filter(
       value => value.id !== ID
     );
@@ -284,6 +302,7 @@ async function addToWatched(evt) {
     currentLanguage === Movie.language.UKRAINIAN
       ? btnText.WATCHED_DEL_UA
       : btnText.WATCHED_DEL_EN;
+  evt.target.dataset.action = dataActionKey.DEL;
 }
 
 /////////// ADD TO QUEUE
@@ -314,6 +333,7 @@ async function addToQueue(evt) {
       currentLanguage === Movie.language.UKRAINIAN
         ? btnText.QUEUE_ADD_UA
         : btnText.QUEUE_ADD_EN;
+    evt.target.dataset.action = dataActionKey.ADD;
     const filteredQueueArr = queueArrCurrentLang.filter(
       value => value.id !== ID
     );
@@ -336,6 +356,7 @@ async function addToQueue(evt) {
     currentLanguage === Movie.language.UKRAINIAN
       ? btnText.QUEUE_DEL_UA
       : btnText.QUEUE_DEL_EN;
+  evt.target.dataset.action = dataActionKey.DEL;
 }
 
 async function fetchAltLangByID(movieID, language) {
