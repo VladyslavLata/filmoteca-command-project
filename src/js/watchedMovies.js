@@ -21,6 +21,13 @@ import { modal } from './modal';
 modal.addEventListener('click', refreshLibraryOnClickBtnModal);
 // const loader = new Loader();
 // console.log(loader.refs.preloader);
+// =======
+// import Loader from './loader';
+
+// const loader = new Loader();
+
+// loader.enable('preloader');
+// >>>>>>> bfecc52972b9ce995683c2b6c793f851334dce1a
 
 // const filmLocal = [
 //   {
@@ -180,6 +187,7 @@ queueMovieBtnEl.addEventListener('click', onClickQueueBtnMarkupFilms);
 // btnUAEl.addEventListener('click', onClickUABtnMarkupFilms);
 
 // currentLangLibrary = getLanguageFromLS();
+
 libraryStart();
 getCurrentLSWatchedFilms();
 
@@ -199,6 +207,7 @@ function libraryStart() {
 }
 
 export function onClickENBtnMarkupFilms() {
+  loader.enable('loader');
   currentLSWatchedFilms =
     currentLSWatchedFilms === keyLS.LS_WATHED_EN_DATA_KEY ||
     currentLSWatchedFilms === keyLS.LS_WATHED_UA_DATA_KEY
@@ -208,6 +217,7 @@ export function onClickENBtnMarkupFilms() {
 }
 
 export function onClickUABtnMarkupFilms() {
+  loader.enable('loader');
   currentLSWatchedFilms =
     currentLSWatchedFilms === keyLS.LS_WATHED_EN_DATA_KEY ||
     currentLSWatchedFilms === keyLS.LS_WATHED_UA_DATA_KEY
@@ -233,6 +243,7 @@ export function onClickUABtnMarkupFilms() {
 // }
 
 function onClickWatchedBtnMarkupFilms() {
+  loader.enable('loader');
   currentLangLibrary = getLanguageFromLS();
   getCurrentLSWatchedFilms();
   clearGallery();
@@ -243,6 +254,7 @@ function onClickWatchedBtnMarkupFilms() {
 }
 
 function onClickQueueBtnMarkupFilms() {
+  loader.enable('loader');
   currentLangLibrary = getLanguageFromLS();
   getCurrentLSQueueFilms();
   clearGallery();
