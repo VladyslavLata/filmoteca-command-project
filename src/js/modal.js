@@ -162,6 +162,7 @@ async function onBtnClick(evt) {
   if (evt.target.name === 'watched') {
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
       addToWatched(evt);
+      evt.target.setAttribute("data-action", "del");
     } else {
       alert(
         'If you want to add movie to "Watched" then you have to log in first.'
@@ -171,6 +172,7 @@ async function onBtnClick(evt) {
   if (evt.target.name === 'queue') {
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
       addToQueue(evt);
+      evt.target.setAttribute("data-action", "del");
     } else {
       alert(
         'If you want to add movie to "Queue" then you have to log in first.'
