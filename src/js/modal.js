@@ -11,9 +11,9 @@ import {
 // import { unlockEl } from './interfaceWork';
 
 const btnText = {
-  WATCHED_DEL_EN: 'delete from watched',
+  WATCHED_DEL_EN: 'remove from watched',
   WATCHED_ADD_EN: 'add to watched',
-  QUEUE_DEL_EN: 'delete from queue',
+  QUEUE_DEL_EN: 'remove from queue',
   QUEUE_ADD_EN: 'add to queue',
   WATCHED_DEL_UA: 'видалити з переглянутого',
   WATCHED_ADD_UA: 'додати до переглянутого',
