@@ -1,7 +1,6 @@
 import { Movie } from './fetchMovie';
 import { keyLS, getLanguageFromLS } from './languageSwitch';
 
-
 export async function genreLoad(classInstance) {
   try {
     const genre = localStorage.getItem(keyLS.LS_GENRE_KEY_EN);
@@ -47,8 +46,8 @@ export function genreFind(genreList = []) {
       genreOther = 'Інші';
       break;
   }
-  console.log(langGenre);
-  console.log(genreLS);
+  // console.log(langGenre);
+  // console.log(genreLS);
   if (!genreLS || genreList.length === 0) {
     return noGenre;
   }
