@@ -252,9 +252,6 @@ body.modal-open {
       border 250ms $typical-cubic;
 
   &:first-child {
-    // color: $white-color;
-    // background-color: $orange-color;
-    // border: 1px solid $orange-color;
     margin-right: 20px;
   }
   @media screen and (min-width: 768px) {
@@ -269,8 +266,20 @@ body.modal-open {
     height: 44px;
   }
 }
-.btn:hover,
-.btn:focus {
+
+  @include mq(tablet) {
+    .btn:hover, 
+    .btn:focus {
+      transform: scale(1.1);
+    }
+  }
+
+.btn[data-action="add"] {
+  color: $black-color;
+  border: 1px solid $black-color;
+}
+
+.btn[data-action="del"] {
   color: $white-color;
   background-color: $orange-color;
   border: 1px solid $orange-color;
