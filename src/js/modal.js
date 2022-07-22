@@ -203,7 +203,7 @@ async function onBtnClick(evt) {
   if (evt.target.name === btnNameKey.WATCHED) {
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
       // addToWatched(evt);
-      addToWatched(evt);
+      await addToWatched(evt);
       evt.target.setAttribute('data-action', 'del');
       writeTestCollectionFunction();
     } else {
@@ -214,7 +214,7 @@ async function onBtnClick(evt) {
   }
   if (evt.target.name === btnNameKey.QUEUE) {
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
-      addToQueue(evt);
+      await addToQueue(evt);
       evt.target.setAttribute('data-action', 'del');
       writeTestCollectionFunction();
     } else {
