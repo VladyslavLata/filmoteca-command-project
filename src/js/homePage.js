@@ -7,8 +7,10 @@ import {
 } from './languageSwitch';
 import { keyword } from './moviesKeyword';
 import { switchBtnTrendTime } from './trendTime';
+import renderPagination from './renderPagination.js';
 
 export let trendMovie;
+
 
 if (keyword === null) {
   startPageVisit();
