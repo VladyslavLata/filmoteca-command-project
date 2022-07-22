@@ -15,19 +15,11 @@ import {
 } from './languageSwitch';
 // import { genreFind } from './workWithGenres';
 import { makeMarkupCard } from './cardMarkup';
-import { modal } from './modal';
-// import Loader from './loader';
+import Loader from './loader';
 
-modal.addEventListener('click', refreshLibraryOnClickBtnModal);
-// const loader = new Loader();
-// console.log(loader.refs.preloader);
-// =======
-// import Loader from './loader';
+const loader = new Loader();
 
-// const loader = new Loader();
-
-// loader.enable('preloader');
-// >>>>>>> bfecc52972b9ce995683c2b6c793f851334dce1a
+loader.enable('preloader');
 
 // const filmLocal = [
 //   {
