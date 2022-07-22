@@ -3,7 +3,9 @@ import { trendMovie } from './homePage';
 import { resetKeyword } from './moviesKeyword';
 import { fetchTrendAndMarkup } from './fetchAndMarkup';
 import { disabledEl, unlockEl } from './interfaceWork';
+import Loader from './loader';
 
+const loader = new Loader();
 const refs = {
   btnSwitchDay: document.querySelector('.time-switch-day'),
   btnSwitchWeek: document.querySelector('.time-switch-week'),
@@ -13,6 +15,7 @@ refs.btnSwitchDay.addEventListener('click', onClickDay);
 refs.btnSwitchWeek.addEventListener('click', onClickWeek);
 
 function onClickDay() {
+  loader.enable('loader');
   trendMovie.page = 1;
   trendMovie.currentTrendTime = Movie.trendTime.DAY;
   fetchTrendAndMarkup(trendMovie);
@@ -21,6 +24,7 @@ function onClickDay() {
 }
 
 function onClickWeek() {
+  loader.enable('loader');
   trendMovie.page = 1;
   trendMovie.currentTrendTime = Movie.trendTime.WEEK;
   fetchTrendAndMarkup(trendMovie);

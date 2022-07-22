@@ -30,6 +30,7 @@ function pagination(targetFetch) {
   };
    numb.forEach(el => {
      el.addEventListener('click', (e) => {
+       loader.enable('loader');
        const selectedPage = e.target.textContent;
        targetFetch.page = selectedPage;
        onFetchAndMarkup(targetFetch);
@@ -52,6 +53,7 @@ function pagination(targetFetch) {
   }
 }
 pagination(trendMovie)
+loader.disable('loader');
 
 
 
@@ -129,9 +131,9 @@ function createPaginMarkup(perPages, page) {
 
 
 function onClickPrevious() {
-  loader.disable();
-  if (keyword === null ? trendMovie.page === 1 : keywordMovies.page === 1) {
-    loader.enable();
+  loader.enable('loader');
+  if (keyword === null ? trendMovie.page === 1 : keywordMovies.page === 1)
+  {
     return;
   }
   setPagePrevious();
@@ -140,7 +142,7 @@ function onClickPrevious() {
 }
 
 function onClickNext() {
-  loader.disable();
+  loader.enable('loader');
   if (
     keyword === null
       ? trendMovie.page === trendMovie.lastPage
