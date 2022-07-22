@@ -21,7 +21,7 @@ if (keyword === null) {
   startPageVisit();
 }
 
-function startPageVisit() {  
+function startPageVisit() {
   trendMovie = new Movie();
   const language = getLanguageFromLS();
   if (!language) {

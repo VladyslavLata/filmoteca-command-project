@@ -22,6 +22,7 @@ export class Movie {
   #query;
   #langCurrent;
   #currentTrendTime;
+  
 
   constructor(query) {
     this.#query = query;
@@ -31,7 +32,7 @@ export class Movie {
     this.#currentTrendTime = Movie.trendTime.DAY;
     axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
   }
-
+ 
   get page() {
     return this.#page;
   }
