@@ -8,7 +8,18 @@ import {
   getLanguageFromLS,
   getCurrentPageFromLS,
 } from './languageSwitch';
-import { unlockEl } from './interfaceWork';
+// import { unlockEl } from './interfaceWork';
+
+const btnText = {
+  WATCHED_DEL_EN: 'delete from watched',
+  WATCHED_ADD_EN: 'add to watched',
+  QUEUE_DEL_EN: 'delete from queue',
+  QUEUE_ADD_EN: 'add to queue',
+  WATCHED_DEL_UA: 'видалити з переглянутого',
+  WATCHED_ADD_UA: 'додати до переглянутого',
+  QUEUE_DEL_UA: 'видалити з черги',
+  QUEUE_ADD_UA: 'додати до черги',
+};
 
 const body = document.querySelector('body');
 
@@ -17,14 +28,16 @@ const body = document.querySelector('body');
 const gallery = document.querySelector('.gallery');
 const backdrop = document.querySelector('.backdrop');
 const modalBtn = document.querySelector('.modal__button');
-const modal = document.querySelector('.modal-info__container');
-const modalWindow = document.querySelector('.modal');
+export const modal = document.querySelector('.modal-info__container');
+// const modalWindow = document.querySelector('.modal');
 
 let ID = 0;
 let movieToAdd = {};
 let movies = '';
-let watchedBtn;
-let queueBtn;
+let watchedBtn = '';
+let queueBtn = '';
+let watchedDataAttr = 'add';
+let queueDataAttr = 'add';
 
 gallery.addEventListener('click', onImageClick);
 modalBtn.addEventListener('click', onCloseClick);
@@ -48,8 +61,9 @@ function onImageClick(e) {
     if (movie.id !== ID) {
       return;
     }
+    buttonTextContent(ID);
     modalMarkup(movie);
-    buttonTextContent();
+
     movieToAdd = movie;
   });
 
@@ -74,8 +88,8 @@ function onCloseClick(e) {
 }
 
 function onEscKeyPress(e) {
-  console.log(e);
-  console.log(e.code);
+  // console.log(e);
+  // console.log(e.code);
   if (e.code === 'Escape') {
     onCloseClick();
   }
@@ -130,8 +144,8 @@ function modalMarkup({
                   <p class="modal-info__article-title">About</p>
                   <p class="modal-info__article">${overview}</p>
                   <div class="container-btn">
-            <button type="button" class="btn" name="watched">add to watched</button>
-            <button type="button" class="btn" name="queue">add to queue</button>
+            <button type="button" class="btn" name="watched" data-action="${watchedDataAttr}">${watchedBtn}</button>
+            <button type="button" class="btn" name="queue" data-action="${queueDataAttr}">${queueBtn}</button>
         </div>`;
   return (modal.innerHTML = makeMarkupModal);
 }
@@ -147,7 +161,7 @@ async function onBtnClick(evt) {
 
   if (evt.target.name === 'watched') {
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
-      addToWatched();
+      addToWatched(evt);
     } else {
       alert(
         'If you want to add movie to "Watched" then you have to log in first.'
@@ -156,7 +170,7 @@ async function onBtnClick(evt) {
   }
   if (evt.target.name === 'queue') {
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
-      addToQueue();
+      addToQueue(evt);
     } else {
       alert(
         'If you want to add movie to "Queue" then you have to log in first.'
@@ -164,25 +178,62 @@ async function onBtnClick(evt) {
     }
   }
 }
-function buttonTextContent() {
-  const modalButtons = document.querySelector('.container-btn');
-  watchedBtn = modalButtons.children[0];
-  queueBtn = modalButtons.children[1];
-  if (watchedArrCurrentLang.some(value => value.id === ID)) {
-    watchedBtn.textContent = 'delete from watched';
-    return;
+
+function buttonTextContent(currentID) {
+  const currentLanguage = getLanguageFromLS();
+  const watchedArr =
+    JSON.parse(localStorage.getItem(keyLS.LS_WATHED_EN_DATA_KEY)) || [];
+  const queueArr =
+    JSON.parse(localStorage.getItem(keyLS.LS_QUEUE_EN_DATA_KEY)) || [];
+
+  if (watchedArr.some(value => value.id === currentID)) {
+    watchedDataAttr = 'del';
+    watchedBtn =
+      currentLanguage === Movie.language.UKRAINIAN
+        ? btnText.WATCHED_DEL_UA
+        : btnText.WATCHED_DEL_EN;
   } else {
-    watchedBtn.textContent = 'add to watched';
+    watchedDataAttr = 'add';
+    watchedBtn =
+      currentLanguage === Movie.language.UKRAINIAN
+        ? btnText.WATCHED_ADD_UA
+        : btnText.WATCHED_ADD_EN;
   }
-  if (queueArrCurrentLang.some(value => value.id === ID)) {
-    queueBtn.textContent = 'delete from queue';
-    return;
+
+  if (queueArr.some(value => value.id === currentID)) {
+    queueDataAttr = 'del';
+    queueBtn =
+      currentLanguage === Movie.language.UKRAINIAN
+        ? btnText.QUEUE_DEL_UA
+        : btnText.QUEUE_DEL_EN;
   } else {
-    queueBtn.textContent = 'add to queue';
+    queueDataAttr = 'add';
+    queueBtn =
+      currentLanguage === Movie.language.UKRAINIAN
+        ? btnText.QUEUE_ADD_UA
+        : btnText.QUEUE_ADD_EN;
   }
 }
+
+// function buttonTextContent() {
+//   const modalButtons = document.querySelector('.container-btn');
+//   watchedBtn = modalButtons.children[0];
+//   queueBtn = modalButtons.children[1];
+//   if (watchedArrCurrentLang.some(value => value.id === ID)) {
+//     watchedBtn.textContent = 'delete from watched';
+//     return;
+//   } else {
+//     watchedBtn.textContent = 'add to watched';
+//   }
+//   if (queueArrCurrentLang.some(value => value.id === ID)) {
+//     queueBtn.textContent = 'delete from queue';
+//     return;
+//   } else {
+//     queueBtn.textContent = 'add to queue';
+//   }
+// }
 ////// ADD TO WATCHED   ///////
-async function addToWatched() {
+async function addToWatched(evt) {
   const currentLanguage = getLanguageFromLS();
   let dataCurrentKey = keyLS.LS_WATHED_EN_DATA_KEY;
   let dataAltKey = keyLS.LS_WATHED_UA_DATA_KEY;
@@ -201,10 +252,14 @@ async function addToWatched() {
   watchedArrCurrentLang =
     JSON.parse(localStorage.getItem(dataCurrentKey)) || [];
   watchedArrAltLang = JSON.parse(localStorage.getItem(dataAltKey)) || [];
-
+  // del
   if (watchedArrCurrentLang.some(value => value.id === ID)) {
-    console.log('этот фильм уже есть, удаляем');
-    watchedBtn.textContent = 'add to watched';
+    // console.log('этот фильм уже есть, удаляем');
+    // watchedBtn.textContent = 'add to watched';
+    evt.target.textContent =
+      currentLanguage === Movie.language.UKRAINIAN
+        ? btnText.WATCHED_ADD_UA
+        : btnText.WATCHED_ADD_EN;
     const filteredWatchedArr = watchedArrCurrentLang.filter(
       value => value.id !== ID
     );
@@ -215,19 +270,23 @@ async function addToWatched() {
     localStorage.setItem(dataAltKey, JSON.stringify(filteredWatchedArrAlt));
     return;
   }
-
+  // add
   watchedArrCurrentLang.push(filtrCurrentData(movieToAdd));
   localStorage.setItem(dataCurrentKey, JSON.stringify(watchedArrCurrentLang));
-  console.log('watched:');
+  // console.log('watched:');
   const altLangData = await fetchAltLangByID(ID, altLang);
   watchedArrAltLang.push(altLangData);
   localStorage.setItem(dataAltKey, JSON.stringify(watchedArrAltLang));
-  watchedBtn.textContent = 'delete from watched';
+  // watchedBtn.textContent = 'delete from watched';
+  evt.target.textContent =
+    currentLanguage === Movie.language.UKRAINIAN
+      ? btnText.WATCHED_DEL_UA
+      : btnText.WATCHED_DEL_EN;
 }
 
 /////////// ADD TO QUEUE
 
-async function addToQueue() {
+async function addToQueue(evt) {
   const currentLanguage = getLanguageFromLS();
   let dataCurrentKey = keyLS.LS_QUEUE_EN_DATA_KEY;
   let dataAltKey = keyLS.LS_QUEUE_UA_DATA_KEY;
@@ -245,10 +304,14 @@ async function addToQueue() {
 
   queueArrCurrentLang = JSON.parse(localStorage.getItem(dataCurrentKey)) || [];
   queueArrAltLang = JSON.parse(localStorage.getItem(dataAltKey)) || [];
-
+  // del
   if (queueArrCurrentLang.some(value => value.id === ID)) {
-    console.log('этот фильм уже есть, удаляем');
-    queueBtn.innerHTML = 'add to queue';
+    // console.log('этот фильм уже есть, удаляем');
+    // queueBtn.innerHTML = 'add to queue';
+    evt.target.textContent =
+      currentLanguage === Movie.language.UKRAINIAN
+        ? btnText.QUEUE_ADD_UA
+        : btnText.QUEUE_ADD_EN;
     const filteredQueueArr = queueArrCurrentLang.filter(
       value => value.id !== ID
     );
@@ -259,14 +322,18 @@ async function addToQueue() {
     localStorage.setItem(dataAltKey, JSON.stringify(filteredQueueArrAlt));
     return;
   }
-
+  // add
   queueArrCurrentLang.push(filtrCurrentData(movieToAdd));
   localStorage.setItem(dataCurrentKey, JSON.stringify(queueArrCurrentLang));
-  console.log('queue:');
+  // console.log('queue:');
   const altLangData = await fetchAltLangByID(ID, altLang);
   queueArrAltLang.push(altLangData);
   localStorage.setItem(dataAltKey, JSON.stringify(queueArrAltLang));
-  queueBtn.innerHTML = 'delete from queue';
+  // queueBtn.innerHTML = 'delete from queue';
+  evt.target.textContent =
+    currentLanguage === Movie.language.UKRAINIAN
+      ? btnText.QUEUE_DEL_UA
+      : btnText.QUEUE_DEL_EN;
 }
 
 async function fetchAltLangByID(movieID, language) {
