@@ -340,9 +340,17 @@
 }
 
 .loader-lib-container {
-  position: relative;
-  margin-right: 400px;
-  margin-left: 400px;
+  position: absolute;
+  top: 90px;
+  left: 50%;
+  width: 280px;
+  height: 1px;
+  transform: translateX(-50%);
+
+  @include mq(tablet) {
+   top: 80px;
+   width: 400px;
+    }
 }
 
 .filter-list {
