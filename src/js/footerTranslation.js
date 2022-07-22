@@ -1,26 +1,32 @@
 import { getLanguageFromLS } from './languageSwitch';
 
+const refs = {
+    textUpFirst: document.querySelector('.js-footer-text__up--first'),
+    textUpSecond: document.querySelector('.js-footer-text__up--second'),
+    textUpThird: document.querySelector('.js-footer-text__up--third'),
+    textLink: document.querySelector('.js-footer-text__link'),
+  }
+
+  const { textUpFirst, textUpSecond, textUpThird, textLink } = refs;
+
+
+
 export async function renderFooter() {
   const lang = await getLanguageFromLS();
-  const footer = document.querySelector('.footer-text');
+ 
   if (lang === 'en-US') {
-    footer.innerHTML = `
-      <span class="footer-text__up">&#169; 2022 | All Rights Reserved |</span>
-      <span class="footer-text__up">Developed with
-          <svg class="footer-text__icon" width="14" height="13"><use href="./images/sprite.svg#icon-heart"></use></svg>
-          by <a class="footer-text__link" href="">GoIT Students</a></span>
-      `;
-    return;
-  }
+    textUpFirst.textContent = `All Rights Reserved`;
+    textUpSecond.textContent = `Developed with`;
+    textUpThird.textContent = `by`;
+    textLink.textContent = `GoIT Students`;
+  };
+
   if (lang === 'uk-UA') {
-    footer.innerHTML = `
-      <span class="footer-text__up">&#169; 2022 | Всі права захищені |</span>
-      <span class="footer-text__up">Розроблено спільно
-          <svg class="footer-text__icon" width="14" height="13"><use href="./images/sprite.svg#icon-heart"></use></svg>
-          з <a class="footer-text__link" href="">Студентами GoIT</a></span>
-      `;
-    return;
-  }
+    textUpFirst.textContent = `Всі права захищені`;
+    textUpSecond.textContent = `Зроблено з`;
+    textUpThird.textContent = ``;
+    textLink.textContent = `Студентами GoIT`;
+  };
 }
 
 renderFooter();
