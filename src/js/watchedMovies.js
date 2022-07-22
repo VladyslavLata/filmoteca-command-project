@@ -294,8 +294,10 @@ function createMarkupFilms(currentLSWatchedFilms) {
   watchedFilms = getWatchedFilmsLocalStorage(currentLSWatchedFilms);
   if (watchedFilms === null) {
     noFilmsMessage();
+    loader.disable('loader');
     return;
   } else if (watchedFilms === undefined) {
+    loader.disable('loader');
     return;
   } else if (watchedFilms) {
     watchedFilmsLength = watchedFilms.length;
