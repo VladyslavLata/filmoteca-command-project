@@ -21,6 +21,19 @@ const btnText = {
   QUEUE_ADD_UA: 'додати до черги',
 };
 
+const textInfoTitle = {
+  VOTE_EN: 'Vote / Votes',
+  POPULARITY_EN: 'Popularity',
+  ORIGINAL_TITLE_EN: 'Original Title',
+  GENRE_EN: 'Genre',
+  ABOUT_EN: 'About',
+  VOTE_UA: 'Оцінка / Голосували',
+  POPULARITY_UA: 'Популярність',
+  ORIGINAL_TITLE_UA: 'Оригінальна назва',
+  GENRE_UA: 'Жанр',
+  ABOUT_UA: 'Опис',
+};
+
 const dataActionKey = {
   DEL: 'del',
   ADD: 'add',
@@ -48,6 +61,13 @@ let watchedBtn = '';
 let queueBtn = '';
 let watchedDataAttr = dataActionKey.ADD;
 let queueDataAttr = dataActionKey.ADD;
+const currentInfoTitle = {
+  VOTE: textInfoTitle.VOTE_EN,
+  POPULARITY: textInfoTitle.POPULARITY_EN,
+  ORIGINAL_TITLE: textInfoTitle.ORIGINAL_TITLE_EN,
+  GENRE: textInfoTitle.GENRE_EN,
+  ABOUT: textInfoTitle.ABOUT_EN,
+};
 
 gallery.addEventListener('click', onImageClick);
 modalBtn.addEventListener('click', onCloseClick);
@@ -72,6 +92,7 @@ function onImageClick(e) {
       return;
     }
     buttonTextContent(ID);
+    modalTextInfoTitle();
     modalMarkup(movie);
 
     movieToAdd = movie;
@@ -132,26 +153,32 @@ function modalMarkup({
           <h2 class="modal-info__movie-name">${title.toUpperCase()}</h2>
           <table class="modal-info__list" >
               <tr class="modal-info__item">
-                <th class="modal-info__title">Vote / Votes</th>
+                <th class="modal-info__title">${currentInfoTitle.VOTE}</th>
                 <th class="modal-info__content"><span class="modal-info__content-color"> ${
                   Math.round(vote_average * 10) / 10
                 } </span> / <span class="modal-info__content-color modal-info__content-color--votes">${vote_count}</span></th>
               </tr>
               <tr class="modal-info__item">
-                <td class="modal-info__title">Popularity</td>
+                <td class="modal-info__title">${
+                  currentInfoTitle.POPULARITY
+                }</td>
                 <td class="modal-info__content">${popularity.toFixed(1)}
                 </td>
               </tr>
               <tr class="modal-info__item">
-                <td class="modal-info__title">Original Title</td>
+                <td class="modal-info__title">${
+                  currentInfoTitle.ORIGINAL_TITLE
+                }</td>
                 <td class="modal-info__content modal-info__content--text">${original_title.toUpperCase()}</td>
               </tr>
               <tr class="modal-info__item">
-                <td class="modal-info__title">Genre</td>
+                <td class="modal-info__title">${currentInfoTitle.GENRE}</td>
                 <td class="modal-info__content">${genreFind(genre_ids)}</td>
               </tr>
               </table>            
-                  <p class="modal-info__article-title">About</p>
+                  <p class="modal-info__article-title">${
+                    currentInfoTitle.ABOUT
+                  }</p>
                   <p class="modal-info__article">${overview}</p>
                   <div class="container-btn">
             <button type="button" class="btn" name="${
@@ -195,6 +222,7 @@ async function onBtnClick(evt) {
 
 function buttonTextContent(currentID) {
   const currentLanguage = getLanguageFromLS();
+  const isUA = currentLanguage === Movie.language.UKRAINIAN;
   const watchedArr =
     JSON.parse(localStorage.getItem(keyLS.LS_WATHED_EN_DATA_KEY)) || [];
   const queueArr =
@@ -202,33 +230,38 @@ function buttonTextContent(currentID) {
 
   if (watchedArr.some(value => value.id === currentID)) {
     watchedDataAttr = dataActionKey.DEL;
-    watchedBtn =
-      currentLanguage === Movie.language.UKRAINIAN
-        ? btnText.WATCHED_DEL_UA
-        : btnText.WATCHED_DEL_EN;
+    watchedBtn = isUA ? btnText.WATCHED_DEL_UA : btnText.WATCHED_DEL_EN;
   } else {
     watchedDataAttr = dataActionKey.ADD;
-    watchedBtn =
-      currentLanguage === Movie.language.UKRAINIAN
-        ? btnText.WATCHED_ADD_UA
-        : btnText.WATCHED_ADD_EN;
+    watchedBtn = isUA ? btnText.WATCHED_ADD_UA : btnText.WATCHED_ADD_EN;
   }
 
   if (queueArr.some(value => value.id === currentID)) {
     queueDataAttr = dataActionKey.DEL;
-    queueBtn =
-      currentLanguage === Movie.language.UKRAINIAN
-        ? btnText.QUEUE_DEL_UA
-        : btnText.QUEUE_DEL_EN;
+    queueBtn = isUA ? btnText.QUEUE_DEL_UA : btnText.QUEUE_DEL_EN;
   } else {
     queueDataAttr = dataActionKey.ADD;
-    queueBtn =
-      currentLanguage === Movie.language.UKRAINIAN
-        ? btnText.QUEUE_ADD_UA
-        : btnText.QUEUE_ADD_EN;
+    queueBtn = isUA ? btnText.QUEUE_ADD_UA : btnText.QUEUE_ADD_EN;
   }
 }
 
+function modalTextInfoTitle() {
+  const currentLanguage = getLanguageFromLS();
+  const isUA = currentLanguage === Movie.language.UKRAINIAN;
+  currentInfoTitle.VOTE = isUA ? textInfoTitle.VOTE_UA : textInfoTitle.VOTE_EN;
+  currentInfoTitle.POPULARITY = isUA
+    ? textInfoTitle.POPULARITY_UA
+    : textInfoTitle.POPULARITY_EN;
+  currentInfoTitle.ORIGINAL_TITLE = isUA
+    ? textInfoTitle.ORIGINAL_TITLE_UA
+    : textInfoTitle.ORIGINAL_TITLE_EN;
+  currentInfoTitle.GENRE = isUA
+    ? textInfoTitle.GENRE_UA
+    : textInfoTitle.GENRE_EN;
+  currentInfoTitle.ABOUT = isUA
+    ? textInfoTitle.ABOUT_UA
+    : textInfoTitle.ABOUT_EN;
+}
 // function buttonTextContent() {
 //   const modalButtons = document.querySelector('.container-btn');
 //   watchedBtn = modalButtons.children[0];
