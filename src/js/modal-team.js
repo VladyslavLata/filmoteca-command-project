@@ -1,6 +1,7 @@
-import {
-  getLanguageFromLS,
-} from './languageSwitch';
+
+import { getLanguageFromLS } from './languageSwitch';
+import { Movie } from './fetchMovie';
+
 
 const team = document.querySelector('.footer-text__link');
 const backdropTeam = document.querySelector('.backdrop-team');
@@ -23,25 +24,29 @@ function onCloseTeamClick(e) {
   backdropTeam.classList.add('is-hidden');
   body.classList.remove('modal-team-open');
 }
-const currentLanguage = getLanguageFromLS();
-const X = currentLanguage  === "en-US"; 
-let TeamLead = X ? "Team Lead" : "Лідер команди";
-let ScrumMaster = X ? "Scrum master" : "Скрам-майстер";
-let Developer = X ? "Developer" : "Розробник";
-let Mentor = X ? "Mentor" : "Ментор";
-let Sainchuk = X ? "Oleksandr Sainchuk" : "Олександр Саінчук";
-let Kurka = X ? "Andrii Kurka" : "Андрій Курка";
-let Tikka = X ? "Oleksandr Tikka" : "Олександр Тікка";
-let Velychko = X ? "Svitlana Velychko" : "Світлана Величко";
-let Tsiukh = X ? "Roman Tsiukh" : "Роман Цюх";
-let Boiko = X ? "Serhii Boiko" : "Сергій Бойко";
-let Konovalova = X ? "Kateryna Konovalova" : "Катерина Коновалова";
-let Lata = X ? "Vladyslav Lata" : "Владислав Лата";
-let Muzalevskiy = X ? "Evgeniy Muzalevskiy" : "Євгеній Музалєвський";
-let Diachenko = X ? "Olena Diachenko" : "Олена Дяченко";
-let Malynovska = X ? "Natalia Malynovska" : "Наталя Малиновська";
-let Garnyk = X ? "Alyona Garnyk" : "Альона Гарнюк";
+
+
 function modalTeamMarkup() {
+
+  const currentLanguage = getLanguageFromLS();
+  let X = currentLanguage === Movie.language.ENGLISH;
+  let TeamLead = X ? 'Team Lead' : 'Лідер команди';
+  let ScrumMaster = X ? 'Scrum master' : 'Скрам-майстер';
+  let Developer = X ? 'Developer' : 'Розробник';
+  let Mentor = X ? 'Mentor' : 'Ментор';
+  let Sainchuk = X ? 'Oleksandr Sainchuk' : 'Олександр Саінчук';
+  let Kurka = X ? 'Andrii Kurka' : 'Андрій Курка';
+  let Tikka = X ? 'Oleksandr Tikka' : 'Олександр Тікка';
+  let Velychko = X ? 'Svitlana Velychko' : 'Світлана Величко';
+  let Tsiukh = X ? 'Roman Tsiukh' : 'Роман Цюх';
+  let Boiko = X ? 'Serhii Boiko' : 'Сергій Бойко';
+  let Konovalova = X ? 'Kateryna Konovalova' : 'Катерина Коновалова';
+  let Lata = X ? 'Vladyslav Lata' : 'Владислав Лата';
+  let Muzalevskiy = X ? 'Evgeniy Muzalevskiy' : 'Євгеній Музалєвський';
+  let Diachenko = X ? 'Olena Diachenko' : 'Олена Дяченко';
+  let Malynovska = X ? 'Natalia Malynovska' : 'Наталя Малиновська';
+  let Garnyk = X ? 'Alyona Garnyk' : 'Альона Гарнюк';
+  
   const makeMarkupModalTeam = `<ul class="team__list">
         <li class="team__item">
           <div class="team__wrapper">
@@ -240,3 +245,133 @@ function modalTeamMarkup() {
     return (modalTeam.innerHTML = makeMarkupModalTeam);  
 
 };
+
+    
+
+/* <ul class="team__list">
+  <li class="team__item">
+    <div class="team__wrapper">
+      <img
+        class="team__img"
+        src="https://ca.slack-edge.com/T03ANNS1UBS-U03KXCM677Z-46aad6e7193c-512"
+        alt="Oleksandr Sainchuk"
+      />
+    </div>
+    <p class="team__name">Oleksandr Sainchuk</p>
+    <p class="team__role">Team lead</p>
+  </li>
+  <li class="team__item">
+    <div class="team__wrapper">
+      <img class="team__img" src="./images/andrii.jpg" alt="Andrii Kurka" />
+    </div>
+    <p class="team__name">Andrii Kurka</p>
+    <p class="team__role">Scrum master</p>
+  </li>
+  <li class="team__item">
+    <div class="team__wrapper">
+      <img
+        class="team__img"
+        src="./images/oleksandr.jpg"
+        alt="Oleksandr Tikka"
+      />
+    </div>
+    <p class="team__name">Oleksandr Tikka</p>
+    <p class="team__role">Developer</p>
+  </li>
+  <li class="team__item">
+    <div class="team__wrapper">
+      <img
+        class="team__img"
+        src="https://ca.slack-edge.com/T03ANNS1UBS-U03AHHL83HV-c974944bd586-512"
+        alt="Svitlana Velychko"
+      />
+    </div>
+    <p class="team__name">Svitlana Velychko</p>
+    <p class="team__role">Developer</p>
+  </li>
+  <li class="team__item">
+    <div class="team__wrapper">
+      <img class="team__img" src="./images/roman.jpg" alt="Roman Tsiukh" />
+    </div>
+    <p class="team__name">Roman Tsiukh</p>
+    <p class="team__role">Developer</p>
+  </li>
+  <li class="team__item">
+    <div class="team__wrapper">
+      <img
+        class="team__img"
+        src="https://passport-photo.online/assets/merged/4DxnP8jh3rOBcxc4zFNc.webp"
+        alt="Serhii Boiko"
+      />
+    </div>
+    <p class="team__name">Serhii Boiko</p>
+    <p class="team__role">Developer</p>
+  </li>
+  <li class="team__item">
+    <div class="team__wrapper">
+      <img
+        class="team__img"
+        src="https://passport-photo.online/assets/merged/4DxnP8jh3rOBcxc4zFNc.webp"
+        alt="Kateryna Konovalova"
+      />
+    </div>
+    <p class="team__name">Kateryna Konovalova</p>
+    <p class="team__role">Developer</p>
+  </li>
+  <li class="team__item">
+    <div class="team__wrapper">
+      <img
+        class="team__img"
+        src="https://passport-photo.online/assets/merged/4DxnP8jh3rOBcxc4zFNc.webp"
+        alt="Vladyslav Lata"
+      />
+    </div>
+    <p class="team__name">Vladyslav Lata</p>
+    <p class="team__role">Developer</p>
+  </li>
+  <li class="team__item">
+    <div class="team__wrapper">
+      <img
+        class="team__img"
+        src="./images/team/evgeniy.jpg"
+        alt="Evgeniy Muzalevskiy"
+      />
+    </div>
+    <p class="team__name">Evgeniy Muzalevskiy</p>
+    <p class="team__role">Developer</p>
+  </li>
+  <li class="team__item">
+    <div class="team__wrapper">
+      <img
+        class="team__img"
+        src="https://passport-photo.online/assets/merged/4DxnP8jh3rOBcxc4zFNc.webp"
+        alt="Olena"
+      />
+    </div>
+    <p class="team__name">Olena</p>
+    <p class="team__role">Developer</p>
+  </li>
+  <li class="team__item">
+    <div class="team__wrapper">
+      <img
+        class="team__img"
+        src="./images/team/Natat.jpg"
+        alt="Natalia Malynovska"
+      />
+    </div>
+    <p class="team__name">Natalia Malynovska</p>
+    <p class="team__role">Developer</p>
+  </li>
+  <li class="team__item">
+    <div class="team__wrapper">
+      <img
+        class="team__img"
+        src="https://ca.slack-edge.com/T03ANNS1UBS-U03PJ16BLQ2-13fdebbd13dc-512"
+        alt="Alyona Garnyk"
+      />
+    </div>
+    <p class="team__name">Alyona Garnyk</p>
+    <p class="team__role">Mentor</p>
+  </li>
+</ul>; */
+
