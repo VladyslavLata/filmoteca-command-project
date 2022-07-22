@@ -145,7 +145,7 @@
   @include fonts(500, 12px, 1.17, null);
   text-transform: uppercase;
   color: $white-color;
-  transition: stroke 250ms $typical-cubic;
+  transition: color 250ms $typical-cubic;
 
   &:hover,
   &:focus {
@@ -219,12 +219,14 @@
   text-align: center;
   transition: color 250ms $typical-cubic,
     background-color 250ms $typical-cubic,
-    transform 250ms $typical-cubic;
+    transform 250ms $typical-cubic,
+    opacity 250ms $typical-cubic;
 
   &:hover,
   &:focus {
     color: $white-color;
     background-color: $orange-color;
+    opacity: 1;
     transform: scale(1.1);
   }
 }
@@ -240,12 +242,14 @@
   text-align: center;
   transition: color 250ms $typical-cubic,
     background-color 250ms $typical-cubic,
-    transform 250ms $typical-cubic;
+    transform 250ms $typical-cubic,
+    opacity 250ms $typical-cubic;
 
   &:hover,
   &:focus {
     color: $white-color;
     background-color: $orange-color;
+    opacity: 1;
     transform: scale(1.1);
   }
 }

@@ -13,14 +13,27 @@ body.modal-open {
   width: 100%;
   height: 100%;
   overflow-y: scroll;
-  background: rgb(0,0,0, 0.25);
+  background: rgb(0,0,0, 0.25); 
+  // background-image: linear-gradient(rgb(0,0,0, 0.2),rgb(0,0,0, 0.9)), url('https://yt3.ggpht.com/AAKF_677TIvjFz_9xFF0R6PgiVd0kRpEtY6APSxSDRP65nXg8hkn9NFsz2bRd9_Z37DJ9D_b=s900-c-k-c0x00ffffff-no-rj');
+  // background-repeat: no-repeat;
+  // background-size: cover;
   transition: opacity 500ms,visibility 500ms;
-  
+
   &.is-hidden {
     opacity: 0;
     pointer-events: none;
     visibility: hidden;
   }
+  // &:after {
+  //   content: "";
+  //   position: absolute;
+  //   z-index: 1;
+  //   left: 0;
+  //   top: 0;
+  //   width: 100%;
+  //   height: 100%;
+  //   background-image: linear-gradient(rgb(0,0,0, 0.3),rgb(0,0,0, 0.7)),
+  // }
 }
 
 .backdrop.is-hidden .modal {
@@ -28,6 +41,7 @@ body.modal-open {
 }
 .modal {
   position: relative;
+  z-index: 2;
   top: 50%;
   left: 50%;
   width: 280px;
@@ -71,6 +85,11 @@ body.modal-open {
   body.dark__theme & {
     stroke: $white-color;
     }
+    &:hover {
+      border-radius: 5px;
+      border: 1px solid $black-color;
+    }
+
   }
 
 .modal-info__container {
@@ -228,11 +247,14 @@ body.modal-open {
   width: 110px;
   height: 44px;
   padding: 6px;
+  transition: background-color 250ms $typical-cubic,
+      color 250ms $typical-cubic,
+      border 250ms $typical-cubic;
 
   &:first-child {
-    color: $white-color;
-    background-color: $orange-color;
-    border: 1px solid $orange-color;
+    // color: $white-color;
+    // background-color: $orange-color;
+    // border: 1px solid $orange-color;
     margin-right: 20px;
   }
   @media screen and (min-width: 768px) {

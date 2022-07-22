@@ -8,6 +8,7 @@ import {
   getLanguageFromLS,
   getCurrentPageFromLS,
 } from './languageSwitch';
+import { unlockEl } from './interfaceWork';
 
 const body = document.querySelector('body');
 
@@ -22,11 +23,13 @@ const modalWindow = document.querySelector('.modal');
 let ID = 0;
 let movieToAdd = {};
 let movies = '';
+let watchedBtn;
+let queueBtn;
 
 gallery.addEventListener('click', onImageClick);
 modalBtn.addEventListener('click', onCloseClick);
 modal.addEventListener('click', onBtnClick);
-backdrop.addEventListener('click', onCloseClick);
+backdrop.addEventListener('click', onCloseClickBackdrop);
 
 function onImageClick(e) {
   e.preventDefault();
@@ -46,29 +49,36 @@ function onImageClick(e) {
       return;
     }
     modalMarkup(movie);
+    buttonTextContent();
     movieToAdd = movie;
   });
 
   if (e.target !== e.currentTarget) {
+    window.addEventListener('keydown', onEscKeyPress);
     body.classList.add('modal-open');
     backdrop.classList.remove('is-hidden');
   }
 }
 
-// function onCloseClickBackdrop(e) {
-//   if (e.target === e.currentTarget) {
-//     body.classList.remove('modal-open');
-//     backdrop.classList.add('is-hidden');
-//   }
-// }
-
-function onCloseClick(e) {
-  if (!modalWindow.contains(e.target) || modalBtn.contains(e.target)) {
+function onCloseClickBackdrop(e) {
+  if (e.target == e.currentTarget) {
     body.classList.remove('modal-open');
     backdrop.classList.add('is-hidden');
   }
-  // body.classList.remove('modal-open');
-  // backdrop.classList.add('is-hidden');
+}
+
+function onCloseClick(e) {
+  window.removeEventListener('keydown', onEscKeyPress);
+  body.classList.remove('modal-open');
+  backdrop.classList.add('is-hidden');
+}
+
+function onEscKeyPress(e) {
+  console.log(e);
+  console.log(e.code);
+  if (e.code === 'Escape') {
+    onCloseClick();
+  }
 }
 
 function modalMarkup({
@@ -81,6 +91,13 @@ function modalMarkup({
   vote_average,
   popularity,
 }) {
+  backdrop.style.background = `linear-gradient(#0000004d, #000000b3), url(${
+    poster_path
+      ? Movie.IMG_PATH + poster_path
+      : 'https://yt3.ggpht.com/AAKF_677TIvjFz_9xFF0R6PgiVd0kRpEtY6APSxSDRP65nXg8hkn9NFsz2bRd9_Z37DJ9D_b=s900-c-k-c0x00ffffff-no-rj'
+  })`;
+  backdrop.style.backgroundRepeat = 'no-repeat';
+  backdrop.style.backgroundSize = 'cover';
   const makeMarkupModal = `
       <img src="${
         poster_path
@@ -119,19 +136,15 @@ function modalMarkup({
   return (modal.innerHTML = makeMarkupModal);
 }
 
-// let watchedArr = [];
-// let queueArr = [];
 let watchedArrCurrentLang = [];
 let watchedArrAltLang = [];
 let queueArrCurrentLang = [];
 let queueArrAltLang = [];
 
-// const LS_WATHED_DATA_KEY = 'themovie-watched-lib';
-// const LS_QUEUE_DATA_KEY = 'themovie-queue-lib';
-
 async function onBtnClick(evt) {
   const username = await localStorage.getItem(LS_LOGIN_KEY);
   const usernameSS = await sessionStorage.getItem(LS_LOGIN_KEY);
+
   if (evt.target.name === 'watched') {
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
       addToWatched();
@@ -151,7 +164,24 @@ async function onBtnClick(evt) {
     }
   }
 }
-
+function buttonTextContent() {
+  const modalButtons = document.querySelector('.container-btn');
+  watchedBtn = modalButtons.children[0];
+  queueBtn = modalButtons.children[1];
+  if (watchedArrCurrentLang.some(value => value.id === ID)) {
+    watchedBtn.textContent = 'delete from watched';
+    return;
+  } else {
+    watchedBtn.textContent = 'add to watched';
+  }
+  if (queueArrCurrentLang.some(value => value.id === ID)) {
+    queueBtn.textContent = 'delete from queue';
+    return;
+  } else {
+    queueBtn.textContent = 'add to queue';
+  }
+}
+////// ADD TO WATCHED   ///////
 async function addToWatched() {
   const currentLanguage = getLanguageFromLS();
   let dataCurrentKey = keyLS.LS_WATHED_EN_DATA_KEY;
@@ -171,22 +201,31 @@ async function addToWatched() {
   watchedArrCurrentLang =
     JSON.parse(localStorage.getItem(dataCurrentKey)) || [];
   watchedArrAltLang = JSON.parse(localStorage.getItem(dataAltKey)) || [];
-  const watchedArrId = [];
 
-  watchedArrCurrentLang.map(mov => {
-    return watchedArrId.push(mov.id);
-  });
-
-  if (watchedArrId.includes(ID)) {
+  if (watchedArrCurrentLang.some(value => value.id === ID)) {
+    console.log('этот фильм уже есть, удаляем');
+    watchedBtn.textContent = 'add to watched';
+    const filteredWatchedArr = watchedArrCurrentLang.filter(
+      value => value.id !== ID
+    );
+    localStorage.setItem(dataCurrentKey, JSON.stringify(filteredWatchedArr));
+    const filteredWatchedArrAlt = watchedArrAltLang.filter(
+      value => value.id !== ID
+    );
+    localStorage.setItem(dataAltKey, JSON.stringify(filteredWatchedArrAlt));
     return;
   }
+
   watchedArrCurrentLang.push(filtrCurrentData(movieToAdd));
   localStorage.setItem(dataCurrentKey, JSON.stringify(watchedArrCurrentLang));
-
+  console.log('watched:');
   const altLangData = await fetchAltLangByID(ID, altLang);
   watchedArrAltLang.push(altLangData);
   localStorage.setItem(dataAltKey, JSON.stringify(watchedArrAltLang));
+  watchedBtn.textContent = 'delete from watched';
 }
+
+/////////// ADD TO QUEUE
 
 async function addToQueue() {
   const currentLanguage = getLanguageFromLS();
@@ -206,21 +245,28 @@ async function addToQueue() {
 
   queueArrCurrentLang = JSON.parse(localStorage.getItem(dataCurrentKey)) || [];
   queueArrAltLang = JSON.parse(localStorage.getItem(dataAltKey)) || [];
-  const queueArrId = [];
-  queueArrCurrentLang.map(mov => {
-    return queueArrId.push(mov.id);
-  });
 
-  if (queueArrId.includes(ID)) {
+  if (queueArrCurrentLang.some(value => value.id === ID)) {
+    console.log('этот фильм уже есть, удаляем');
+    queueBtn.innerHTML = 'add to queue';
+    const filteredQueueArr = queueArrCurrentLang.filter(
+      value => value.id !== ID
+    );
+    localStorage.setItem(dataCurrentKey, JSON.stringify(filteredQueueArr));
+    const filteredQueueArrAlt = queueArrAltLang.filter(
+      value => value.id !== ID
+    );
+    localStorage.setItem(dataAltKey, JSON.stringify(filteredQueueArrAlt));
     return;
   }
+
   queueArrCurrentLang.push(filtrCurrentData(movieToAdd));
   localStorage.setItem(dataCurrentKey, JSON.stringify(queueArrCurrentLang));
-  console.log('queue:  ' + queueArrId);
-
+  console.log('queue:');
   const altLangData = await fetchAltLangByID(ID, altLang);
   queueArrAltLang.push(altLangData);
   localStorage.setItem(dataAltKey, JSON.stringify(queueArrAltLang));
+  queueBtn.innerHTML = 'delete from queue';
 }
 
 async function fetchAltLangByID(movieID, language) {
@@ -289,35 +335,3 @@ function filtrAltData({
     release_date,
   };
 }
-
-// const addToWatched = () => {
-//   watchedArr = JSON.parse(localStorage.getItem(LS_WATHED_DATA_KEY)) || [];
-//   const watchedArrId = [];
-
-//   watchedArr.map(mov => {
-//     return watchedArrId.push(mov.id);
-//   });
-
-//   if (watchedArrId.includes(ID)) {
-//     return;
-//   }
-//   watchedArr.push(movieToAdd);
-//   localStorage.setItem(LS_WATHED_DATA_KEY, JSON.stringify(watchedArr));
-//   console.log('watched:  ' + watchedArrId);
-// };
-
-// const addToQueue = () => {
-//   queueArr = JSON.parse(localStorage.getItem(LS_QUEUE_DATA_KEY)) || [];
-//   const queueArrId = [];
-//   queueArr.map(mov => {
-//     return queueArrId.push(mov.id);
-//   });
-
-//   if (queueArrId.includes(ID)) {
-//     console.log('есть уже');
-//     return;
-//   }
-//   queueArr.push(movieToAdd);
-//   localStorage.setItem(LS_QUEUE_DATA_KEY, JSON.stringify(queueArr));
-//   console.log('queue:  ' + queueArrId);
-// };
