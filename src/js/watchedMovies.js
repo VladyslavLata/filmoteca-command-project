@@ -15,12 +15,11 @@ import {
 } from './languageSwitch';
 // import { genreFind } from './workWithGenres';
 import { makeMarkupCard } from './cardMarkup';
-import { modal } from './modal';
-// import Loader from './loader';
+import Loader from './loader';
 
-modal.addEventListener('click', refreshLibraryOnClickBtnModal);
-// const loader = new Loader();
-// console.log(loader.refs.preloader);
+const loader = new Loader();
+
+loader.enable('preloader');
 
 // const filmLocal = [
 //   {
@@ -180,6 +179,7 @@ queueMovieBtnEl.addEventListener('click', onClickQueueBtnMarkupFilms);
 // btnUAEl.addEventListener('click', onClickUABtnMarkupFilms);
 
 // currentLangLibrary = getLanguageFromLS();
+
 libraryStart();
 getCurrentLSWatchedFilms();
 
@@ -199,6 +199,7 @@ function libraryStart() {
 }
 
 export function onClickENBtnMarkupFilms() {
+  loader.enable('loader');
   currentLSWatchedFilms =
     currentLSWatchedFilms === keyLS.LS_WATHED_EN_DATA_KEY ||
     currentLSWatchedFilms === keyLS.LS_WATHED_UA_DATA_KEY
@@ -208,6 +209,7 @@ export function onClickENBtnMarkupFilms() {
 }
 
 export function onClickUABtnMarkupFilms() {
+  loader.enable('loader');
   currentLSWatchedFilms =
     currentLSWatchedFilms === keyLS.LS_WATHED_EN_DATA_KEY ||
     currentLSWatchedFilms === keyLS.LS_WATHED_UA_DATA_KEY
@@ -233,6 +235,7 @@ export function onClickUABtnMarkupFilms() {
 // }
 
 function onClickWatchedBtnMarkupFilms() {
+  loader.enable('loader');
   currentLangLibrary = getLanguageFromLS();
   getCurrentLSWatchedFilms();
   clearGallery();
@@ -243,6 +246,7 @@ function onClickWatchedBtnMarkupFilms() {
 }
 
 function onClickQueueBtnMarkupFilms() {
+  loader.enable('loader');
   currentLangLibrary = getLanguageFromLS();
   getCurrentLSQueueFilms();
   clearGallery();
