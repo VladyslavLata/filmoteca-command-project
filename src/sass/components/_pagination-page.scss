@@ -1,7 +1,13 @@
 .pagination-page {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 40px;
+
+  @include mq(tablet) {
+    padding-bottom: 60px;
+  }
 }
 .pagination {
   background-color: transparent;

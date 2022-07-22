@@ -1,0 +1,33 @@
+<div class="log-in__overlay log-in__overlay--hidden">
+    <div class="log-in-modal">
+        <button class="close-login__button" type="button">
+            <svg class="modal__icon" width="30" height="30">
+                <use href="./images/sprite.svg#icon-close"></use>
+            </svg>
+        </button>
+        <form class="login__form">
+            <h3 class="login__title">Log In</h3>
+            <input type="text" placeholder="Username" id="login-username" name="login-username"
+                class="login__username" required>
+            <input type="email" placeholder="Email" id="login-email" name="login-email" class="login__email" required>
+            <input type="password" placeholder="Password" id="login-password" name="login-password"
+                class="login__password" required>
+            <!-- <div class="form-group"> -->
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="gridCheck">
+                    <label class="form-check-label" for="gridCheck">
+                        Keep me Logged In
+                    </label>
+                </div>
+            <!-- </div> -->
+            <button type="button" id="login__button" class="login__button--form">Log In</button>
+            <a href="" id="switch-form__link-login" class="login__link">Want to create a new
+                account?</a>
+        </form>
+        <div class="logout-modal logout-modal--hidden">
+            <h3 class="login__title">Log Out</h3>
+            <p class="logout-modal__text"></p>
+            <button type="button" id="logout__button" class="login__button--form">Log Out</button>
+        </div>
+    </div>
+</div>

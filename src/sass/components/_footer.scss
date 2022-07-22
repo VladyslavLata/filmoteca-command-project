@@ -1,37 +1,33 @@
 .footer {
     background-color: $footer-bg-color;
     color: $footer-text-color;
-    // height: 100px;
     padding-top: 29px;
     padding-bottom: 29px;
+    // margin-top: 40px;
 
-    @media screen and (min-width: 768px) {
-        // height: 79px;
+    @include mq(tablet) {
         padding-top: 30px;
         padding-bottom: 30px;
         display: flex;
         align-items: center;
+        // margin-top: 60px;
       };
 
-    @media screen and (min-width: 1280px) {
+    @include mq(desktop) {
         padding-bottom: 28px;
-    };
+      };
 }
 
 .footer-text {
-    @media screen and (min-width: 768px) {
-        @include center; 
-    };
+    @include mq(tablet) {
+        @include center;
+      }
 }
 
 .footer-text__link {
     color: $footer-text-color;
     text-decoration:underline;
     margin-left: 4px;
-
-    @media screen and (min-width: 768px) {
-        margin-left: 0px;
-    }; 
 };
 
 .footer-text__up {
@@ -39,22 +35,33 @@
     @include fonts;
     letter-spacing: normal;
 
-    @media screen and (min-width: 768px) {
-        // display: inline-block;
-        font-size: 16px;
-    }; 
+    @include mq(tablet) {
+        font-size: 16px;;
+      }
 }
 
 .footer-text__up:nth-child(2){
-    // margin-left: 28px;
-    // margin-right: 16px;
     margin-top: 10px;
 
-    @media screen and (min-width: 768px) {
+    @include mq(tablet) {
         margin-left: 4px;
         margin-right: 0px;
         margin-top: 0px;
-    }; 
+      } 
 }
 
-.footer-text__icon {margin: 0 10px;}
+.footer-text__icon {
+  margin: 0 10px;
+}
+
+.animate__heartBeat {
+  animation-duration: 1500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: $typical-cubic;
+}
+
+.wrap {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}

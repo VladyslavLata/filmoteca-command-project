@@ -4,6 +4,8 @@
 body {
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
+
+  transition: background-color 500ms $typical-cubic, color 500ms $typical-cubic;
 }
 
 ul {
@@ -29,6 +31,10 @@ ul {
 button {
   cursor: pointer;
   padding: 0;
+
+  &:disabled {
+    cursor: auto;
+  }
 }
 
 img {
@@ -40,4 +46,17 @@ img {
 
 a {
   text-decoration: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: 0 0 0px 1000px inherit inset;
+  -webkit-text-fill-color: #000000;
+
+  body.dark__theme & {
+        -webkit-text-fill-color: #ffffff;
+    }
 }

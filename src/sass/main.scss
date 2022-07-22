@@ -2,6 +2,8 @@
 @import './utils/mixins';
 @import './utils/variables';
 @import './utils/placeholders';
+@import './components/preloader';
+@import './components/loader';
 
 @import './components/_header';
 @import './components/_gallery';
@@ -12,5 +14,8 @@
 @import './components/trend-time';
 @import './components/pagination-page';
 @import'./components/up-btn';
+@import'./components/signup';
+@import'./components/login';
+
 
 @import './base/_common';

@@ -1,0 +1,90 @@
+.log-in__overlay {
+    @extend %auth-backdrop;
+}
+
+.log-in__overlay--hidden {
+    @extend %auth-backdrop-hidden;
+
+    & .log-in-modal {
+            transform: translate(-50%, -50%) scale(0.4);
+        }
+}
+
+.log-in-modal {
+    @extend %auth-modal;
+}
+
+.close-login__button {
+    @extend .modal__button;
+
+    body.dark__theme & {
+            stroke: $white-color;
+        }
+}
+
+.login__form {
+    @extend .sign-up__form;
+}
+
+.login__form--hidden {
+    display: none;
+}
+
+.logout-modal {
+    @extend .login__form;
+    justify-content: center;
+}
+
+.logout-modal--hidden {
+    display: none;
+}
+
+.logout-modal__text {
+    margin-top: 20px;
+    color: $black-color;
+
+    body.dark__theme & {
+        color: $white-color;
+    }
+}
+
+.login__title {
+    @extend .sign-up__title
+}
+
+.login__username {
+    @extend .sign-up__email;
+}
+
+.login__email {
+    @extend .sign-up__email;
+    margin-top: 10px;
+}
+
+.login__password {
+    @extend .sign-up__password;
+    margin-top: 10px;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    color: $black-color;
+
+    body.dark__theme & {
+        color: $white-color;
+    }
+}
+
+.form-check-input {
+    margin-right: 10px;
+}
+
+.login__button--form {
+    @extend .sign-up__button;
+}
+
+.login__link {
+    @extend .sign-up__link;
+}
