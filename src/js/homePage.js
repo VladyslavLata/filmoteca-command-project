@@ -12,16 +12,16 @@ import { switchBtnTrendTime } from './trendTime';
 import Loader from './loader';
 
 const loader = new Loader();
-console.log(loader.refs.preloader);
 
 export let trendMovie;
+
+loader.enable('preloader');
 
 if (keyword === null) {
   startPageVisit();
 }
 
 function startPageVisit() {
-  loader.refs.preloader.classList.remove('is-off');
   trendMovie = new Movie();
   const language = getLanguageFromLS();
   if (!language) {

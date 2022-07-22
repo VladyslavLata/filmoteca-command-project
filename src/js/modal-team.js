@@ -1,4 +1,5 @@
 import { getLanguageFromLS } from './languageSwitch';
+import { Movie } from './fetchMovie';
 
 const team = document.querySelector('.footer-text__link');
 const backdropTeam = document.querySelector('.backdrop-team');
@@ -17,29 +18,30 @@ function onTeamClick(e) {
 }
 
 function onCloseTeamClick(e) {
-  // e.preventDefault();
   backdropTeam.classList.add('is-hidden');
   body.classList.remove('modal-team-open');
 }
-const currentLanguage = getLanguageFromLS();
-const X = currentLanguage === 'en-US';
-let TeamLead = X ? 'Team Lead' : 'Лідер команди';
-let ScrumMaster = X ? 'Scrum master' : 'Скрам-майстер';
-let Developer = X ? 'Developer' : 'Розробник';
-let Mentor = X ? 'Mentor' : 'Ментор';
-let Sainchuk = X ? 'Oleksandr Sainchuk' : 'Олександр Саінчук';
-let Kurka = X ? 'Andrii Kurka' : 'Андрій Курка';
-let Tikka = X ? 'Oleksandr Tikka' : 'Олександр Тікка';
-let Velychko = X ? 'Svitlana Velychko' : 'Світлана Величко';
-let Tsiukh = X ? 'Roman Tsiukh' : 'Роман Цюх';
-let Boiko = X ? 'Serhii Boiko' : 'Сергій Бойко';
-let Konovalova = X ? 'Kateryna Konovalova' : 'Катерина Коновалова';
-let Lata = X ? 'Vladyslav Lata' : 'Владислав Лата';
-let Muzalevskiy = X ? 'Evgeniy Muzalevskiy' : 'Євгеній Музалєвський';
-let Diachenko = X ? 'Olena Diachenko' : 'Олена Дяченко';
-let Malynovska = X ? 'Natalia Malynovska' : 'Наталя Малиновська';
-let Garnyk = X ? 'Alyona Garnyk' : 'Альона Гарнюк';
+
 function modalTeamMarkup() {
+  const currentLanguage = getLanguageFromLS();
+  let langUS = currentLanguage === Movie.language.ENGLISH;
+  let TeamLead = langUS ? 'Team Lead' : 'Лідер команди';
+  let ScrumMaster = langUS ? 'Scrum master' : 'Скрам-майстер';
+  let Developer = langUS ? 'Developer' : 'Розробник';
+  let Mentor = langUS ? 'Mentor' : 'Ментор';
+  let Sainchuk = langUS ? 'Oleksandr Sainchuk' : 'Олександр Саінчук';
+  let Kurka = langUS ? 'Andrii Kurka' : 'Андрій Курка';
+  let Tikka = langUS ? 'Oleksandr Tikka' : 'Олександр Тікка';
+  let Velychko = langUS ? 'Svitlana Velychko' : 'Світлана Величко';
+  let Tsiukh = langUS ? 'Roman Tsiukh' : 'Роман Цюх';
+  let Boiko = langUS ? 'Serhii Boiko' : 'Сергій Бойко';
+  let Konovalova = langUS ? 'Kateryna Konovalova' : 'Катерина Коновалова';
+  let Lata = langUS ? 'Vladyslav Lata' : 'Владислав Лата';
+  let Muzalevskiy = langUS ? 'Evgeniy Muzalevskiy' : 'Євгеній Музалєвський';
+  let Diachenko = langUS ? 'Olena Diachenko' : 'Олена Дяченко';
+  let Malynovska = langUS ? 'Natalia Malynovska' : 'Наталя Малиновська';
+  let Garnyk = langUS ? 'Alyona Garnyk' : 'Альона Гарнюк';
+
   const makeMarkupModalTeam = `<ul class="team__list">
         <li class="team__item">
           <div class="team__wrapper">
@@ -234,7 +236,6 @@ function modalTeamMarkup() {
           <p class="team__role">${Mentor}</p>
         </li>
       </ul > `;
-
   return (modalTeam.innerHTML = makeMarkupModalTeam);
 }
 
