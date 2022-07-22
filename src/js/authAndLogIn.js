@@ -7,13 +7,6 @@ import {
   onAuthStateChanged,
   signOut,
 } from 'firebase/auth';
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  addDoc,
-  collection,
-} from 'firebase/firestore';
 
 const refs = {
   emptyLibText: document.querySelector('.not-logged-gallery'),
@@ -34,6 +27,7 @@ const refs = {
   checkbox: document.querySelector('.form-check-input'),
   usernick: document.querySelector('.user-nick'),
 };
+
 export const LS_LOGIN_KEY = 'keep_logged_as';
 
 sessionStorage.removeItem(LS_LOGIN_KEY);
@@ -50,32 +44,88 @@ const firebaseConfig = {
   appId: '1:744226297338:web:8ad6c2023b760eb61bc043',
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
+export const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
+// writeTestCollectionFunction();
 
 // ------------------------------------------------------------------------------------------------
-const firestore = getFirestore(firebaseApp);
+// const firestore = getFirestore(firebaseApp);
 
-const watchedCollection = doc(firestore, 'watched/collection');
+// const libraryCollection = doc(firestore, 'watched/watched');
 
-async function writeTestCollectionFunction() {
-  const docData = {
-    array: ['1', '2'],
-  };
-  setDoc(watchedCollection, docData);
-  // try {
-  //   const docRef = await addDoc(collection(firestore, 'users'), {
-  //     first: 'Ada',
-  //     last: 'Lovelace',
-  //     born: 1815,
-  //   });
-  //   console.log('Document written with ID: ', docRef.id);
-  // } catch (e) {
-  //   console.error('Error adding document: ', e);
-  // }
-}
+// export async function writeTestCollectionFunction() {
+//   try {
+//     const watchedEN = JSON.parse(
+//       localStorage.getItem('themovie-watched-EN-lib')
+//     );
+//     const watchedUA = JSON.parse(
+//       localStorage.getItem('themovie-watched-UA-lib')
+//     );
+//     const queueEN = JSON.parse(localStorage.getItem('themovie-queue-EN-lib'));
+//     const queueUA = JSON.parse(localStorage.getItem('themovie-queue-UA-lib'));
+//     const docData = {
+//       watchedEN,
+//       watchedUA,
+//       queueEN,
+//       queueUA,
+//     };
+//     setDoc(libraryCollection, docData);
+//   } catch (error) {
+//     console.error('Error adding document: ', error);
+//   }
+// }
 
-writeTestCollectionFunction();
+// // export async function readThemeDocument() {
+// //   const mySnapshot = await getDoc(libraryCollection);
+// //   if (mySnapshot.exists()) {
+// //     const docData = mySnapshot.data();
+// //     console.log('My Data: ', docData.watchedEN);
+// //     // return docData.switchMode;
+// //   }
+// // }
+
+// export async function listenTowatchedEn() {
+//   onSnapshot(libraryCollection, docSnapshot => {
+//     if (docSnapshot.exists()) {
+//       const docWatchedEn = docSnapshot.data().watchedEN;
+//       console.log('EN: ', docWatchedEn);
+//       return docWatchedEn;
+//     }
+//   });
+// }
+// export async function listenTowatchedUa() {
+//   onSnapshot(libraryCollection, docSnapshot => {
+//     if (docSnapshot.exists()) {
+//       const docWatchedUa = docSnapshot.data().watchedUA;
+//       console.log('UA: ', docWatchedUa);
+//       return docWatchedUa;
+//     }
+//   });
+// }
+// export async function listenToQueueEn() {
+//   onSnapshot(libraryCollection, docSnapshot => {
+//     if (docSnapshot.exists()) {
+//       const docQueueEn = docSnapshot.data().queueEN;
+//       console.log('EN: ', docQueueEn);
+//       return docQueueEn;
+//     }
+//   });
+// }
+// export async function listenToQueueUa() {
+//   onSnapshot(libraryCollection, docSnapshot => {
+//     if (docSnapshot.exists()) {
+//       const docQueueUa = docSnapshot.data().queueUA;
+//       console.log('UA: ', docQueueUa);
+//       return docQueueUa;
+//     }
+//   });
+// }
+
+// listenTowatchedEn();
+// listenTowatchedUa();
+// listenToQueueEn();
+// listenToQueueUa();
+
 // -------------------------------------------------------------------------------------------------
 
 const loginEmailPassword = async () => {
