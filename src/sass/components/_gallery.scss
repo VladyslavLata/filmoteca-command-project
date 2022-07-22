@@ -9,6 +9,21 @@ body {
   }
 }
 
+.not-logged-gallery, .empty-lib-gallery {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $black-color;
+  
+  @include mq(tablet) {
+    font-size: 38px;
+  }
+
+  body.dark__theme & {
+    color: $white-color;
+  }
+}
+
 .gallery-section {
   position: relative;
 }

@@ -11,12 +11,14 @@ import {
   getLanguageFromLS,
   switchBtnLang,
   setCurrentPageToLS,
-  // noYearVariableLang,
+  getCurrentPageFromLS,
 } from './languageSwitch';
 // import { genreFind } from './workWithGenres';
 import { makeMarkupCard } from './cardMarkup';
+import { modal } from './modal';
 // import Loader from './loader';
 
+modal.addEventListener('click', refreshLibraryOnClickBtnModal);
 // const loader = new Loader();
 // console.log(loader.refs.preloader);
 
@@ -387,5 +389,19 @@ function handledChangeDeskTop(e) {
     currentTotalFilmsInPage = DESKTOP_FILMS;
     clearGallery();
     createMarkupFilms(currentLSWatchedFilms);
+  }
+}
+
+function refreshLibraryOnClickBtnModal(evt) {
+  const currentPage = getCurrentPageFromLS();
+  if (evt.target.name === 'watched') {
+    if (currentPage === keyLS.VALUE_PAGE_LIBRARY_W) {
+      onClickWatchedBtnMarkupFilms();
+    }
+  }
+  if (evt.target.name === 'queue') {
+    if (currentPage === keyLS.VALUE_PAGE_LIBRARY_Q) {
+      onClickQueueBtnMarkupFilms();
+    }
   }
 }
