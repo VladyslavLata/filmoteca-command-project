@@ -196,11 +196,17 @@ let watchedArrAltLang = [];
 let queueArrCurrentLang = [];
 let queueArrAltLang = [];
 
-async function onBtnClick(evt) {
-  const username = localStorage.getItem(LS_LOGIN_KEY);
-  const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
 
-  if (evt.target.name === btnNameKey.WATCHED) {
+// const LS_WATHED_DATA_KEY = 'themovie-watched-lib';
+// const LS_QUEUE_DATA_KEY = 'themovie-queue-lib';
+export const username =  localStorage.getItem(LS_LOGIN_KEY);
+export const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
+  
+async function onBtnClick(evt) {
+//  const username =  localStorage.getItem(LS_LOGIN_KEY);
+//  const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
+  if (evt.target.name === 'watched') {
+
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
       // addToWatched(evt);
       await addToWatched(evt);

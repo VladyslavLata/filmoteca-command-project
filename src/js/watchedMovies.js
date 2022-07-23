@@ -1,11 +1,5 @@
 import { Movie } from './fetchMovie';
-
-// import {
-//   genreFind,
-//   noYearVariableLang,
-//   getLanguageFromLS,
-//   keyLS,
-// } from './genresAndYearFind';
+import { username, usernameSS } from './modal';
 import {
   keyLS,
   setLanguageToLS,
@@ -18,6 +12,7 @@ import {
 import { makeMarkupCard } from './cardMarkup';
 import { modal, btnNameKey } from './modal';
 
+
 import Loader from './loader';
 
 const loader = new Loader();
@@ -26,6 +21,7 @@ loader.enable('preloader');
 
 // localStorage.setItem(keyLS.LS_WATHED_UA_DATA_KEY, JSON.stringify(filmLocal));
 // localStorage.setItem(keyLS.LS_QUEUE_UA_DATA_KEY, JSON.stringify(filmLocalUA));
+
 
 const mediaQueryMob = window.matchMedia('(max-width: 767px)');
 const mediaQueryTab = window.matchMedia(
@@ -50,8 +46,7 @@ const btnArrowRightEl = document.querySelector('.btn-arrow.right');
 
 const watchedMovieBtnEl = document.querySelector('.watched');
 const queueMovieBtnEl = document.querySelector('.queue');
-// const btnENEl = document.querySelector('.switch-EN');
-// const btnUAEl = document.querySelector('.switch-UA');
+
 const galleryEl = document.querySelector('.gallery');
 let watchedFilms = null;
 export let watchedFilmsLength = 0;
@@ -70,8 +65,7 @@ boxLastBtnEl.addEventListener('click', onClickBtnInLastBoxChangePage);
 
 btnArrowLeftEl.addEventListener('click', onClickBtnArrowLeftChangePage);
 btnArrowRightEl.addEventListener('click', onClickBtnArrowRightChangePage);
-// btnENEl.addEventListener('click', onClickENBtnMarkupFilms);
-// btnUAEl.addEventListener('click', onClickUABtnMarkupFilms);
+
 
 // currentLangLibrary = getLanguageFromLS();
 
@@ -113,21 +107,7 @@ export function onClickUABtnMarkupFilms() {
   createMarkupFilms(currentLSWatchedFilms);
 }
 
-// function onClickENBtnMarkupFilms() {
-//   currentLSWatchedFilms =
-//     currentLSWatchedFilms === 'WATHED_UA'
-//       ? keyLS.LS_WATHED_DATA_KEY
-//       : keyLS.LS_QUEUE_DATA_KEY;
-//   createMarkupFilms(currentLSWatchedFilms);
-// }
 
-// function onClickUABtnMarkupFilms() {
-//   currentLSWatchedFilms =
-//     currentLSWatchedFilms === keyLS.LS_WATHED_DATA_KEY
-//       ? 'WATHED_UA'
-//       : 'QUEUE_UA';
-//   createMarkupFilms(currentLSWatchedFilms);
-// }
 
 function onClickWatchedBtnMarkupFilms() {
   loader.enable('loader');
@@ -169,25 +149,18 @@ function getCurrentLSQueueFilms() {
   }
 }
 
-// function getCurrentLSWatchedFilms() {
-//   if (currentLangLibrary === Movie.language.ENGLISH) {
-//     currentLSWatchedFilms = keyLS.LS_WATHED_DATA_KEY;
-//   } else if (currentLangLibrary === Movie.language.UKRAINIAN) {
-//     currentLSWatchedFilms = 'WATHED_UA';
-//   }
-// }
 
-// function getCurrentLSQueueFilms() {
-//   if (currentLangLibrary === Movie.language.ENGLISH) {
-//     currentLSWatchedFilms = keyLS.LS_QUEUE_DATA_KEY;
-//   } else if (currentLangLibrary === Movie.language.UKRAINIAN) {
-//     currentLSWatchedFilms = 'QUEUE_UA';
-//   }
-// }
 
 export function createMarkupFilms(currentLSWatchedFilms) {
   watchedFilms = getWatchedFilmsLocalStorage(currentLSWatchedFilms);
-  if (watchedFilms === null) {
+  if (watchedFilms === null || watchedFilms.length === 0) {
+    clearPagination();
+    //  btnArrowLeftEl.classList.add('.btn-hidden');
+    // btnArrowRightEl.classList.add('.btn-hidden');
+    if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
+      noFilmsNoLogInMessage();
+      return;
+     }
     noFilmsMessage();
     loader.disable('loader');
     return;
@@ -234,35 +207,16 @@ function getWatchedFilmsLocalStorage(currentLSWatchedFilms) {
   }
 }
 
-// function markupCards(datas) {
-//   return datas
-//     .map(movieItem => {
-//       return `<li class="card">
-//           <a class="card__link" href=""  >
-//             <img data-id="${movieItem.id}" class="card__img" src="${
-//         movieItem.poster_path
-//           ? Movie.IMG_PATH + movieItem.poster_path
-//           : 'https://yt3.ggpht.com/AAKF_677TIvjFz_9xFF0R6PgiVd0kRpEtY6APSxSDRP65nXg8hkn9NFsz2bRd9_Z37DJ9D_b=s900-c-k-c0x00ffffff-no-rj'
-//       }" alt="${movieItem.title}" loading="lazy"/>
-//       <div class="card__wrapper">
-//             <p class="card__name">${movieItem.title.toUpperCase()}</p>
-//             <p class="card__description">${genreFind(
-//               movieItem.genre_ids
-//             )} | ${noYearVariableLang(movieItem.release_date)}
-//             <span class="card__vote">${
-//               Math.round(movieItem.vote_average * 10) / 10
-//             }</span>
-//             </p>
-//             </div>
-//           </a>
-//         </li>`;
-//     })
-//     .join('');
-// }
+
 
 function noFilmsMessage() {
   galleryEl.innerHTML =
-    '<p class="message info animate__bounceInDown">Your watch films list is empty.</p>';
+    '<p class="message info animate__bounceInDown">Your watch list is empty.</p>';
+}
+
+function noFilmsNoLogInMessage() {
+  galleryEl.innerHTML =
+    '<p class="message animate__bounceInDown">If you want to add movie to library then you have to log in first.</p>';
 }
 
 function errorMessage() {
@@ -271,7 +225,11 @@ function errorMessage() {
 }
 
 function clearGallery() {
-  galleryEl.innerHTML = '';
+  boxMainBbtnsEl.innerHTML = '';
+}
+
+function clearPagination() {
+  boxMainBbtnsEl.innerHTML = '';
 }
 
 function handledChangeMobile(e) {
@@ -313,6 +271,9 @@ function handledChangeDeskTop(e) {
     // makeMarkupBtns(totalPages);
   }
 }
+
+
+// ---------------------------Pagination----------------------------
 
 function onClickBtnInMainBoxChangePage() {
   if (event.target.nodeName !== 'BUTTON') {
@@ -364,6 +325,14 @@ function markupBtn() {
 }
 
 function makeMarkupBtns(totalPages) {
+  // if (totalPages > 1) {
+  //   btnArrowLeftEl.classList.remove('.btn-hidden');
+  //   btnArrowRightEl.classList.remove('.btn-hidden');
+  // } else if (totalPages <= 1) {
+  //   btnArrowLeftEl.classList.add('.btn-hidden');
+  //   btnArrowRightEl.classList.add('.btn-hidden');
+  // }
+
   let markupBtns = '';
   let totalBtn = 0;
   if (totalPages <= 9) {
@@ -373,6 +342,7 @@ function makeMarkupBtns(totalPages) {
     for (let i = 1; i <= totalBtn; i += 1) {
       markupBtns += markupBtn();
     }
+
     addMarkupBtns(markupBtns);
     [...boxMainBbtnsEl.children].map((btn, i) => {
       btn.textContent = i + 1;
@@ -393,6 +363,7 @@ function makeMarkupBtns(totalPages) {
     [...boxMainBbtnsEl.children].map((btn, i) => {
       btn.textContent = currentPage - 2 + i;
     });
+
     return;
   } else if (totalPages > 9 && currentPage <= 5) {
     boxFirstBtnEl.classList.add('btn-hidden');
@@ -419,6 +390,8 @@ function makeMarkupBtns(totalPages) {
     [...boxMainBbtnsEl.children].map((btn, i) => {
       btn.textContent = totalPages - 6 + i;
     });
+
+    createNumberLastBtn();
     return;
   }
 }
