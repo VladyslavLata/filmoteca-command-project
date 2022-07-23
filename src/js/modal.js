@@ -2,7 +2,7 @@ import { Movie } from './fetchMovie';
 import { genreFind } from './workWithGenres';
 import { getCurrenDataFromLS, getDataFromLibraryLS } from './currentPageData';
 import { LS_LOGIN_KEY } from './authAndLogIn';
-// import { noYearVariableLang } from './languageSwitch';
+import { updateUserData } from './authAndLogIn';
 import {
   keyLS,
   getLanguageFromLS,
@@ -21,6 +21,29 @@ const btnText = {
   QUEUE_ADD_UA: 'додати до черги',
 };
 
+const textInfoTitle = {
+  VOTE_EN: 'Vote / Votes',
+  POPULARITY_EN: 'Popularity',
+  ORIGINAL_TITLE_EN: 'Original Title',
+  GENRE_EN: 'Genre',
+  ABOUT_EN: 'About',
+  VOTE_UA: 'Оцінка / Голосували',
+  POPULARITY_UA: 'Популярність',
+  ORIGINAL_TITLE_UA: 'Оригінальна назва',
+  GENRE_UA: 'Жанр',
+  ABOUT_UA: 'Опис',
+};
+
+const dataActionKey = {
+  DEL: 'del',
+  ADD: 'add',
+};
+
+export const btnNameKey = {
+  WATCHED: 'watched',
+  QUEUE: 'queue',
+};
+
 const body = document.querySelector('body');
 
 // console.log('~ username', username);
@@ -36,8 +59,15 @@ let movieToAdd = {};
 let movies = '';
 let watchedBtn = '';
 let queueBtn = '';
-let watchedDataAttr = 'add';
-let queueDataAttr = 'add';
+let watchedDataAttr = dataActionKey.ADD;
+let queueDataAttr = dataActionKey.ADD;
+const currentInfoTitle = {
+  VOTE: textInfoTitle.VOTE_EN,
+  POPULARITY: textInfoTitle.POPULARITY_EN,
+  ORIGINAL_TITLE: textInfoTitle.ORIGINAL_TITLE_EN,
+  GENRE: textInfoTitle.GENRE_EN,
+  ABOUT: textInfoTitle.ABOUT_EN,
+};
 
 gallery.addEventListener('click', onImageClick);
 modalBtn.addEventListener('click', onCloseClick);
@@ -62,6 +92,7 @@ function onImageClick(e) {
       return;
     }
     buttonTextContent(ID);
+    modalTextInfoTitle();
     modalMarkup(movie);
 
     movieToAdd = movie;
@@ -122,30 +153,40 @@ function modalMarkup({
           <h2 class="modal-info__movie-name">${title.toUpperCase()}</h2>
           <table class="modal-info__list" >
               <tr class="modal-info__item">
-                <th class="modal-info__title">Vote / Votes</th>
+                <th class="modal-info__title">${currentInfoTitle.VOTE}</th>
                 <th class="modal-info__content"><span class="modal-info__content-color"> ${
                   Math.round(vote_average * 10) / 10
                 } </span> / <span class="modal-info__content-color modal-info__content-color--votes">${vote_count}</span></th>
               </tr>
               <tr class="modal-info__item">
-                <td class="modal-info__title">Popularity</td>
+                <td class="modal-info__title">${
+                  currentInfoTitle.POPULARITY
+                }</td>
                 <td class="modal-info__content">${popularity.toFixed(1)}
                 </td>
               </tr>
               <tr class="modal-info__item">
-                <td class="modal-info__title">Original Title</td>
+                <td class="modal-info__title">${
+                  currentInfoTitle.ORIGINAL_TITLE
+                }</td>
                 <td class="modal-info__content modal-info__content--text">${original_title.toUpperCase()}</td>
               </tr>
               <tr class="modal-info__item">
-                <td class="modal-info__title">Genre</td>
+                <td class="modal-info__title">${currentInfoTitle.GENRE}</td>
                 <td class="modal-info__content">${genreFind(genre_ids)}</td>
               </tr>
               </table>            
-                  <p class="modal-info__article-title">About</p>
+                  <p class="modal-info__article-title">${
+                    currentInfoTitle.ABOUT
+                  }</p>
                   <p class="modal-info__article">${overview}</p>
                   <div class="container-btn">
-            <button type="button" class="btn" name="watched" data-action="${watchedDataAttr}">${watchedBtn}</button>
-            <button type="button" class="btn" name="queue" data-action="${queueDataAttr}">${queueBtn}</button>
+            <button type="button" class="btn" name="${
+              btnNameKey.WATCHED
+            }" data-action="${watchedDataAttr}">${watchedBtn}</button>
+            <button type="button" class="btn" name="${
+              btnNameKey.QUEUE
+            }" data-action="${queueDataAttr}">${queueBtn}</button>
         </div>`;
   return (modal.innerHTML = makeMarkupModal);
 }
@@ -155,22 +196,30 @@ let watchedArrAltLang = [];
 let queueArrCurrentLang = [];
 let queueArrAltLang = [];
 
-async function onBtnClick(evt) {
-  const username = await localStorage.getItem(LS_LOGIN_KEY);
-  const usernameSS = await sessionStorage.getItem(LS_LOGIN_KEY);
+// const LS_WATHED_DATA_KEY = 'themovie-watched-lib';
+// const LS_QUEUE_DATA_KEY = 'themovie-queue-lib';
+export const username = localStorage.getItem(LS_LOGIN_KEY);
+export const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
 
+async function onBtnClick(evt) {
+  const username = localStorage.getItem(LS_LOGIN_KEY);
+  const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
   if (evt.target.name === 'watched') {
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
-      addToWatched(evt);
+      await addToWatched(evt);
+      const UID = localStorage.getItem('UID');
+      updateUserData(UID);
     } else {
       alert(
         'If you want to add movie to "Watched" then you have to log in first.'
       );
     }
   }
-  if (evt.target.name === 'queue') {
+  if (evt.target.name === btnNameKey.QUEUE) {
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
-      addToQueue(evt);
+      const UID = localStorage.getItem('UID');
+      await addToQueue(evt);
+      updateUserData(UID);
     } else {
       alert(
         'If you want to add movie to "Queue" then you have to log in first.'
@@ -181,40 +230,46 @@ async function onBtnClick(evt) {
 
 function buttonTextContent(currentID) {
   const currentLanguage = getLanguageFromLS();
+  const isUA = currentLanguage === Movie.language.UKRAINIAN;
   const watchedArr =
     JSON.parse(localStorage.getItem(keyLS.LS_WATHED_EN_DATA_KEY)) || [];
   const queueArr =
     JSON.parse(localStorage.getItem(keyLS.LS_QUEUE_EN_DATA_KEY)) || [];
 
   if (watchedArr.some(value => value.id === currentID)) {
-    watchedDataAttr = 'del';
-    watchedBtn =
-      currentLanguage === Movie.language.UKRAINIAN
-        ? btnText.WATCHED_DEL_UA
-        : btnText.WATCHED_DEL_EN;
+    watchedDataAttr = dataActionKey.DEL;
+    watchedBtn = isUA ? btnText.WATCHED_DEL_UA : btnText.WATCHED_DEL_EN;
   } else {
-    watchedDataAttr = 'add';
-    watchedBtn =
-      currentLanguage === Movie.language.UKRAINIAN
-        ? btnText.WATCHED_ADD_UA
-        : btnText.WATCHED_ADD_EN;
+    watchedDataAttr = dataActionKey.ADD;
+    watchedBtn = isUA ? btnText.WATCHED_ADD_UA : btnText.WATCHED_ADD_EN;
   }
 
   if (queueArr.some(value => value.id === currentID)) {
-    queueDataAttr = 'del';
-    queueBtn =
-      currentLanguage === Movie.language.UKRAINIAN
-        ? btnText.QUEUE_DEL_UA
-        : btnText.QUEUE_DEL_EN;
+    queueDataAttr = dataActionKey.DEL;
+    queueBtn = isUA ? btnText.QUEUE_DEL_UA : btnText.QUEUE_DEL_EN;
   } else {
-    queueDataAttr = 'add';
-    queueBtn =
-      currentLanguage === Movie.language.UKRAINIAN
-        ? btnText.QUEUE_ADD_UA
-        : btnText.QUEUE_ADD_EN;
+    queueDataAttr = dataActionKey.ADD;
+    queueBtn = isUA ? btnText.QUEUE_ADD_UA : btnText.QUEUE_ADD_EN;
   }
 }
 
+function modalTextInfoTitle() {
+  const currentLanguage = getLanguageFromLS();
+  const isUA = currentLanguage === Movie.language.UKRAINIAN;
+  currentInfoTitle.VOTE = isUA ? textInfoTitle.VOTE_UA : textInfoTitle.VOTE_EN;
+  currentInfoTitle.POPULARITY = isUA
+    ? textInfoTitle.POPULARITY_UA
+    : textInfoTitle.POPULARITY_EN;
+  currentInfoTitle.ORIGINAL_TITLE = isUA
+    ? textInfoTitle.ORIGINAL_TITLE_UA
+    : textInfoTitle.ORIGINAL_TITLE_EN;
+  currentInfoTitle.GENRE = isUA
+    ? textInfoTitle.GENRE_UA
+    : textInfoTitle.GENRE_EN;
+  currentInfoTitle.ABOUT = isUA
+    ? textInfoTitle.ABOUT_UA
+    : textInfoTitle.ABOUT_EN;
+}
 // function buttonTextContent() {
 //   const modalButtons = document.querySelector('.container-btn');
 //   watchedBtn = modalButtons.children[0];
@@ -260,6 +315,7 @@ async function addToWatched(evt) {
       currentLanguage === Movie.language.UKRAINIAN
         ? btnText.WATCHED_ADD_UA
         : btnText.WATCHED_ADD_EN;
+    evt.target.dataset.action = dataActionKey.ADD;
     const filteredWatchedArr = watchedArrCurrentLang.filter(
       value => value.id !== ID
     );
@@ -282,6 +338,7 @@ async function addToWatched(evt) {
     currentLanguage === Movie.language.UKRAINIAN
       ? btnText.WATCHED_DEL_UA
       : btnText.WATCHED_DEL_EN;
+  evt.target.dataset.action = dataActionKey.DEL;
 }
 
 /////////// ADD TO QUEUE
@@ -312,6 +369,7 @@ async function addToQueue(evt) {
       currentLanguage === Movie.language.UKRAINIAN
         ? btnText.QUEUE_ADD_UA
         : btnText.QUEUE_ADD_EN;
+    evt.target.dataset.action = dataActionKey.ADD;
     const filteredQueueArr = queueArrCurrentLang.filter(
       value => value.id !== ID
     );
@@ -334,6 +392,7 @@ async function addToQueue(evt) {
     currentLanguage === Movie.language.UKRAINIAN
       ? btnText.QUEUE_DEL_UA
       : btnText.QUEUE_DEL_EN;
+  evt.target.dataset.action = dataActionKey.DEL;
 }
 
 async function fetchAltLangByID(movieID, language) {

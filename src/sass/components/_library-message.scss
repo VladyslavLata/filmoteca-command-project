@@ -1,0 +1,39 @@
+.message {
+  padding: 10px 0px;
+  position: relative;
+  z-index: -1;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.4;
+  color: $orange-color;
+
+  @media screen and (min-width: 768px) {
+    font-size: 24px;
+  }
+}
+
+.box-btns {
+  display: flex;
+}
+
+.btn-pg {
+  width: 25px;
+  height: 25px;
+}
+
+.first-box-btn,
+.last-box-btn {
+  display: flex;
+
+}
+
+.btn-hidden {
+    @extend %visually-hidden;
+}
+
+.btn-current-pages {
+  background-color: $orange-color;
+}
+

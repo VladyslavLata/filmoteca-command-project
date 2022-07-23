@@ -6,6 +6,7 @@ const backdropTeam = document.querySelector('.backdrop-team');
 const closeTeam = document.querySelector('.modal-team__button');
 const body = document.querySelector('body');
 const modalTeam = document.querySelector('.modal-team__container');
+const heartIcon = document.querySelector('.footer-text__icon');
 
 const ref = {
   lead: document.querySelector('.js-role-lead'),
@@ -36,11 +37,13 @@ function onTeamClick(e) {
   backdropTeam.classList.remove('is-hidden');
   body.classList.add('modal-team-open');
   modalTeamMarkup();
+  heartIcon.classList.remove('animate__heartBeat');
 }
 
 function onCloseTeamClick(e) {
   backdropTeam.classList.add('is-hidden');
   body.classList.remove('modal-team-open');
+  heartIcon.classList.add('animate__heartBeat');
 }
 
 function modalTeamMarkup() {

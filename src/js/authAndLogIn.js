@@ -7,13 +7,8 @@ import {
   onAuthStateChanged,
   signOut,
 } from 'firebase/auth';
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  addDoc,
-  collection,
-} from 'firebase/firestore';
+import { getDatabase, set, ref, child, update, get } from 'firebase/database';
+import { keyLS } from './languageSwitch';
 
 const refs = {
   emptyLibText: document.querySelector('.not-logged-gallery'),
@@ -34,7 +29,9 @@ const refs = {
   checkbox: document.querySelector('.form-check-input'),
   usernick: document.querySelector('.user-nick'),
 };
+
 export const LS_LOGIN_KEY = 'keep_logged_as';
+export const LS_UID_VALUE = 'UID';
 
 sessionStorage.removeItem(LS_LOGIN_KEY);
 
@@ -50,34 +47,107 @@ const firebaseConfig = {
   appId: '1:744226297338:web:8ad6c2023b760eb61bc043',
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
+export const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
+const database = getDatabase(firebaseApp);
 
-// ------------------------------------------------------------------------------------------------
-const firestore = getFirestore(firebaseApp);
-
-const watchedCollection = doc(firestore, 'watched/collection');
-
-async function writeTestCollectionFunction() {
-  const docData = {
-    array: ['1', '2'],
-  };
-  setDoc(watchedCollection, docData);
-  // try {
-  //   const docRef = await addDoc(collection(firestore, 'users'), {
-  //     first: 'Ada',
-  //     last: 'Lovelace',
-  //     born: 1815,
-  //   });
-  //   console.log('Document written with ID: ', docRef.id);
-  // } catch (e) {
-  //   console.error('Error adding document: ', e);
-  // }
+function writeUserData(userId, name, email) {
+  set(ref(database, 'users/' + userId), {
+    username: name,
+    email: email,
+    watchedEN: '',
+    watchedUA: '',
+    queueEN: '',
+    queueUA: '',
+  });
 }
 
-writeTestCollectionFunction();
-// -------------------------------------------------------------------------------------------------
+function getDataFromDatabase(userId) {
+  const databaseRef = ref(getDatabase(firebaseApp));
+  get(child(databaseRef, `users/${userId}`))
+    .then(snapshot => {
+      // console.log(snapshot.exists());
+      if (snapshot.exists()) {
+        const dataFromFirebaseWatchedUA = snapshot.val().watchedUA;
+        const dataFromFirebaseWatchedEN = snapshot.val().watchedEN;
+        const dataFromFirebaseQueueUA = snapshot.val().queueUA;
+        const dataFromFirebaseQueueEN = snapshot.val().queueEN;
+        localStorage.setItem(
+          keyLS.LS_WATHED_UA_DATA_KEY,
+          JSON.stringify(dataFromFirebaseWatchedUA)
+        );
+        localStorage.setItem(
+          keyLS.LS_WATHED_EN_DATA_KEY,
+          JSON.stringify(dataFromFirebaseWatchedEN)
+        );
+        localStorage.setItem(
+          keyLS.LS_QUEUE_UA_DATA_KEY,
+          JSON.stringify(dataFromFirebaseQueueUA)
+        );
+        localStorage.setItem(
+          keyLS.LS_QUEUE_EN_DATA_KEY,
+          JSON.stringify(dataFromFirebaseQueueEN)
+        );
+      } else {
+        console.log('No data available');
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
 
+export async function updateUserData(userUID) {
+  let watchedEN = localStorage.getItem('themovie-watched-EN-lib');
+  let watchedUA = localStorage.getItem('themovie-watched-UA-lib');
+  let queueEN = localStorage.getItem('themovie-queue-EN-lib');
+  let queueUA = localStorage.getItem('themovie-queue-UA-lib');
+  const updates = {};
+  if (watchedEN.length !== 2) {
+    watchedEN = JSON.parse(watchedEN);
+  }
+  if (watchedUA.length !== 2) {
+    watchedUA = JSON.parse(watchedUA);
+  }
+  if (queueEN.length !== 2) {
+    queueEN = JSON.parse(queueEN);
+  }
+  if (queueUA.length !== 2) {
+    queueUA = JSON.parse(queueUA);
+  }
+  console.log(watchedEN);
+  console.log(typeof watchedEN === 'string');
+  console.log(watchedUA);
+  console.log(queueEN);
+  console.log(queueUA);
+
+  if (watchedEN.length > 0) {
+    updates['/users/' + userUID + '/' + 'watchedEN'] = watchedEN;
+  }
+  if (watchedEN.length == 2 && typeof watchedEN === 'string') {
+    updates['/users/' + userUID + '/' + 'watchedEN'] = '';
+  }
+  if (watchedUA.length > 0) {
+    updates['/users/' + userUID + '/' + 'watchedUA'] = watchedUA;
+  }
+  if (watchedUA.length == 2 && typeof watchedUA === 'string') {
+    updates['/users/' + userUID + '/' + 'watchedUA'] = '';
+  }
+  if (queueEN.length > 0) {
+    updates['/users/' + userUID + '/' + 'queueEN'] = queueEN;
+  }
+  if (queueEN.length == 2 && typeof queueEN === 'string') {
+    updates['/users/' + userUID + '/' + 'queueEN'] = '';
+  }
+  if (queueUA.length > 0) {
+    updates['/users/' + userUID + '/' + 'queueUA'] = queueUA;
+  }
+  if (queueUA.length == 2 && typeof queueUA === 'string') {
+    updates['/users/' + userUID + '/' + 'queueUA'] = '';
+  }
+  return update(ref(database), updates);
+}
+// ----------------------------------------------------------------------------------
 const loginEmailPassword = async () => {
   const loginEmail = refs.loginEmail.value;
   const loginPassword = refs.loginPassword.value;
@@ -92,14 +162,17 @@ const loginEmailPassword = async () => {
     } else {
       userCredential.user.displayName = refs.loginUsername.value;
       const username = userCredential.user.displayName;
+      const userUID = userCredential.user.uid;
       if (refs.checkbox.checked) {
         localStorage.setItem(LS_LOGIN_KEY, `${username}`);
       } else if (!refs.checkbox.checked) {
         sessionStorage.setItem(LS_LOGIN_KEY, `${username}`);
       }
+      localStorage.setItem(LS_UID_VALUE, `${userUID}`);
       refs.loginHeaderBtn.textContent = 'Log Out';
       refs.usernick.textContent = `${username}`;
       console.log(username);
+      getDataFromDatabase(userUID);
       monitorAuthState();
       resetLogin();
     }
@@ -127,6 +200,11 @@ const createAccount = async e => {
       signupEmail,
       signupPassword
     );
+    writeUserData(
+      userCredential.user.uid,
+      userCredential.user.displayName,
+      userCredential.user.email
+    );
     alert('You are signed up now');
     resetSignup();
   } catch (error) {
@@ -141,7 +219,7 @@ async function monitorAuthState() {
     const username = localStorage.getItem(LS_LOGIN_KEY);
     const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
     if (refs.libGallery) {
-      refs.emptyLibText.style.display = 'none';
+      // refs.emptyLibText.style.display = 'none';
       refs.libGallery.style.display = 'flex';
     }
     if (username) {
@@ -154,15 +232,20 @@ async function monitorAuthState() {
       refs.logoutModal.classList.remove('logout-modal--hidden');
       refs.logoutText.innerHTML = `You are logged in as ${usernameSS}`;
     }
+    // return user.uid;
   });
 }
 
 const logout = async () => {
   await signOut(auth);
   if (refs.libGallery) {
-    refs.emptyLibText.style.display = 'flex';
+    // refs.emptyLibText.style.display = 'flex';
     refs.libGallery.style.display = 'none';
   }
+  localStorage.removeItem(keyLS.LS_WATHED_UA_DATA_KEY);
+  localStorage.removeItem(keyLS.LS_WATHED_EN_DATA_KEY);
+  localStorage.removeItem(keyLS.LS_QUEUE_UA_DATA_KEY);
+  localStorage.removeItem(keyLS.LS_QUEUE_EN_DATA_KEY);
   localStorage.removeItem(LS_LOGIN_KEY);
   refs.loginHeaderBtn.textContent = 'Log In';
   refs.usernick.textContent = ``;
@@ -178,7 +261,7 @@ function checkIfLogged() {
   const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
   if (username || usernameSS) {
     if (refs.libGallery) {
-      refs.emptyLibText.style.display = 'none';
+      // refs.emptyLibText.style.display = 'none';
       refs.libGallery.style.display = 'flex';
     }
     refs.loginForm.classList.add('logout-modal--hidden');
@@ -188,7 +271,7 @@ function checkIfLogged() {
     refs.logoutText.innerHTML = `You are logged in as ${username}`;
   } else {
     if (refs.libGallery) {
-      refs.emptyLibText.style.display = 'flex';
+      // refs.emptyLibText.style.display = 'flex';
       refs.libGallery.style.display = 'none';
     }
     refs.loginForm.classList.remove('logout-modal--hidden');
