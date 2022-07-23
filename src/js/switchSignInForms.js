@@ -18,6 +18,8 @@ loginCloseBtn.addEventListener('click', onCloseModal);
 loginBtn.addEventListener('click', onLoginOpen);
 signupBtn.addEventListener('click', onSignupOpen);
 regUserMobileBtn.addEventListener('click', onLoginOpen);
+signupOverlay.addEventListener('click', onCloseClickBackdrop);
+loginOverlay.addEventListener('click', onCloseClickBackdrop);
 
 function onChangeLinkClick(e) {
   e.preventDefault();
@@ -26,17 +28,34 @@ function onChangeLinkClick(e) {
 }
 
 function onCloseModal(e) {
+  window.removeEventListener('keydown', onEscKeyPress);
   body.classList.remove('modal-open');
   loginOverlay.classList.add('log-in__overlay--hidden');
   signupOverlay.classList.add('sign-up__overlay--hidden');
 }
 
 function onLoginOpen(e) {
+  window.addEventListener('keydown', onEscKeyPress);
   loginOverlay.classList.remove('log-in__overlay--hidden');
   body.classList.add('modal-open');
 }
 
 function onSignupOpen(e) {
+  window.addEventListener('keydown', onEscKeyPress);
   signupOverlay.classList.remove('sign-up__overlay--hidden');
   body.classList.add('modal-open');
+}
+
+function onCloseClickBackdrop(e) {
+  if (e.target == e.currentTarget) {
+    body.classList.remove('modal-open');
+    loginOverlay.classList.add('log-in__overlay--hidden');
+    signupOverlay.classList.add('sign-up__overlay--hidden');
+  }
+}
+
+function onEscKeyPress(e) {
+  if (e.code === 'Escape') {
+    onCloseModal();
+  }
 }
