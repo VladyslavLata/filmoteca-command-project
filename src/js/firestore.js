@@ -5,6 +5,8 @@ const firestore = getFirestore(firebaseApp);
 
 const libraryCollection = doc(firestore, 'watched/watched');
 
+writeTestCollectionFunction();
+
 export async function writeTestCollectionFunction() {
   try {
     const watchedEN = JSON.parse(
