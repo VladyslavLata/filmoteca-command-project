@@ -60,7 +60,7 @@ function modalTeamMarkup() {
   let boiko = langUS ? 'Serhii Boiko' : 'Сергій Бойко';
   let konovalova = langUS ? 'Kateryna Konovalova' : 'Катерина Коновалова';
   let lata = langUS ? 'Vladyslav Lata' : 'Владислав Лата';
-  let muzalevskiy = langUS ? 'Evgeniy Muzalevskiy' : 'Євгеній Музалєвський';
+  let muzalevskiy = langUS ? 'Evgeniy Muzalevskiy' : 'Євген Музалевський';
   let diachenko = langUS ? 'Olena Diachenko' : 'Олена Дяченко';
   let malynovska = langUS ? 'Natalia Malynovska' : 'Наталя Малиновська';
   let garnyk = langUS ? 'Alyona Garnyk' : 'Альона Гарнюк';
