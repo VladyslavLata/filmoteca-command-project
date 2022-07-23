@@ -2,7 +2,7 @@ import { Movie } from './fetchMovie';
 import { genreFind } from './workWithGenres';
 import { getCurrenDataFromLS, getDataFromLibraryLS } from './currentPageData';
 import { LS_LOGIN_KEY } from './authAndLogIn';
-// import { writeTestCollectionFunction } from './firestore';
+import { updateUserData } from './authAndLogIn';
 import {
   keyLS,
   getLanguageFromLS,
@@ -206,9 +206,9 @@ async function onBtnClick(evt) {
   const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
   if (evt.target.name === 'watched') {
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
-      // addToWatched(evt);
       await addToWatched(evt);
-      // writeTestCollectionFunction();
+      const UID = localStorage.getItem('UID');
+      updateUserData(UID);
     } else {
       alert(
         'If you want to add movie to "Watched" then you have to log in first.'
@@ -217,8 +217,9 @@ async function onBtnClick(evt) {
   }
   if (evt.target.name === btnNameKey.QUEUE) {
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
+      const UID = localStorage.getItem('UID');
       await addToQueue(evt);
-      // writeTestCollectionFunction();
+      updateUserData(UID);
     } else {
       alert(
         'If you want to add movie to "Queue" then you have to log in first.'

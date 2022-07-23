@@ -7,6 +7,8 @@ import {
   onAuthStateChanged,
   signOut,
 } from 'firebase/auth';
+import { getDatabase, set, ref, child, update, get } from 'firebase/database';
+import { keyLS } from './languageSwitch';
 
 const refs = {
   emptyLibText: document.querySelector('.not-logged-gallery'),
@@ -29,6 +31,7 @@ const refs = {
 };
 
 export const LS_LOGIN_KEY = 'keep_logged_as';
+export const LS_UID_VALUE = 'UID';
 
 sessionStorage.removeItem(LS_LOGIN_KEY);
 
@@ -46,88 +49,62 @@ const firebaseConfig = {
 
 export const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
-// writeTestCollectionFunction();
+const database = getDatabase(firebaseApp);
 
-// ------------------------------------------------------------------------------------------------
-// const firestore = getFirestore(firebaseApp);
+function writeUserData(userId, name, email) {
+  set(ref(database, 'users/' + userId), {
+    username: name,
+    email: email,
+  });
+}
 
-// const libraryCollection = doc(firestore, 'watched/watched');
+function getDataFromDatabase(userId) {
+  const databaseRef = ref(getDatabase(firebaseApp));
+  get(child(databaseRef, `users/${userId}`))
+    .then(snapshot => {
+      if (snapshot.exists()) {
+        const dataFromFirebaseWatchedUA = snapshot.val().watchedUA;
+        const dataFromFirebaseWatchedEN = snapshot.val().watchedEN;
+        const dataFromFirebaseQueueUA = snapshot.val().queueUA;
+        const dataFromFirebaseQueueEN = snapshot.val().queueEN;
+        localStorage.setItem(
+          keyLS.LS_WATHED_UA_DATA_KEY,
+          JSON.stringify(dataFromFirebaseWatchedUA)
+        );
+        localStorage.setItem(
+          keyLS.LS_WATHED_EN_DATA_KEY,
+          JSON.stringify(dataFromFirebaseWatchedEN)
+        );
+        localStorage.setItem(
+          keyLS.LS_QUEUE_UA_DATA_KEY,
+          JSON.stringify(dataFromFirebaseQueueUA)
+        );
+        localStorage.setItem(
+          keyLS.LS_QUEUE_EN_DATA_KEY,
+          JSON.stringify(dataFromFirebaseQueueEN)
+        );
+      } else {
+        console.log('No data available');
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
 
-// export async function writeTestCollectionFunction() {
-//   try {
-//     const watchedEN = JSON.parse(
-//       localStorage.getItem('themovie-watched-EN-lib')
-//     );
-//     const watchedUA = JSON.parse(
-//       localStorage.getItem('themovie-watched-UA-lib')
-//     );
-//     const queueEN = JSON.parse(localStorage.getItem('themovie-queue-EN-lib'));
-//     const queueUA = JSON.parse(localStorage.getItem('themovie-queue-UA-lib'));
-//     const docData = {
-//       watchedEN,
-//       watchedUA,
-//       queueEN,
-//       queueUA,
-//     };
-//     setDoc(libraryCollection, docData);
-//   } catch (error) {
-//     console.error('Error adding document: ', error);
-//   }
-// }
-
-// // export async function readThemeDocument() {
-// //   const mySnapshot = await getDoc(libraryCollection);
-// //   if (mySnapshot.exists()) {
-// //     const docData = mySnapshot.data();
-// //     console.log('My Data: ', docData.watchedEN);
-// //     // return docData.switchMode;
-// //   }
-// // }
-
-// export async function listenTowatchedEn() {
-//   onSnapshot(libraryCollection, docSnapshot => {
-//     if (docSnapshot.exists()) {
-//       const docWatchedEn = docSnapshot.data().watchedEN;
-//       console.log('EN: ', docWatchedEn);
-//       return docWatchedEn;
-//     }
-//   });
-// }
-// export async function listenTowatchedUa() {
-//   onSnapshot(libraryCollection, docSnapshot => {
-//     if (docSnapshot.exists()) {
-//       const docWatchedUa = docSnapshot.data().watchedUA;
-//       console.log('UA: ', docWatchedUa);
-//       return docWatchedUa;
-//     }
-//   });
-// }
-// export async function listenToQueueEn() {
-//   onSnapshot(libraryCollection, docSnapshot => {
-//     if (docSnapshot.exists()) {
-//       const docQueueEn = docSnapshot.data().queueEN;
-//       console.log('EN: ', docQueueEn);
-//       return docQueueEn;
-//     }
-//   });
-// }
-// export async function listenToQueueUa() {
-//   onSnapshot(libraryCollection, docSnapshot => {
-//     if (docSnapshot.exists()) {
-//       const docQueueUa = docSnapshot.data().queueUA;
-//       console.log('UA: ', docQueueUa);
-//       return docQueueUa;
-//     }
-//   });
-// }
-
-// listenTowatchedEn();
-// listenTowatchedUa();
-// listenToQueueEn();
-// listenToQueueUa();
-
-// -------------------------------------------------------------------------------------------------
-
+export async function updateUserData(userUID) {
+  const watchedEN = JSON.parse(localStorage.getItem('themovie-watched-EN-lib'));
+  const watchedUA = JSON.parse(localStorage.getItem('themovie-watched-UA-lib'));
+  const queueEN = JSON.parse(localStorage.getItem('themovie-queue-EN-lib'));
+  const queueUA = JSON.parse(localStorage.getItem('themovie-queue-UA-lib'));
+  const updates = {};
+  updates['/users/' + userUID + '/' + 'watchedEN'] = watchedEN;
+  updates['/users/' + userUID + '/' + 'watchedUA'] = watchedUA;
+  updates['/users/' + userUID + '/' + 'queueEN'] = queueEN;
+  updates['/users/' + userUID + '/' + 'queueUA'] = queueUA;
+  return update(ref(database), updates);
+}
+// ----------------------------------------------------------------------------------
 const loginEmailPassword = async () => {
   const loginEmail = refs.loginEmail.value;
   const loginPassword = refs.loginPassword.value;
@@ -142,14 +119,17 @@ const loginEmailPassword = async () => {
     } else {
       userCredential.user.displayName = refs.loginUsername.value;
       const username = userCredential.user.displayName;
+      const userUID = userCredential.user.uid;
       if (refs.checkbox.checked) {
         localStorage.setItem(LS_LOGIN_KEY, `${username}`);
       } else if (!refs.checkbox.checked) {
         sessionStorage.setItem(LS_LOGIN_KEY, `${username}`);
       }
+      localStorage.setItem(LS_UID_VALUE, `${userUID}`);
       refs.loginHeaderBtn.textContent = 'Log Out';
       refs.usernick.textContent = `${username}`;
       console.log(username);
+      getDataFromDatabase(userUID);
       monitorAuthState();
       resetLogin();
     }
@@ -176,6 +156,11 @@ const createAccount = async e => {
       auth,
       signupEmail,
       signupPassword
+    );
+    writeUserData(
+      userCredential.user.uid,
+      userCredential.user.displayName,
+      userCredential.user.email
     );
     alert('You are signed up now');
     resetSignup();
@@ -204,6 +189,7 @@ async function monitorAuthState() {
       refs.logoutModal.classList.remove('logout-modal--hidden');
       refs.logoutText.innerHTML = `You are logged in as ${usernameSS}`;
     }
+    // return user.uid;
   });
 }
 
@@ -213,6 +199,10 @@ const logout = async () => {
     // refs.emptyLibText.style.display = 'flex';
     refs.libGallery.style.display = 'none';
   }
+  localStorage.removeItem(keyLS.LS_WATHED_UA_DATA_KEY);
+  localStorage.removeItem(keyLS.LS_WATHED_EN_DATA_KEY);
+  localStorage.removeItem(keyLS.LS_QUEUE_UA_DATA_KEY);
+  localStorage.removeItem(keyLS.LS_QUEUE_EN_DATA_KEY);
   localStorage.removeItem(LS_LOGIN_KEY);
   refs.loginHeaderBtn.textContent = 'Log In';
   refs.usernick.textContent = ``;
