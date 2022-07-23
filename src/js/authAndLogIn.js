@@ -116,11 +116,11 @@ export async function updateUserData(userUID) {
   if (queueUA.length !== 2) {
     queueUA = JSON.parse(queueUA);
   }
-  console.log(watchedEN);
-  console.log(typeof watchedEN === 'string');
-  console.log(watchedUA);
-  console.log(queueEN);
-  console.log(queueUA);
+  // console.log(watchedEN);
+  // console.log(typeof watchedEN === 'string');
+  // console.log(watchedUA);
+  // console.log(queueEN);
+  // console.log(queueUA);
 
   if (watchedEN.length > 0) {
     updates['/users/' + userUID + '/' + 'watchedEN'] = watchedEN;
