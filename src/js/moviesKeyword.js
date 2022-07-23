@@ -3,6 +3,7 @@ import { makeMarkupCard } from './cardMarkup';
 import { getLanguageFromLS } from './languageSwitch';
 import { unlockBtnTrendTime } from './trendTime';
 import { setCurrenDataToLS, getCurrenDataFromLS } from './currentPageData';
+import { renderPagination } from './renderPagination';
 import Loader from './loader';
 
 const loader = new Loader();
@@ -40,6 +41,7 @@ async function onClickSubmit(event) {
     }
 
     makeMarkupCard(data);
+    renderPagination(data);
     event.target.reset();
     refs.paragraphEl.innerHTML = '';
 
