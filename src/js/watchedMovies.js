@@ -84,6 +84,7 @@ function libraryStart() {
   }
   switchBtnLang(currentLangLibrary);
   setCurrentPageToLS(keyLS.VALUE_PAGE_LIBRARY_W);
+  setTimeout(() => { loader.disable('preloader') }, 1000);
 }
 
 export function onClickENBtnMarkupFilms() {
@@ -116,6 +117,7 @@ function onClickWatchedBtnMarkupFilms() {
   setCurrentPageToLS(keyLS.VALUE_PAGE_LIBRARY_W);
   watchedMovieBtnEl.classList.add('is-active');
   queueMovieBtnEl.classList.remove('is-active');
+  loader.disable('loader');
 }
 
 function onClickQueueBtnMarkupFilms() {
@@ -128,6 +130,7 @@ function onClickQueueBtnMarkupFilms() {
   setCurrentPageToLS(keyLS.VALUE_PAGE_LIBRARY_Q);
   queueMovieBtnEl.classList.add('is-active');
   watchedMovieBtnEl.classList.remove('is-active');
+  loader.disable('loader');
 }
 
 function getCurrentLSWatchedFilms() {

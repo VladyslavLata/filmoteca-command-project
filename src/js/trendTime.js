@@ -6,13 +6,13 @@ import { disabledEl, unlockEl } from './interfaceWork';
 import Loader from './loader';
 
 const loader = new Loader();
-const refs = {
+export const refsTrendTime = {
   btnSwitchDay: document.querySelector('.time-switch-day'),
   btnSwitchWeek: document.querySelector('.time-switch-week'),
 };
 
-refs.btnSwitchDay.addEventListener('click', onClickDay);
-refs.btnSwitchWeek.addEventListener('click', onClickWeek);
+refsTrendTime.btnSwitchDay.addEventListener('click', onClickDay);
+refsTrendTime.btnSwitchWeek.addEventListener('click', onClickWeek);
 
 function onClickDay() {
   loader.enable('loader');
@@ -35,18 +35,18 @@ function onClickWeek() {
 export function switchBtnTrendTime(currentTime) {
   switch (currentTime) {
     case Movie.trendTime.DAY:
-      disabledEl(refs.btnSwitchDay);
-      unlockEl(refs.btnSwitchWeek);
+      disabledEl(refsTrendTime.btnSwitchDay);
+      unlockEl(refsTrendTime.btnSwitchWeek);
       break;
 
     case Movie.trendTime.WEEK:
-      disabledEl(refs.btnSwitchWeek);
-      unlockEl(refs.btnSwitchDay);
+      disabledEl(refsTrendTime.btnSwitchWeek);
+      unlockEl(refsTrendTime.btnSwitchDay);
       break;
   }
 }
 
 export function unlockBtnTrendTime() {
-  unlockEl(refs.btnSwitchDay);
-  unlockEl(refs.btnSwitchWeek);
+  unlockEl(refsTrendTime.btnSwitchDay);
+  unlockEl(refsTrendTime.btnSwitchWeek);
 }
