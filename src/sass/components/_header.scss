@@ -197,6 +197,9 @@
 
 .user-nick {
   color: $white-color;
+  @include mq(mobile-only) {
+      display: none;
+    }
 }
 
 .registration__menu {

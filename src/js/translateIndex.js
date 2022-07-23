@@ -41,7 +41,7 @@ export async function translatePage() {
 
   if (lang === 'uk-UA') {
     linkHome.textContent = `Головна`;
-    linkMyLibrary.textContent = `Моя бібліотека`;
+    linkMyLibrary.textContent = `Бібліотека`;
     btnSignUp.textContent = `Реєстрація`;
     if (btnLogIn.textContent === 'Log In') {
       btnLogIn.textContent = 'Вхід';
