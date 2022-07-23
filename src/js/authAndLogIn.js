@@ -190,10 +190,10 @@ async function monitorAuthState() {
   onAuthStateChanged(auth, user => {
     const username = localStorage.getItem(LS_LOGIN_KEY);
     const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
-    if (refs.libGallery) {
-      refs.emptyLibText.style.display = 'none';
-      refs.libGallery.style.display = 'flex';
-    }
+    // if (refs.libGallery) {
+    //   refs.emptyLibText.style.display = 'none';
+    //   refs.libGallery.style.display = 'flex';
+    // }
     if (username) {
       refs.loginForm.classList.add('logout-modal--hidden');
       refs.logoutModal.classList.remove('logout-modal--hidden');
@@ -209,10 +209,10 @@ async function monitorAuthState() {
 
 const logout = async () => {
   await signOut(auth);
-  if (refs.libGallery) {
-    refs.emptyLibText.style.display = 'flex';
-    refs.libGallery.style.display = 'none';
-  }
+  // if (refs.libGallery) {
+  //   refs.emptyLibText.style.display = 'flex';
+  //   refs.libGallery.style.display = 'none';
+  // }
   localStorage.removeItem(LS_LOGIN_KEY);
   refs.loginHeaderBtn.textContent = 'Log In';
   refs.usernick.textContent = ``;
@@ -227,20 +227,20 @@ function checkIfLogged() {
   const username = localStorage.getItem(LS_LOGIN_KEY);
   const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
   if (username || usernameSS) {
-    if (refs.libGallery) {
-      refs.emptyLibText.style.display = 'none';
-      refs.libGallery.style.display = 'flex';
-    }
+    // if (refs.libGallery) {
+    //   refs.emptyLibText.style.display = 'none';
+    //   refs.libGallery.style.display = 'flex';
+    // }
     refs.loginForm.classList.add('logout-modal--hidden');
     refs.logoutModal.classList.remove('logout-modal--hidden');
     refs.loginHeaderBtn.textContent = 'Log Out';
     refs.usernick.textContent = `${username}`;
     refs.logoutText.innerHTML = `You are logged in as ${username}`;
   } else {
-    if (refs.libGallery) {
-      refs.emptyLibText.style.display = 'flex';
-      refs.libGallery.style.display = 'none';
-    }
+    // if (refs.libGallery) {
+    //   refs.emptyLibText.style.display = 'flex';
+    //   refs.libGallery.style.display = 'none';
+    // }
     refs.loginForm.classList.remove('logout-modal--hidden');
     refs.logoutModal.classList.add('logout-modal--hidden');
     refs.loginHeaderBtn.textContent = 'Log In';
