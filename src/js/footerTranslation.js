@@ -1,4 +1,5 @@
 import { getLanguageFromLS } from './languageSwitch';
+import { Movie } from './fetchMovie';
 
 const refs = {
   textUpFirst: document.querySelector('.js-footer-text__up--first'),
@@ -27,6 +28,6 @@ export async function renderFooter() {
     textUpThird.textContent = ``;
     textLink.textContent = `Студентами GoIT`;
   }
-};
+}
 
 renderFooter();
