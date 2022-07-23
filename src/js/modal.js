@@ -2,7 +2,7 @@ import { Movie } from './fetchMovie';
 import { genreFind } from './workWithGenres';
 import { getCurrenDataFromLS, getDataFromLibraryLS } from './currentPageData';
 import { LS_LOGIN_KEY } from './authAndLogIn';
-import { writeTestCollectionFunction } from './firestore';
+// import { writeTestCollectionFunction } from './firestore';
 import {
   keyLS,
   getLanguageFromLS,
@@ -197,15 +197,15 @@ let queueArrCurrentLang = [];
 let queueArrAltLang = [];
 
 async function onBtnClick(evt) {
-  const username = await localStorage.getItem(LS_LOGIN_KEY);
-  const usernameSS = await sessionStorage.getItem(LS_LOGIN_KEY);
+  const username = localStorage.getItem(LS_LOGIN_KEY);
+  const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
 
   if (evt.target.name === btnNameKey.WATCHED) {
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
       // addToWatched(evt);
-      addToWatched(evt);
+      await addToWatched(evt);
       evt.target.setAttribute('data-action', 'del');
-      writeTestCollectionFunction();
+      // writeTestCollectionFunction();
     } else {
       alert(
         'If you want to add movie to "Watched" then you have to log in first.'
@@ -214,9 +214,9 @@ async function onBtnClick(evt) {
   }
   if (evt.target.name === btnNameKey.QUEUE) {
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
-      addToQueue(evt);
+      await addToQueue(evt);
       evt.target.setAttribute('data-action', 'del');
-      writeTestCollectionFunction();
+      // writeTestCollectionFunction();
     } else {
       alert(
         'If you want to add movie to "Queue" then you have to log in first.'
