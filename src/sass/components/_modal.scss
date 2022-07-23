@@ -249,7 +249,8 @@ body.modal-open {
   padding: 6px;
   transition: background-color 250ms $typical-cubic,
       color 250ms $typical-cubic,
-      border 250ms $typical-cubic;
+      border 250ms $typical-cubic,
+      transform 250ms $typical-cubic;
 
   &:first-child {
     margin-right: 20px;
