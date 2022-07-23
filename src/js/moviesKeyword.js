@@ -7,7 +7,7 @@ import { renderPagination } from './renderPagination';
 import Loader from './loader';
 
 const loader = new Loader();
-const refs = {
+export const refs = {
   formEl: document.querySelector('.search-form'),
   paragraphEl: document.querySelector('.warning-notification'),
 };

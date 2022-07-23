@@ -9,6 +9,7 @@ import {
 } from 'firebase/auth';
 import { getDatabase, set, ref, child, update, get } from 'firebase/database';
 import { keyLS } from './languageSwitch';
+import { getLanguageFromLS } from './languageSwitch';
 
 const refs = {
   emptyLibText: document.querySelector('.not-logged-gallery'),
@@ -55,6 +56,10 @@ function writeUserData(userId, name, email) {
   set(ref(database, 'users/' + userId), {
     username: name,
     email: email,
+    watchedEN: '',
+    watchedUA: '',
+    queueEN: '',
+    queueUA: '',
   });
 }
 
@@ -62,6 +67,7 @@ function getDataFromDatabase(userId) {
   const databaseRef = ref(getDatabase(firebaseApp));
   get(child(databaseRef, `users/${userId}`))
     .then(snapshot => {
+      // console.log(snapshot.exists());
       if (snapshot.exists()) {
         const dataFromFirebaseWatchedUA = snapshot.val().watchedUA;
         const dataFromFirebaseWatchedEN = snapshot.val().watchedEN;
@@ -93,15 +99,53 @@ function getDataFromDatabase(userId) {
 }
 
 export async function updateUserData(userUID) {
-  const watchedEN = JSON.parse(localStorage.getItem('themovie-watched-EN-lib'));
-  const watchedUA = JSON.parse(localStorage.getItem('themovie-watched-UA-lib'));
-  const queueEN = JSON.parse(localStorage.getItem('themovie-queue-EN-lib'));
-  const queueUA = JSON.parse(localStorage.getItem('themovie-queue-UA-lib'));
+  let watchedEN = localStorage.getItem('themovie-watched-EN-lib');
+  let watchedUA = localStorage.getItem('themovie-watched-UA-lib');
+  let queueEN = localStorage.getItem('themovie-queue-EN-lib');
+  let queueUA = localStorage.getItem('themovie-queue-UA-lib');
   const updates = {};
-  updates['/users/' + userUID + '/' + 'watchedEN'] = watchedEN;
-  updates['/users/' + userUID + '/' + 'watchedUA'] = watchedUA;
-  updates['/users/' + userUID + '/' + 'queueEN'] = queueEN;
-  updates['/users/' + userUID + '/' + 'queueUA'] = queueUA;
+  if (watchedEN.length !== 2) {
+    watchedEN = JSON.parse(watchedEN);
+  }
+  if (watchedUA.length !== 2) {
+    watchedUA = JSON.parse(watchedUA);
+  }
+  if (queueEN.length !== 2) {
+    queueEN = JSON.parse(queueEN);
+  }
+  if (queueUA.length !== 2) {
+    queueUA = JSON.parse(queueUA);
+  }
+  // console.log(watchedEN);
+  // console.log(typeof watchedEN === 'string');
+  // console.log(watchedUA);
+  // console.log(queueEN);
+  // console.log(queueUA);
+
+  if (watchedEN.length > 0) {
+    updates['/users/' + userUID + '/' + 'watchedEN'] = watchedEN;
+  }
+  if (watchedEN.length == 2 && typeof watchedEN === 'string') {
+    updates['/users/' + userUID + '/' + 'watchedEN'] = '';
+  }
+  if (watchedUA.length > 0) {
+    updates['/users/' + userUID + '/' + 'watchedUA'] = watchedUA;
+  }
+  if (watchedUA.length == 2 && typeof watchedUA === 'string') {
+    updates['/users/' + userUID + '/' + 'watchedUA'] = '';
+  }
+  if (queueEN.length > 0) {
+    updates['/users/' + userUID + '/' + 'queueEN'] = queueEN;
+  }
+  if (queueEN.length == 2 && typeof queueEN === 'string') {
+    updates['/users/' + userUID + '/' + 'queueEN'] = '';
+  }
+  if (queueUA.length > 0) {
+    updates['/users/' + userUID + '/' + 'queueUA'] = queueUA;
+  }
+  if (queueUA.length == 2 && typeof queueUA === 'string') {
+    updates['/users/' + userUID + '/' + 'queueUA'] = '';
+  }
   return update(ref(database), updates);
 }
 // ----------------------------------------------------------------------------------
@@ -126,7 +170,8 @@ const loginEmailPassword = async () => {
         sessionStorage.setItem(LS_LOGIN_KEY, `${username}`);
       }
       localStorage.setItem(LS_UID_VALUE, `${userUID}`);
-      refs.loginHeaderBtn.textContent = 'Log Out';
+      currentLangLogOut();
+      // refs.loginHeaderBtn.textContent = 'Log Out';
       refs.usernick.textContent = `${username}`;
       console.log(username);
       getDataFromDatabase(userUID);
@@ -204,7 +249,8 @@ const logout = async () => {
   localStorage.removeItem(keyLS.LS_QUEUE_UA_DATA_KEY);
   localStorage.removeItem(keyLS.LS_QUEUE_EN_DATA_KEY);
   localStorage.removeItem(LS_LOGIN_KEY);
-  refs.loginHeaderBtn.textContent = 'Log In';
+  currentLangLogIn();
+  // refs.loginHeaderBtn.textContent = 'Log In';
   refs.usernick.textContent = ``;
   refs.loginForm.classList.remove('logout-modal--hidden');
   refs.logoutModal.classList.add('logout-modal--hidden');
@@ -223,7 +269,8 @@ function checkIfLogged() {
     }
     refs.loginForm.classList.add('logout-modal--hidden');
     refs.logoutModal.classList.remove('logout-modal--hidden');
-    refs.loginHeaderBtn.textContent = 'Log Out';
+    currentLangLogOut();
+    // refs.loginHeaderBtn.textContent = 'Log Out';
     refs.usernick.textContent = `${username}`;
     refs.logoutText.innerHTML = `You are logged in as ${username}`;
   } else {
@@ -233,7 +280,8 @@ function checkIfLogged() {
     }
     refs.loginForm.classList.remove('logout-modal--hidden');
     refs.logoutModal.classList.add('logout-modal--hidden');
-    refs.loginHeaderBtn.textContent = 'Log In';
+    currentLangLogOIn();
+    // refs.loginHeaderBtn.textContent = 'Log In';
     refs.usernick.textContent = ``;
   }
 }
@@ -248,4 +296,22 @@ function resetLogin() {
 function resetSignup() {
   refs.signupPassword.value = '';
   refs.signupEmail.value = '';
+}
+
+async function currentLangLogIn() {
+  const lang = await getLanguageFromLS();
+  if (lang === 'en-US') {
+    return refs.loginHeaderBtn.textContent = 'Log In';
+  } else {
+    return refs.loginHeaderBtn.textContent = 'Вхід';
+  }
+}
+
+async function currentLangLogOut() {
+  const lang = await getLanguageFromLS();
+  if (lang === 'en-US') {
+    return refs.loginHeaderBtn.textContent = 'Log Out';
+  } else {
+    return refs.loginHeaderBtn.textContent = 'Вихід';
+  }
 }
