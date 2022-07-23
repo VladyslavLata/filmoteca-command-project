@@ -11,7 +11,7 @@ const heartIcon = document.querySelector('.footer-text__icon');
 const ref = {
   lead: document.querySelector('.js-role-lead'),
   scrum: document.querySelector('.js-role-scrum'),
-  developer: document.querySelector('.js-role-developer'),
+  developer: document.querySelectorAll('.js-role-developer'),
   mentor: document.querySelector('.js-role-mentor'),
 
   sainchuk: document.querySelector('.js-name-sainchuk'),
@@ -26,8 +26,7 @@ const ref = {
   diachenko: document.querySelector('.js-name-diachenko'),
   malynovska: document.querySelector('.js-name-malynovska'),
   garnyk: document.querySelector('.js-name-garnyk'),
-
-}
+};
 
 team.addEventListener('click', onTeamClick);
 closeTeam.addEventListener('click', onCloseTeamClick);
@@ -61,14 +60,14 @@ function modalTeamMarkup() {
   let boiko = langUS ? 'Serhii Boiko' : 'Сергій Бойко';
   let konovalova = langUS ? 'Kateryna Konovalova' : 'Катерина Коновалова';
   let lata = langUS ? 'Vladyslav Lata' : 'Владислав Лата';
-  let muzalevskiy = langUS ? 'Evgeniy Muzalevskiy' : 'Євгеній Музалєвський';
+  let muzalevskiy = langUS ? 'Evgeniy Muzalevskiy' : 'Євген Музалевський';
   let diachenko = langUS ? 'Olena Diachenko' : 'Олена Дяченко';
   let malynovska = langUS ? 'Natalia Malynovska' : 'Наталя Малиновська';
   let garnyk = langUS ? 'Alyona Garnyk' : 'Альона Гарнюк';
 
   ref.lead.textContent = teamLead;
   ref.scrum.textContent = scrumMaster;
-  ref.developer.textContent = developer;
+  // ref.developer.textContent = developer;
   ref.mentor.textContent = mentor;
   ref.sainchuk.textContent = sainchuk;
   ref.kurka.textContent = kurka;
@@ -82,6 +81,9 @@ function modalTeamMarkup() {
   ref.diachenko.textContent = diachenko;
   ref.malynovska.textContent = malynovska;
   ref.garnyk.textContent = garnyk;
+  ref.developer.forEach(item => {
+    item.textContent = developer;
+  });
 
   // const makeMarkupModalTeam = `<ul class="team__list">
   //       <li class="team__item">
