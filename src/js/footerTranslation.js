@@ -25,6 +25,6 @@ export async function renderFooter() {
     textUpThird.textContent = ``;
     textLink.textContent = `Студентами GoIT`;
   }
-}
+};
 
 renderFooter();
