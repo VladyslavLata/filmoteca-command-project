@@ -12,16 +12,16 @@ import {
 import { makeMarkupCard } from './cardMarkup';
 import { modal, btnNameKey } from './modal';
 
-
 import Loader from './loader';
 
 const loader = new Loader();
 
 loader.enable('preloader');
 
+modal.addEventListener('click', refreshLibraryOnClickBtnModal);
+
 // localStorage.setItem(keyLS.LS_WATHED_UA_DATA_KEY, JSON.stringify(filmLocal));
 // localStorage.setItem(keyLS.LS_QUEUE_UA_DATA_KEY, JSON.stringify(filmLocalUA));
-
 
 const mediaQueryMob = window.matchMedia('(max-width: 767px)');
 const mediaQueryTab = window.matchMedia(
@@ -66,7 +66,6 @@ boxLastBtnEl.addEventListener('click', onClickBtnInLastBoxChangePage);
 btnArrowLeftEl.addEventListener('click', onClickBtnArrowLeftChangePage);
 btnArrowRightEl.addEventListener('click', onClickBtnArrowRightChangePage);
 
-
 // currentLangLibrary = getLanguageFromLS();
 
 libraryStart();
@@ -106,8 +105,6 @@ export function onClickUABtnMarkupFilms() {
       : keyLS.LS_QUEUE_UA_DATA_KEY;
   createMarkupFilms(currentLSWatchedFilms);
 }
-
-
 
 function onClickWatchedBtnMarkupFilms() {
   loader.enable('loader');
@@ -149,8 +146,6 @@ function getCurrentLSQueueFilms() {
   }
 }
 
-
-
 export function createMarkupFilms(currentLSWatchedFilms) {
   watchedFilms = getWatchedFilmsLocalStorage(currentLSWatchedFilms);
   if (watchedFilms === null || watchedFilms.length === 0) {
@@ -160,7 +155,7 @@ export function createMarkupFilms(currentLSWatchedFilms) {
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
       noFilmsNoLogInMessage();
       return;
-     }
+    }
     noFilmsMessage();
     loader.disable('loader');
     return;
@@ -206,8 +201,6 @@ function getWatchedFilmsLocalStorage(currentLSWatchedFilms) {
     console.error('Get state error: ', error.message);
   }
 }
-
-
 
 function noFilmsMessage() {
   galleryEl.innerHTML =
@@ -271,7 +264,6 @@ function handledChangeDeskTop(e) {
     // makeMarkupBtns(totalPages);
   }
 }
-
 
 // ---------------------------Pagination----------------------------
 
