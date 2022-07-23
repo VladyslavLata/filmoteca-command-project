@@ -1,0 +1,32 @@
+.box-btns {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-pg {
+  width: 40px;
+  height: 40px;
+  border: none;
+background-color: inherit;
+text-align: center;
+border-radius: 5px;
+}
+
+// .hidden-btns {
+
+// }
+
+.first-box-btn,
+.last-box-btn {
+  display: flex;
+
+}
+
+.btn-hidden {
+  @extend %visually-hidden;
+}
+
+.btn-current-pages {
+  background-color: $orange-color;
+}
