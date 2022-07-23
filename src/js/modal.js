@@ -197,8 +197,8 @@ let queueArrCurrentLang = [];
 let queueArrAltLang = [];
 
 async function onBtnClick(evt) {
-  const username = await localStorage.getItem(LS_LOGIN_KEY);
-  const usernameSS = await sessionStorage.getItem(LS_LOGIN_KEY);
+  const username = localStorage.getItem(LS_LOGIN_KEY);
+  const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
 
   if (evt.target.name === btnNameKey.WATCHED) {
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
