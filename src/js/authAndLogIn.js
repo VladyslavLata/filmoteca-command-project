@@ -55,6 +55,10 @@ function writeUserData(userId, name, email) {
   set(ref(database, 'users/' + userId), {
     username: name,
     email: email,
+    watchedEN: [],
+    watchedUA: [],
+    queueEN: [],
+    queueUA: [],
   });
 }
 
