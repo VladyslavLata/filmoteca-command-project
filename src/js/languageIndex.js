@@ -5,6 +5,7 @@ import { keyword, keywordMovies } from './moviesKeyword';
 import { refs, setLanguageToLS } from './languageSwitch';
 import Loader from './loader';
 import { renderFooter } from './footerTranslation';
+import { translatePage } from './translateIndex';
 
 const loader = new Loader();
 
@@ -20,6 +21,7 @@ function onClickEN() {
     keywordMovies.langCurrent = setLanguageToLS(Movie.language.ENGLISH);
     fetchSearchAndMarkup(keywordMovies);
   }
+  translatePage();
   renderFooter();
 }
 
@@ -32,5 +34,6 @@ function onClickUA() {
     keywordMovies.langCurrent = setLanguageToLS(Movie.language.UKRAINIAN);
     fetchSearchAndMarkup(keywordMovies);
   }
+  translatePage();
   renderFooter();
 }
