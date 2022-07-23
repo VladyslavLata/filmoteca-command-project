@@ -204,7 +204,6 @@ async function onBtnClick(evt) {
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
       // addToWatched(evt);
       await addToWatched(evt);
-      evt.target.setAttribute('data-action', 'del');
       // writeTestCollectionFunction();
     } else {
       alert(
@@ -215,7 +214,6 @@ async function onBtnClick(evt) {
   if (evt.target.name === btnNameKey.QUEUE) {
     if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
       await addToQueue(evt);
-      evt.target.setAttribute('data-action', 'del');
       // writeTestCollectionFunction();
     } else {
       alert(
