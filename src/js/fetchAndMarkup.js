@@ -2,7 +2,7 @@ import { Movie } from './fetchMovie';
 import { makeMarkupCard } from './cardMarkup';
 import { genreLoad } from './workWithGenres';
 import { setCurrenDataToLS, getCurrenDataFromLS } from './currentPageData';
-import renderPagination from './renderPagination.js';
+import { renderPagination } from './renderPagination';
 
 export async function fetchTrendAndMarkup(classIstance) {
   try {
@@ -11,7 +11,7 @@ export async function fetchTrendAndMarkup(classIstance) {
     console.log(data);
     setCurrenDataToLS(data.results);
     makeMarkupCard(data);
-    renderPagination(data)
+    renderPagination(data);
     classIstance.lastPage = data.total_pages;
   } catch (error) {
     console.log(error);
@@ -25,6 +25,7 @@ export async function fetchSearchAndMarkup(classIstance) {
     console.log(data);
     setCurrenDataToLS(data.results);
     makeMarkupCard(data);
+    renderPagination(data);
     classIstance.lastPage = data.total_pages;
   } catch (error) {
     console.log(error);

@@ -1,31 +1,40 @@
+const paginationClass = {
+  ACTIVE: 'active',
+  BTN: 'btn',
+  NUMB: 'numb',
+  PREV_PAGE: 'prev-page',
+  NEXT_PAGE: 'next-page',
+  FIRST_PAGE: 'first-page',
+  LAST_PAGE: 'last-page',
+  DOTS: 'dots',
+};
 
 function createPaginationMarkup(pages, page) {
   if (pages < 2) {
     return '';
   }
-  let str = '<ul class="pagination">';
+  let str = `<ul class="pagination-list" data-last="${pages}" data-current="${page}">`;
   let active;
+  let firstPage;
   let prevPage = page - 1;
   let nextPage = page + 1;
 
-
   if (page > 1) {
-    str += '<li class="btn prev"><span><<</span></li>';
+    str += `<li class="${paginationClass.BTN} ${
+      paginationClass.PREV_PAGE
+    }" data-page="${page - 1}"><span><<</span></li>`;
   }
 
   if (pages < 6) {
     for (let p = 1; p <= pages; p++) {
-      active = page == p ? 'active' : ' ';
-      str += '<li class="numb ' + active + '"><span>' + p + '</span></li>';
+      active = page === p ? paginationClass.ACTIVE : '';
+      str += `<li class="${paginationClass.NUMB} ${active}" data-page="${p}"><span>${p}</span></li>`;
     }
-  }
-
-  else {
-
+  } else {
     if (page > 2) {
-      str += '<li class="first numb"><span>1</span></li>';
+      str += `<li class="${paginationClass.NUMB} ${paginationClass.FIRST_PAGE}" data-page="1"><span>1</span></li>`;
       if (page > 3) {
-        str += '<li class="dots"><span>...</span></li>';
+        str += `<li class="${paginationClass.DOTS}"><span>...</span></li>`;
       }
     }
     // Determine how many pages to show after the current page index
@@ -48,27 +57,32 @@ function createPaginationMarkup(pages, page) {
       if (p > pages) {
         continue;
       }
-      active = page == p ? 'active' : '';
-      str += '<li class="numb ' + active + '"><span>' + p + '</span></li>';
+      active = page === p ? paginationClass.ACTIVE : '';
+      str += `<li class="${paginationClass.NUMB} ${active}" data-page="${p}"><span>${p}</span></li>`;
     }
 
     if (page < pages - 1) {
       if (page < pages - 2) {
-        str += '<li class="dots"><spank">...</span></li>';
+        str += `<li class="${paginationClass.DOTS}"><spank">...</span></li>`;
       }
-      str += '<li class="numb"><span>' + pages + '</span></li>';
+      str += `<li class="${paginationClass.NUMB} ${paginationClass.LAST_PAGE}" data-page="${pages}"><span>${pages}</span></li>`;
     }
   }
 
   if (page < pages) {
-    str += '<li class="btn next"' + (page + 1) + '">>></span></li>';
+    str += `<li class="${paginationClass.BTN} ${
+      paginationClass.NEXT_PAGE
+    }" data-page="${page + 1}">>></span></li>`;
   }
   str += '</ul>';
- 
-  document.querySelector('.pagination').innerHTML = str;
+
+  // document.querySelector('.pagination').innerHTML = str;
   return str;
 }
 
-export default function renderPagination(data) {
-    document.querySelector('.pagination').innerHTML = createPaginationMarkup(data.total_pages, data.page);
+export function renderPagination(data) {
+  const currentPage = data.page;
+  const lastPage = data.total_pages;
+  document.querySelector('.pagination-container').innerHTML =
+    createPaginationMarkup(lastPage, currentPage);
 }

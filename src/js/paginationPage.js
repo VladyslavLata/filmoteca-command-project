@@ -3,166 +3,109 @@ import { fetchTrendAndMarkup, fetchSearchAndMarkup } from './fetchAndMarkup';
 import { trendMovie } from './homePage';
 import { keyword, keywordMovies } from './moviesKeyword';
 import { handleButtonClick as goToStart } from './up-btnAndSwitcher';
-import renderPagination from './renderPagination';
 
 import Loader from './loader';
 
 const loader = new Loader();
 
-const refs = {
-  btnLoadPrevious: document.querySelector('.pagination-page__btn-previous'),
-  btnLoadNext: document.querySelector('.pagination-page__btn-next'),
-};
+const paginationContainer = document.querySelector('.pagination-container');
+paginationContainer.addEventListener('click', onClickPagination);
+console.log(paginationContainer);
 
-refs.btnLoadPrevious.addEventListener('click', onClickPrevious);
-refs.btnLoadNext.addEventListener('click', onClickNext);
+// const refs = {
+// btnLoadPrevious: document.querySelector('.pagination-page__btn-previous'),
+// btnLoadNext: document.querySelector('.pagination-page__btn-next'),
+// };
 
-const { prev, numb, next } = {
-  prev: document.querySelector('.prev'),
-  numb: document.querySelectorAll('.numb'),
-  next: document.querySelector('.next'),
-};
+// refs.btnLoadPrevious.addEventListener('click', onClickPrevious);
+// refs.btnLoadNext.addEventListener('click', onClickNext);
+// refs.paginationList.addEventListener('click', onClickPagination);
 
-function makePagination(targetFetch) {
-  renderPagination(targetFetch);
+// const { prev, numb, next } = {
+//   prev: document.querySelector('.prev'),
+//   numb: document.querySelectorAll('.numb'),
+//   next: document.querySelector('.next'),
+// };
 
-  numb.forEach(el => {
-    el.addEventListener('click', e => {
-      loader.enable('loader');
-      const selectedPage = e.target.textContent;
-      targetFetch.page = selectedPage;
-      onFetchAndMarkup(targetFetch);
-      makePagination(targetFetch);
-    });
-  });
-  if (prev) {
-    prev.addEventListener('click', () => {
-      targetFetch.page -= 1;
-      onFetchAndMarkup(targetFetch);
-      makePagination(targetFetch);
-    });
-  }
-  if (next) {
-    next.addEventListener('click', () => {
-      targetFetch.page += 1;
-      onFetchAndMarkup(targetFetch);
-      makePagination(targetFetch);
-    });
-  }
-}
-// <<<<<<< HEAD
-makePagination(trendMovie);
-// =======
-// pagination(trendMovie)
-// loader.disable('loader');
+// function makePagination(targetFetch) {
+//   renderPagination(targetFetch);
 
-// function createPaginMarkup(perPages, page) {
-
-//   let liTag = '';
-//   let active;
-//   let prevPage = page - 1;
-//   let nextPage = page + 1;
-
-//   if (page > 1) {
-//     liTag += `<li class="btn prev"><span><<</span></li>`;
+//   numb.forEach(el => {
+//     el.addEventListener('click', e => {
+//       loader.enable('loader');
+//       const selectedPage = e.target.textContent;
+//       targetFetch.page = selectedPage;
+//       onFetchAndMarkup(targetFetch);
+//       makePagination(targetFetch);
+//     });
+//   });
+//   if (prev) {
+//     prev.addEventListener('click', () => {
+//       targetFetch.page -= 1;
+//       onFetchAndMarkup(targetFetch);
+//       makePagination(targetFetch);
+//     });
 //   }
-
-//   if (page > 2) {
-//     if (perPages > 3) {
-//       liTag += `<li class="first numb"><span>1</span></li>`;
-//     }
-//     // if (page > 3) {
-//     //   liTag += `<li class="dots"><span>...</span></li>`;
-//     // }
-//     if (page > 3) {
-//       liTag += `<li class="dots"><span>...</span></li>`;
-//     }
+//   if (next) {
+//     next.addEventListener('click', () => {
+//       targetFetch.page += 1;
+//       onFetchAndMarkup(targetFetch);
+//       makePagination(targetFetch);
+//     });
 //   }
-
-//   if (perPages > 2) {
-//     nextPage += 1;
-//   }
-
-//   if (page == perPages) {
-//     prevPage -= 2;
-//   } else if (page == perPages - 1) {
-//     prevPage -= 1;
-//   } else if (perPages == 1) {
-//     prevPage = 1;
-//   }
-
-//   for (var plength = prevPage; plength <= nextPage; plength++) {
-//     if (plength > perPages) {
-//       continue;
-//     }
-
-//     if (plength < 1) {
-//       plength = 1;
-//     }
-
-//     if (page == plength) {
-//       active = 'active';
-//     } else {
-//       active = '';
-//     }
-//     liTag += `<li class="numb ${active}"><span>${plength}</span></li>`;
-//   }
-
-//   if (page < perPages - 1) {
-//     if (page < perPages- 2) {
-//       liTag += `<li class="dots"><span>...</span></li>`;
-//     }
-//     if (perPages > 3) {
-//       liTag += `<li class="last numb"><span>${perPages}</span></li>`;
-//     }
-//   }
-
-//   if (page < perPages) {
-//     liTag += `<li class="btn next"><span>>></span></li>`;
-//   }
-//   element.innerHTML = '';
-//   element.insertAdjacentHTML('beforeend', liTag);
-//   return liTag;
 // }
-// >>>>>>> main
 
-function onClickPrevious() {
-  loader.disable();
-  if (keyword === null ? trendMovie.page === 1 : keywordMovies.page === 1) {
-    loader.enable();
+function onClickPagination(evt) {
+  const refs = {
+    elPaginationList: document.querySelector('.pagination-list'),
+  };
+
+  const currentPage = refs.elPaginationList.dataset.current;
+  const lastPage = refs.elPaginationList.dataset.last;
+
+  if (evt.target.nodeName !== 'LI') {
     return;
   }
-  setPagePrevious();
+  const activePage = evt.target.dataset.page;
+
+  if (activePage === currentPage) {
+    return;
+  }
+
+  setPageNum(activePage);
   onFetchAndMarkup();
   goToStart();
 }
 
-function onClickNext() {
-  if (
-    keyword === null
-      ? trendMovie.page === trendMovie.lastPage
-      : keywordMovies.page === keywordMovies.lastPage
-  ) {
-    return;
-  }
-  setPageNext();
-  onFetchAndMarkup();
-  goToStart();
-}
+// function onClickPrevious() {
+//   loader.disable();
+//   if (keyword === null ? trendMovie.page === 1 : keywordMovies.page === 1) {
+//     loader.enable();
+//     return;
+//   }
+//   setPagePrevious();
+//   onFetchAndMarkup();
+//   goToStart();
+// }
 
-function setPagePrevious() {
-  if (keyword === null) {
-    trendMovie.page -= 1;
-  } else {
-    keywordMovies.page -= 1;
-  }
-}
+// function onClickNext() {
+//   if (
+//     keyword === null
+//       ? trendMovie.page === trendMovie.lastPage
+//       : keywordMovies.page === keywordMovies.lastPage
+//   ) {
+//     return;
+//   }
+//   setPageNext();
+//   onFetchAndMarkup();
+//   goToStart();
+// }
 
-function setPageNext() {
+function setPageNum(numPage) {
   if (keyword === null) {
-    trendMovie.page += 1;
+    trendMovie.page = numPage;
   } else {
-    keywordMovies.page += 1;
+    keywordMovies.page = numPage;
   }
 }
 
