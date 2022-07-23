@@ -207,7 +207,7 @@
   }
 }
 
-.signup__button {
+.signup__button, .login__button {
   width: 50px;
   height: 23px;
   opacity: 0.7;
@@ -215,29 +215,6 @@
   padding: 2px;
   border: none;
   margin-right: 5px;
-  @include fonts(500, 12px, 1.17, null);
-  text-align: center;
-  transition: color 250ms $typical-cubic,
-    background-color 250ms $typical-cubic,
-    transform 250ms $typical-cubic,
-    opacity 250ms $typical-cubic;
-
-  &:hover,
-  &:focus {
-    color: $white-color;
-    background-color: $orange-color;
-    opacity: 1;
-    transform: scale(1.1);
-  }
-}
-
-.login__button {
-  width: 50px;
-  height: 23px;
-  opacity: 0.7;
-  border-radius: 5px;
-  padding: 2px;
-  border: none;
   @include fonts(500, 12px, 1.17, null);
   text-align: center;
   transition: color 250ms $typical-cubic,
