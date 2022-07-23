@@ -30,8 +30,8 @@ export function makeMarkupCard(data) {
     })
     .join('');
   gallery.innerHTML = makeMarkupCard;
-  loader.refs.preloader.classList.add('is-off');
-  loader.enable();
+  setTimeout(() => { loader.disable('preloader') }, 1000);
+  loader.disable('loader');
 }
 
 

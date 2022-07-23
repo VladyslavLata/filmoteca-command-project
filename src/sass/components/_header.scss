@@ -145,7 +145,7 @@
   @include fonts(500, 12px, 1.17, null);
   text-transform: uppercase;
   color: $white-color;
-  transition: stroke 250ms $typical-cubic;
+  transition: color 250ms $typical-cubic;
 
   &:hover,
   &:focus {
@@ -207,7 +207,7 @@
   }
 }
 
-.signup__button {
+.signup__button, .login__button {
   width: 50px;
   height: 23px;
   opacity: 0.7;
@@ -219,33 +219,14 @@
   text-align: center;
   transition: color 250ms $typical-cubic,
     background-color 250ms $typical-cubic,
-    transform 250ms $typical-cubic;
+    transform 250ms $typical-cubic,
+    opacity 250ms $typical-cubic;
 
   &:hover,
   &:focus {
     color: $white-color;
     background-color: $orange-color;
-    transform: scale(1.1);
-  }
-}
-
-.login__button {
-  width: 50px;
-  height: 23px;
-  opacity: 0.7;
-  border-radius: 5px;
-  padding: 2px;
-  border: none;
-  @include fonts(500, 12px, 1.17, null);
-  text-align: center;
-  transition: color 250ms $typical-cubic,
-    background-color 250ms $typical-cubic,
-    transform 250ms $typical-cubic;
-
-  &:hover,
-  &:focus {
-    color: $white-color;
-    background-color: $orange-color;
+    opacity: 1;
     transform: scale(1.1);
   }
 }
@@ -333,6 +314,20 @@
   @include fonts(null, null, 1.14, null);
   color: $warning-text;
   text-align: center;
+}
+
+.loader-lib-container {
+  position: absolute;
+  top: 90px;
+  left: 50%;
+  width: 280px;
+  height: 1px;
+  transform: translateX(-50%);
+
+  @include mq(tablet) {
+   top: 80px;
+   width: 400px;
+    }
 }
 
 .filter-list {

@@ -16,11 +16,6 @@
                     <a href="/src/library.html" class="site-nav__link">My library</a>
                 </li>
                 <li class="registration__container">
-                    <!-- <button type="button" class="registration__button">
-                        <svg class="registration__icon" width="24" height="24">
-                            <use href="/src/images/sprite.svg#user"></use>
-                        </svg>
-                    </button> -->
                     <div class="registration__menu">
                         <button type="button" class="signup__button">Sign Up</button>
                         <button type="button" class="login__button">Log In</button>
@@ -35,12 +30,11 @@
             </ul>
         </nav>
         <form class="search-form animate__zoomIn" id="search-form">
-            <div class="loader loader__absolute-top is-off"></div>
+            <div class="loader loader__absolute-index is-off"></div>
             <input 
             class="search-form__input"
             type="text"
             name="query"
-            
             placeholder="Movie search"
             />
             <button type="submit" class="search-form__btn">
@@ -50,14 +44,6 @@
             </button>
         </form>
         <p class="warning-notification"></p>
-        <!-- <div class="trend-time-switch animate__zoomIn">
-            <button class="time-switch-day">day</button>
-            <button class="time-switch-week">week</button>
-        </div>
-        <div class="language-switch animate__zoomIn">
-            <button class="switch-EN">en</button>
-            <button class="switch-UA">ua</button>
-        </div>    -->
         <include src="./partials/trendTime.html"></include>
         <include src="./partials/languageSwitch.html"></include>
     </div> 

@@ -13,18 +13,11 @@
           <a href="/src/index.html" class="site-nav__link">Home</a>
         </li>
         <li class="site-nav__item">
-          <a
-            href="/src/library.html"
-            class="site-nav__link site-nav__link--current"
-            >My library</a
-          >
+          <a href="/src/library.html" class="site-nav__link site-nav__link--current"
+            >My library
+          </a>
         </li>
         <li class="registration__container">
-          <!-- <button type="button" class="registration__button">
-                                <svg class="registration__icon" width="24" height="24">
-                                    <use href="/src/images/sprite.svg#user"></use>
-                                </svg>
-                            </button> -->
           <div class="registration__menu">
             <button type="button" class="signup__button">Sign Up</button>
             <button type="button" class="login__button">Log In</button>
@@ -38,20 +31,20 @@
         </li>
       </ul>
     </nav>
-    <ul class="filter-list animate__zoomIn">
-      <li class="filter-list__item">
-        <button type="button" class="filter-list__btn watched is-active">
-          Watched
-        </button>
-      </li>
-      <li class="filter-list__item">
-        <button type="button" class="filter-list__btn queue">Queue</button>
-      </li>
-    </ul>
-    <!-- <div class="language-switch animate__zoomIn">
-            <button class="switch-EN">en</button>
-            <button class="switch-UA">ua</button>
-        </div> -->
+    <div class="loader-lib-container">
+      <div class="loader loader__absolute-library is-off"></div>
+    </div>
+      <ul class="filter-list animate__zoomIn">
+        <li class="filter-list__item">
+          <button type="button" class="filter-list__btn watched is-active"
+          >Watched
+          </button>
+        </li>
+        <li class="filter-list__item">
+          <button type="button" class="filter-list__btn queue">Queue</button>
+        </li>
+      </ul>
+    </div>
     <include src="./partials/languageSwitch.html"></include>
   </div>
 </header>

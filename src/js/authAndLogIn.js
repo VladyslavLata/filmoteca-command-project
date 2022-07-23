@@ -2,7 +2,6 @@ import { initializeApp } from 'firebase/app';
 import {
   AuthErrorCodes,
   getAuth,
-  //   connectAuthEmulator,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -10,14 +9,14 @@ import {
 } from 'firebase/auth';
 
 const refs = {
-  //   signupForm: document.querySelector('.sign-up__form'),
+  emptyLibText: document.querySelector('.not-logged-gallery'),
+  libContainer: document.querySelector('.container-library'),
+  libGallery: document.querySelector('.gallery-library'),
   loginForm: document.querySelector('.login__form'),
   loginUsername: document.querySelector('#login-username'),
-  //   name: document.querySelector('#nameInp'),
   loginEmail: document.querySelector('#login-email'),
-  signupEmail: document.querySelector('#signup-email'),
-  //   username: document.querySelector('#userInp'),
   loginPassword: document.querySelector('#login-password'),
+  signupEmail: document.querySelector('#signup-email'),
   signupPassword: document.querySelector('#signup-password'),
   loginBtn: document.querySelector('#login__button'),
   loginHeaderBtn: document.querySelector('.login__button'),
@@ -28,11 +27,11 @@ const refs = {
   checkbox: document.querySelector('.form-check-input'),
   usernick: document.querySelector('.user-nick'),
 };
+
 export const LS_LOGIN_KEY = 'keep_logged_as';
 
 sessionStorage.removeItem(LS_LOGIN_KEY);
 
-// console.log(refs.checkbox.checked);
 checkIfLogged();
 
 const firebaseConfig = {
@@ -45,9 +44,89 @@ const firebaseConfig = {
   appId: '1:744226297338:web:8ad6c2023b760eb61bc043',
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
+export const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
-// connectAuthEmulator(auth, 'http://localhost:9099');
+// writeTestCollectionFunction();
+
+// ------------------------------------------------------------------------------------------------
+// const firestore = getFirestore(firebaseApp);
+
+// const libraryCollection = doc(firestore, 'watched/watched');
+
+// export async function writeTestCollectionFunction() {
+//   try {
+//     const watchedEN = JSON.parse(
+//       localStorage.getItem('themovie-watched-EN-lib')
+//     );
+//     const watchedUA = JSON.parse(
+//       localStorage.getItem('themovie-watched-UA-lib')
+//     );
+//     const queueEN = JSON.parse(localStorage.getItem('themovie-queue-EN-lib'));
+//     const queueUA = JSON.parse(localStorage.getItem('themovie-queue-UA-lib'));
+//     const docData = {
+//       watchedEN,
+//       watchedUA,
+//       queueEN,
+//       queueUA,
+//     };
+//     setDoc(libraryCollection, docData);
+//   } catch (error) {
+//     console.error('Error adding document: ', error);
+//   }
+// }
+
+// // export async function readThemeDocument() {
+// //   const mySnapshot = await getDoc(libraryCollection);
+// //   if (mySnapshot.exists()) {
+// //     const docData = mySnapshot.data();
+// //     console.log('My Data: ', docData.watchedEN);
+// //     // return docData.switchMode;
+// //   }
+// // }
+
+// export async function listenTowatchedEn() {
+//   onSnapshot(libraryCollection, docSnapshot => {
+//     if (docSnapshot.exists()) {
+//       const docWatchedEn = docSnapshot.data().watchedEN;
+//       console.log('EN: ', docWatchedEn);
+//       return docWatchedEn;
+//     }
+//   });
+// }
+// export async function listenTowatchedUa() {
+//   onSnapshot(libraryCollection, docSnapshot => {
+//     if (docSnapshot.exists()) {
+//       const docWatchedUa = docSnapshot.data().watchedUA;
+//       console.log('UA: ', docWatchedUa);
+//       return docWatchedUa;
+//     }
+//   });
+// }
+// export async function listenToQueueEn() {
+//   onSnapshot(libraryCollection, docSnapshot => {
+//     if (docSnapshot.exists()) {
+//       const docQueueEn = docSnapshot.data().queueEN;
+//       console.log('EN: ', docQueueEn);
+//       return docQueueEn;
+//     }
+//   });
+// }
+// export async function listenToQueueUa() {
+//   onSnapshot(libraryCollection, docSnapshot => {
+//     if (docSnapshot.exists()) {
+//       const docQueueUa = docSnapshot.data().queueUA;
+//       console.log('UA: ', docQueueUa);
+//       return docQueueUa;
+//     }
+//   });
+// }
+
+// listenTowatchedEn();
+// listenTowatchedUa();
+// listenToQueueEn();
+// listenToQueueUa();
+
+// -------------------------------------------------------------------------------------------------
 
 const loginEmailPassword = async () => {
   const loginEmail = refs.loginEmail.value;
@@ -72,6 +151,7 @@ const loginEmailPassword = async () => {
       refs.usernick.textContent = `${username}`;
       console.log(username);
       monitorAuthState();
+      resetLogin();
     }
   } catch (error) {
     showLoginError(error);
@@ -88,7 +168,7 @@ function showLoginError(error) {
 
 refs.loginBtn.addEventListener('click', loginEmailPassword);
 
-const createAccount = async () => {
+const createAccount = async e => {
   const signupEmail = refs.signupEmail.value;
   const signupPassword = refs.signupPassword.value;
   try {
@@ -98,6 +178,7 @@ const createAccount = async () => {
       signupPassword
     );
     alert('You are signed up now');
+    resetSignup();
   } catch (error) {
     showLoginError(error);
   }
@@ -109,38 +190,29 @@ async function monitorAuthState() {
   onAuthStateChanged(auth, user => {
     const username = localStorage.getItem(LS_LOGIN_KEY);
     const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
-    // if (user) {
-    //   refs.logoutText.innerHTML = `You are logged in as ${username}`;
-    // }
-    // if (!user) {
-    //   refs.loginForm.classList.remove('logout-modal--hidden');
-    //   refs.logoutModal.classList.add('logout-modal--hidden');
+    // if (refs.libGallery) {
+    //   refs.emptyLibText.style.display = 'none';
+    //   refs.libGallery.style.display = 'flex';
     // }
     if (username) {
       refs.loginForm.classList.add('logout-modal--hidden');
       refs.logoutModal.classList.remove('logout-modal--hidden');
-      // loginHeaderBtn.innerText = 'Log Out';
-
       refs.logoutText.innerHTML = `You are logged in as ${username}`;
     }
     if (usernameSS) {
       refs.loginForm.classList.add('logout-modal--hidden');
       refs.logoutModal.classList.remove('logout-modal--hidden');
-      // loginHeaderBtn.textContent = 'Log Out';
       refs.logoutText.innerHTML = `You are logged in as ${usernameSS}`;
     }
-    // if (user && !username) {
-    //   refs.loginForm.classList.add('logout-modal--hidden');
-    //   refs.logoutModal.classList.remove('logout-modal--hidden');
-    //   refs.logoutText.innerHTML = `You are logged in as ${user.displayName}`;
-    // }
   });
 }
 
-// monitorAuthState();
-
 const logout = async () => {
   await signOut(auth);
+  // if (refs.libGallery) {
+  //   refs.emptyLibText.style.display = 'flex';
+  //   refs.libGallery.style.display = 'none';
+  // }
   localStorage.removeItem(LS_LOGIN_KEY);
   refs.loginHeaderBtn.textContent = 'Log In';
   refs.usernick.textContent = ``;
@@ -155,15 +227,35 @@ function checkIfLogged() {
   const username = localStorage.getItem(LS_LOGIN_KEY);
   const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
   if (username || usernameSS) {
+    // if (refs.libGallery) {
+    //   refs.emptyLibText.style.display = 'none';
+    //   refs.libGallery.style.display = 'flex';
+    // }
     refs.loginForm.classList.add('logout-modal--hidden');
     refs.logoutModal.classList.remove('logout-modal--hidden');
     refs.loginHeaderBtn.textContent = 'Log Out';
     refs.usernick.textContent = `${username}`;
     refs.logoutText.innerHTML = `You are logged in as ${username}`;
   } else {
+    // if (refs.libGallery) {
+    //   refs.emptyLibText.style.display = 'flex';
+    //   refs.libGallery.style.display = 'none';
+    // }
     refs.loginForm.classList.remove('logout-modal--hidden');
     refs.logoutModal.classList.add('logout-modal--hidden');
     refs.loginHeaderBtn.textContent = 'Log In';
     refs.usernick.textContent = ``;
   }
+}
+
+function resetLogin() {
+  refs.loginUsername.value = '';
+  refs.loginEmail.value = '';
+  refs.loginPassword.value = '';
+  refs.checkbox.checked = false;
+}
+
+function resetSignup() {
+  refs.signupPassword.value = '';
+  refs.signupEmail.value = '';
 }

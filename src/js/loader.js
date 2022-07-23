@@ -6,19 +6,23 @@ export default class Loader {
     getRefs() {
         const refs = {};
         refs.preloader = document.querySelector('.overlay')
-        refs.loader = document.querySelectorAll('.loader');
+        refs.loader = document.querySelector('.loader');
         return refs;
     }
 
-    enable() {
-        this.refs.loader.forEach((e) => {
-           e.classList.add('is-off');
-        });
-    }
-
-    disable() {
-        this.refs.loader.forEach((e) => {
-           e.classList.remove('is-off');
-        });
+    enable(name) {
+        if (name === 'loader') {
+            this.refs.loader.classList.remove('is-off')
+        } else if (name === 'preloader') {
+            this.refs.preloader.classList.remove('is-off')
+        }     
+    } 
+    
+    disable(name) {
+        if (name === 'loader') {
+            this.refs.loader.classList.add('is-off')
+        } else if (name === 'preloader') {
+            this.refs.preloader.classList.add('is-off')
+        }
     }
 }

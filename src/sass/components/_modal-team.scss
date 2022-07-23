@@ -38,8 +38,8 @@ body.modal-team-open {
     transform: translate(-50%, -50%);
     border-radius: 5px;
     background: $white-color;
-    min-width: 280px;
-    height: 100%;
+    // width: 100%;
+    // height: 100%;
     overflow-y: scroll;
     
     // min-height: 940px;
@@ -50,17 +50,17 @@ body.modal-team-open {
         }
 
     @media screen and (min-width: 320px) {
-            width: 300px;
+            width: 320px;
             
         }
 
     @media screen and (min-width: 768px) {
-        width: 700px;
+        width: 768px;
         
     }
 
     @media screen and (min-width: 1280px) {
-        width: 1200px;
+        width: 1280px;
               
     }
 
@@ -70,6 +70,7 @@ body.modal-team-open {
 }
 
 .modal-team__container {
+    
     // position: relative;
     // top: 0;
     // left: 0;
@@ -145,6 +146,8 @@ body.modal-team-open {
 }
 
 .team__wrapper {
+    position: relative;
+        overflow: hidden;
     margin-bottom: 10px;
 @media screen and (min-width: 320px) {
         height: 162px;
@@ -166,10 +169,57 @@ body.modal-team-open {
     height: 100%;
 }
 
+.team__overlay {
+    position: absolute;
+    
+    
+    top: 0;
+    left: 0;
+
+    background-color: $orange-color;
+    opacity: 0.5;
+    width: 100%;
+    height: 100%;
+    // padding: 63px 24px;
+
+    transition: transform;
+    transform: translate(0, 101%);
+    transition-duration: 250ms;
+    transition-timing-function: $typical-cubic;
+
+    .team__wrapper:hover & {
+        transform: translate(0, 0);
+        border-radius: 5px;
+    }
+}
+
+.team__link {
+    
+    display: flex;
+        align-items: center;
+        justify-content: space-between;
+}
+
+// .overlay__img {
+//     display: block;
+//     width: 70%;
+//     margin: auto;
+// }
+
 .team__name, .team__role {
     line-height: 1.35;
-    @media screen and (min-width: 320px) {
-            font-size: 10px;
+
+    body.dark__theme & {
+        color: $white-color;
+    }
+       
+}
+
+.team__name{
+    
+    
+        @media screen and (min-width: 320px) {
+            font-size: 11px;
     
         }
     
@@ -180,12 +230,27 @@ body.modal-team-open {
     
         @media screen and (min-width: 1280px) {
     
-            font-size: 18px;
-            ;
+            font-size: 15px;
+            
         }
+}
 
-    body.dark__theme & {
-        color: $white-color;
+.team__role {
+
+
+    @media screen and (min-width: 320px) {
+        font-size: 12px;
+
     }
-       
+
+    @media screen and (min-width: 768px) {
+
+        font-size: 16px;
+    }
+
+    @media screen and (min-width: 1280px) {
+
+        font-size: 19px;
+
+    }
 }
