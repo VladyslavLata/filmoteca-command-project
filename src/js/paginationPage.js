@@ -63,7 +63,7 @@ function onClickPagination(evt) {
   const currentPage = refs.elPaginationList.dataset.current;
   const lastPage = refs.elPaginationList.dataset.last;
 
-  if (evt.target.nodeName !== 'LI') {
+  if (evt.target.nodeName !== 'BUTTON') {
     return;
   }
   const activePage = evt.target.dataset.page;

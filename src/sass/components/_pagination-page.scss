@@ -29,17 +29,40 @@
   list-style: none;
   font-size: 16px;
   font-weight: 500;
-  cursor: pointer;
+  // cursor: pointer;
   user-select: none;
   transition: all 0.3s ease;
 }
 
-.pagination-list li.numb {
+// .pagination-list li.numb {
+//   list-style: none;
+//   height: 40px;
+//   width: 40px;
+//   margin: 0;
+//   border-radius: 5px;
+// }
+
+.pagination-list li {
   list-style: none;
   height: 40px;
   width: 40px;
   margin: 0;
   border-radius: 5px;
+}
+
+.pagination-list button {
+  height: 40px;
+  width: 40px;
+  padding: 0;
+  color: inherit;
+  background-color: inherit;
+  border: inherit;
+  border-radius: 5px;
+}
+
+.pagination-list button:disabled {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .pagination-list li.numb.first {
@@ -50,24 +73,31 @@
   margin: 0px -5px 0 3px;
 }
 
-.pagination-list li.dots {
+.pagination-list li.dots button {
   font-size: 12px;
   cursor: default;
 }
 
-.pagination-list li.btn {
-  height: 40px;
-  width: 40px;
-  border-radius: 5px;
+// .pagination-list li.btn-pagination {
+//   height: 40px;
+//   width: 40px;
+//   border-radius: 5px;
+// }
+
+.pagination-list li.active button {
+  color: #fff;
+  background: #ff6b08;
+  cursor: default;
 }
 
-.pagination-list li.active {
+.pagination-list li:hover,
+.pagination-list li:focus {
   color: #fff;
   background: #ff6b08;
 }
 
-.pagination-list li.numb:hover,
-.pagination-list li:first-child:hover,
-.pagination-list li:last-child:hover {
-  background: #f7f7f7;
-}
+// .pagination-list li.numb:hover,
+// .pagination-list li:first-child:hover,
+// .pagination-list li:last-child:hover {
+//   background: #f7f7f7;
+// }
