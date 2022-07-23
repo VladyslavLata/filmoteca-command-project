@@ -98,15 +98,53 @@ function getDataFromDatabase(userId) {
 }
 
 export async function updateUserData(userUID) {
-  const watchedEN = JSON.parse(localStorage.getItem('themovie-watched-EN-lib'));
-  const watchedUA = JSON.parse(localStorage.getItem('themovie-watched-UA-lib'));
-  const queueEN = JSON.parse(localStorage.getItem('themovie-queue-EN-lib'));
-  const queueUA = JSON.parse(localStorage.getItem('themovie-queue-UA-lib'));
+  let watchedEN = localStorage.getItem('themovie-watched-EN-lib');
+  let watchedUA = localStorage.getItem('themovie-watched-UA-lib');
+  let queueEN = localStorage.getItem('themovie-queue-EN-lib');
+  let queueUA = localStorage.getItem('themovie-queue-UA-lib');
   const updates = {};
-  updates['/users/' + userUID + '/' + 'watchedEN'] = watchedEN;
-  updates['/users/' + userUID + '/' + 'watchedUA'] = watchedUA;
-  updates['/users/' + userUID + '/' + 'queueEN'] = queueEN;
-  updates['/users/' + userUID + '/' + 'queueUA'] = queueUA;
+  if (watchedEN.length !== 2) {
+    watchedEN = JSON.parse(watchedEN);
+  }
+  if (watchedUA.length !== 2) {
+    watchedUA = JSON.parse(watchedUA);
+  }
+  if (queueEN.length !== 2) {
+    queueEN = JSON.parse(queueEN);
+  }
+  if (queueUA.length !== 2) {
+    queueUA = JSON.parse(queueUA);
+  }
+  console.log(watchedEN);
+  console.log(typeof watchedEN === 'string');
+  console.log(watchedUA);
+  console.log(queueEN);
+  console.log(queueUA);
+
+  if (watchedEN.length > 0) {
+    updates['/users/' + userUID + '/' + 'watchedEN'] = watchedEN;
+  }
+  if (watchedEN.length == 2 && typeof watchedEN === 'string') {
+    updates['/users/' + userUID + '/' + 'watchedEN'] = '';
+  }
+  if (watchedUA.length > 0) {
+    updates['/users/' + userUID + '/' + 'watchedUA'] = watchedUA;
+  }
+  if (watchedUA.length == 2 && typeof watchedUA === 'string') {
+    updates['/users/' + userUID + '/' + 'watchedUA'] = '';
+  }
+  if (queueEN.length > 0) {
+    updates['/users/' + userUID + '/' + 'queueEN'] = queueEN;
+  }
+  if (queueEN.length == 2 && typeof queueEN === 'string') {
+    updates['/users/' + userUID + '/' + 'queueEN'] = '';
+  }
+  if (queueUA.length > 0) {
+    updates['/users/' + userUID + '/' + 'queueUA'] = queueUA;
+  }
+  if (queueUA.length == 2 && typeof queueUA === 'string') {
+    updates['/users/' + userUID + '/' + 'queueUA'] = '';
+  }
   return update(ref(database), updates);
 }
 // ----------------------------------------------------------------------------------
