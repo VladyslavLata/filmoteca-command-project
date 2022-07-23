@@ -55,10 +55,10 @@ function writeUserData(userId, name, email) {
   set(ref(database, 'users/' + userId), {
     username: name,
     email: email,
-    watchedEN: [],
-    watchedUA: [],
-    queueEN: [],
-    queueUA: [],
+    watchedEN: '[]',
+    watchedUA: '[]',
+    queueEN: '[]',
+    queueUA: '[]',
   });
 }
 
@@ -73,19 +73,19 @@ function getDataFromDatabase(userId) {
         const dataFromFirebaseQueueEN = snapshot.val().queueEN;
         localStorage.setItem(
           keyLS.LS_WATHED_UA_DATA_KEY,
-          JSON.stringify(dataFromFirebaseWatchedUA)
+          dataFromFirebaseWatchedUA
         );
         localStorage.setItem(
           keyLS.LS_WATHED_EN_DATA_KEY,
-          JSON.stringify(dataFromFirebaseWatchedEN)
+          dataFromFirebaseWatchedEN
         );
         localStorage.setItem(
           keyLS.LS_QUEUE_UA_DATA_KEY,
-          JSON.stringify(dataFromFirebaseQueueUA)
+          dataFromFirebaseQueueUA
         );
         localStorage.setItem(
           keyLS.LS_QUEUE_EN_DATA_KEY,
-          JSON.stringify(dataFromFirebaseQueueEN)
+          dataFromFirebaseQueueEN
         );
       } else {
         console.log('No data available');
