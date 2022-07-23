@@ -14,26 +14,4 @@
   }
 }
 
-.box-btns {
-  display: flex;
-}
-
-.btn-pg {
-  width: 25px;
-  height: 25px;
-}
-
-.first-box-btn,
-.last-box-btn {
-  display: flex;
-
-}
-
-.btn-hidden {
-    @extend %visually-hidden;
-}
-
-.btn-current-pages {
-  background-color: $orange-color;
-}
 
