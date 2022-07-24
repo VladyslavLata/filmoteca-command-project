@@ -17,7 +17,13 @@
 .pagination-container {
   background-color: transparent;
 }
+.arrow-light-theme{
+stroke: $black-color;
+}
 
+.arrow-dark-theme {
+  stroke: $white-color;
+}
 .pagination-list {
   width: 100%;
   display: flex;
