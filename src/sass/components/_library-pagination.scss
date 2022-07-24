@@ -2,6 +2,10 @@
   margin-top: 40px;
   display: flex;
   justify-content: center;
+
+  @include mq(tablet) {
+    margin-top: 60px;
+  }
 }
 
 .btn-pg {
@@ -13,20 +17,31 @@ text-align: center;
 border-radius: 5px;
 }
 
-// .hidden-btns {
+.btn-pg.hidden-btns {
 
-// }
-
-.first-box-btn,
-.last-box-btn {
-  display: flex;
+ @include center;
+align-items: baseline;
 
 }
 
+.first-box-btn,
+.last-box-btn,
+.box-main-btnss {
+  display: flex;
+flex-wrap: wrap;
+}
+
 .btn-hidden {
-  @extend %visually-hidden;
+  display: none;
+  
 }
 
 .btn-current-pages {
   background-color: $orange-color;
+}
+
+.btn-pg span {
+@include center;
+height: 30;
+
 }

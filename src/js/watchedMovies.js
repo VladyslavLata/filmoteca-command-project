@@ -162,21 +162,36 @@ function getCurrentLSQueueFilms() {
 
 export function createMarkupFilms(currentLSWatchedFilms) {
   watchedFilms = getWatchedFilmsLocalStorage(currentLSWatchedFilms);
-  if (watchedFilms === null || watchedFilms.length === 0) {
+  if (watchedFilms === null) {
+    console.log('1',watchedFilms);
     clearPagination();
+    hiddenBtnArrow();
     boxFirstBtnEl.classList.add('btn-hidden');
     boxLastBtnEl.classList.add('btn-hidden');
     //  btnArrowLeftEl.classList.add('.btn-hidden');
     // btnArrowRightEl.classList.add('.btn-hidden');
+    noFilmsNoLogInMessage();
+    
     // if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
     //   noFilmsNoLogInMessage();
     //   return;
     // }
-    noFilmsMessage();
+    // noFilmsMessage();
     loader.disable('loader');
     return;
-  } else if (watchedFilms === undefined) {
+  } else if (watchedFilms.length === 0) {
+    console.log('2',watchedFilms);
     clearPagination();
+    hiddenBtnArrow();
+    boxFirstBtnEl.classList.add('btn-hidden');
+    boxLastBtnEl.classList.add('btn-hidden');
+    noFilmsMessage();
+     loader.disable('loader');
+    return;
+  }
+  else if (watchedFilms === undefined) {
+    clearPagination();
+    hiddenBtnArrow();
     boxFirstBtnEl.classList.add('btn-hidden');
     boxLastBtnEl.classList.add('btn-hidden');
     loader.disable('loader');
@@ -226,10 +241,10 @@ function noFilmsMessage() {
     '<p class="message info animate__bounceInDown">Your watch list is empty.</p>';
 }
 
-// function noFilmsNoLogInMessage() {
-//   galleryEl.innerHTML =
-//     '<p class="message animate__bounceInDown">If you want to add movie to library then you have to log in first.</p>';
-// }
+function noFilmsNoLogInMessage() {
+  galleryEl.innerHTML =
+    '<p class="message animate__bounceInDown">If you want to add movie to library then you have to log in first.</p>';
+}
 
 function errorMessage() {
   galleryEl.innerHTML =
@@ -297,8 +312,13 @@ function onClickBtnInMainBoxChangePage() {
   pickOutCurrentPage(currentPage);
 }
 
-function onClickBtnInFirstBoxChangePage() {
+function onClickBtnInFirstBoxChangePage(event) {
   if (event.target.nodeName !== 'BUTTON') {
+    return;
+  } else if (event.target.textContent === '...') {
+    currentPage = currentPage >= 6 ? currentPage - 5 : 1;
+    createMarkupFilms(currentLSWatchedFilms);
+    pickOutCurrentPage(currentPage);
     return;
   }
   currentPage = 1;
@@ -308,6 +328,11 @@ function onClickBtnInFirstBoxChangePage() {
 
 function onClickBtnInLastBoxChangePage() {
   if (event.target.nodeName !== 'BUTTON') {
+    return;
+  } else if (event.target.textContent === '...') {
+    currentPage = totalPages >= (currentPage + 5) ? currentPage + 5 : totalPages;
+    createMarkupFilms(currentLSWatchedFilms);
+    pickOutCurrentPage(currentPage);
     return;
   }
   currentPage = Number(event.target.textContent);
@@ -334,17 +359,18 @@ function onClickBtnArrowRightChangePage() {
 }
 
 function markupBtn() {
-  return `<button type="button" class="main-btn btn-pg"></button>`;
+  return `<li><button type="button" class="main-btn btn-pg"></button></li>`;
 }
 
 function makeMarkupBtns(totalPages) {
-  // if (totalPages > 1) {
-  //   btnArrowLeftEl.classList.remove('.btn-hidden');
-  //   btnArrowRightEl.classList.remove('.btn-hidden');
-  // } else if (totalPages <= 1) {
-  //   btnArrowLeftEl.classList.add('.btn-hidden');
-  //   btnArrowRightEl.classList.add('.btn-hidden');
-  // }
+  if (totalPages > 1) {
+    visibleBtnArrow();
+  } else if (totalPages <= 1) {
+    hiddenBtnArrow();
+  }
+  if (currentPage > totalPages) {
+    currentPage = totalPages;
+  }
 
   let markupBtns = '';
   let totalBtn = 0;
@@ -358,7 +384,7 @@ function makeMarkupBtns(totalPages) {
 
     addMarkupBtns(markupBtns);
     [...boxMainBbtnsEl.children].map((btn, i) => {
-      btn.textContent = i + 1;
+      btn.firstElementChild.textContent = i + 1;
     });
     return;
   } else if (
@@ -374,7 +400,7 @@ function makeMarkupBtns(totalPages) {
     }
     addMarkupBtns(markupBtns);
     [...boxMainBbtnsEl.children].map((btn, i) => {
-      btn.textContent = currentPage - 2 + i;
+      btn.firstElementChild.textContent = currentPage - 2 + i;
     });
 
     return;
@@ -388,7 +414,7 @@ function makeMarkupBtns(totalPages) {
     }
     addMarkupBtns(markupBtns);
     [...boxMainBbtnsEl.children].map((btn, i) => {
-      btn.textContent = i + 1;
+      btn.firstElementChild.textContent = i + 1;
     });
     createNumberLastBtn();
     return;
@@ -401,7 +427,7 @@ function makeMarkupBtns(totalPages) {
     }
     addMarkupBtns(markupBtns);
     [...boxMainBbtnsEl.children].map((btn, i) => {
-      btn.textContent = totalPages - 6 + i;
+      btn.firstElementChild.textContent = totalPages - 6 + i;
     });
 
     createNumberLastBtn();
@@ -410,6 +436,15 @@ function makeMarkupBtns(totalPages) {
 }
 
 function makeMarkupBtnsMobile(totalPages) {
+if (totalPages > 1) {
+    visibleBtnArrow();
+  } else if (totalPages <= 1) {
+    hiddenBtnArrow();
+  }
+ if (currentPage > totalPages) {
+    currentPage = totalPages;
+  }
+
   let markupBtns = '';
   let totalBtn = 0;
 
@@ -422,7 +457,7 @@ function makeMarkupBtnsMobile(totalPages) {
     }
     addMarkupBtns(markupBtns);
     [...boxMainBbtnsEl.children].map((btn, i) => {
-      btn.textContent = i + 1;
+      btn.firstElementChild.textContent = i + 1;
     });
     return;
   } else if (totalPages > 5 && currentPage <= 3) {
@@ -432,7 +467,7 @@ function makeMarkupBtnsMobile(totalPages) {
     }
     addMarkupBtns(markupBtns);
     [...boxMainBbtnsEl.children].map((btn, i) => {
-      btn.textContent = i + 1;
+      btn.firstElementChild.textContent = i + 1;
     });
     return;
   } else if (
@@ -446,7 +481,7 @@ function makeMarkupBtnsMobile(totalPages) {
     }
     addMarkupBtns(markupBtns);
     [...boxMainBbtnsEl.children].map((btn, i) => {
-      btn.textContent = currentPage - 2 + i;
+      btn.firstElementChild.textContent = currentPage - 2 + i;
     });
     return;
   } else if (totalPages > 5 && currentPage >= totalPages - 1) {
@@ -456,7 +491,7 @@ function makeMarkupBtnsMobile(totalPages) {
     }
     addMarkupBtns(markupBtns);
     [...boxMainBbtnsEl.children].map((btn, i) => {
-      btn.textContent = totalPages - 4 + i;
+      btn.firstElementChild.textContent = totalPages - 4 + i;
     });
     return;
   }
@@ -467,13 +502,13 @@ function addMarkupBtns(markupBtns) {
 }
 
 function createNumberLastBtn() {
-  boxLastBtnEl.lastElementChild.textContent = totalPages;
+  boxLastBtnEl.lastElementChild.firstElementChild.textContent = totalPages;
 }
 
 function pickOutCurrentPage(currentPage) {
   [...boxMainBbtnsEl.children].find(el => {
-    if (el.textContent === String(currentPage)) {
-      el.classList.add('btn-current-pages');
+    if (el.firstElementChild.textContent === String(currentPage)) {
+      el.firstElementChild.classList.add('btn-current-pages');
     }
   });
 }
@@ -482,16 +517,30 @@ function getTotalPages(watchedFilmsLength, currentTotalFilmsInPage) {
   return Math.ceil(watchedFilmsLength / currentTotalFilmsInPage);
 }
 
+
+function hiddenBtnArrow() {
+    btnArrowLeftEl.classList.add('btn-hidden');
+    btnArrowRightEl.classList.add('btn-hidden');
+
+}
+
+function visibleBtnArrow() {
+  btnArrowLeftEl.classList.remove('btn-hidden');
+  btnArrowRightEl.classList.remove('btn-hidden');
+}
+
 function refreshLibraryOnClickBtnModal(evt) {
   const currentPage = getCurrentPageFromLS();
   if (evt.target.name === btnNameKey.WATCHED) {
     if (currentPage === keyLS.VALUE_PAGE_LIBRARY_W) {
-      onClickWatchedBtnMarkupFilms();
+      createMarkupFilms(currentLSWatchedFilms);
+      // onClickWatchedBtnMarkupFilms();
     }
   }
   if (evt.target.name === btnNameKey.QUEUE) {
     if (currentPage === keyLS.VALUE_PAGE_LIBRARY_Q) {
-      onClickQueueBtnMarkupFilms();
+      createMarkupFilms(currentLSWatchedFilms);
+      // onClickQueueBtnMarkupFilms();
     }
   }
 }

@@ -10,19 +10,29 @@
   </button>
   <div class="container container--space container-library">
     <ul class="gallery gallery-library"></ul>
-    <h1 class="not-logged-message message animate__bounceInDown message--hidden">Here will be your films, after you log in :)</h1>
+    <!-- <h1 class="not-logged-message message animate__bounceInDown message--hidden">Here will be your films, after you log in :)</h1> -->
     <!-- <h1 class="empty-lib-gallery">Here will be your films, after you add them! :)</h1> -->
     <div class="box-btns">
       <button type="button" class="btn-arrow left btn-pg"><-</button>
-      <div class="first-box-btn btn-hidden">
-        <button type="button" class="btn-first btn-pg">1</button>
-        <p class="hidden-btns left btn-pg">...</p>
-      </div>
-      <div class="box-main-btnss"></div>
-      <div class="last-box-btn btn-hidden">
-        <p class="hidden-btns right btn-pg">...</p>
-        <button type="button" class="btn-last btn-pg"></button>
-      </div>
+      <ul class="first-box-btn btn-hidden">
+        <li><button type="button" class="btn-first btn-pg">1</button></li>
+        <li>
+          <button type="button" class="btn-pg hidden-btns left">
+            <span>...</span>
+          </button>
+        </li>
+      </ul>
+      <ul class="box-main-btnss"></ul>
+      <ul class="last-box-btn btn-hidden">
+        <li>
+          <button type="button" class="btn-pg hidden-btns right">
+            <span>...</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="btn-last btn-pg"></button>
+        </li>
+      </ul>
       <button type="button" class="btn-arrow right btn-pg">-></button>
     </div>
   </div>

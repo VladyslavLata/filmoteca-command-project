@@ -222,7 +222,7 @@ async function monitorAuthState() {
     const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
     if (refs.libGallery) {
       // refs.emptyLibText.style.display = 'none';
-      refs.emptyLibText.classList.add('message--hidden');
+      // refs.emptyLibText.classList.add('message--hidden');
       refs.libGallery.style.display = 'flex';
     }
     if (username) {
@@ -243,7 +243,7 @@ const logout = async () => {
   await signOut(auth);
   if (refs.libGallery) {
     // refs.emptyLibText.style.display = 'flex';
-    refs.emptyLibText.classList.remove('message--hidden');
+    // refs.emptyLibText.classList.remove('message--hidden');
     refs.libGallery.style.display = 'none';
   }
   localStorage.removeItem(keyLS.LS_WATHED_UA_DATA_KEY);
@@ -267,7 +267,7 @@ function checkIfLogged() {
   if (username || usernameSS) {
     if (refs.libGallery) {
       // refs.emptyLibText.style.display = 'none';
-      refs.emptyLibText.classList.add('message--hidden');
+      // refs.emptyLibText.classList.add('message--hidden');
       refs.libGallery.style.display = 'flex';
     }
     refs.loginForm.classList.add('logout-modal--hidden');
@@ -279,7 +279,7 @@ function checkIfLogged() {
   } else {
     if (refs.libGallery) {
       // refs.emptyLibText.style.display = 'flex';
-      refs.emptyLibText.classList.remove('message--hidden');
+      // refs.emptyLibText.classList.remove('message--hidden');
       refs.libGallery.style.display = 'none';
     }
     refs.loginForm.classList.remove('logout-modal--hidden');
