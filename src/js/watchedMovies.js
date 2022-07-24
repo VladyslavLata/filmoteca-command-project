@@ -84,7 +84,7 @@ function mobilePagination(e) {
   }
 }
 
-function libraryStart() {
+export function libraryStart() {
   if (!currentLangLibrary) {
     currentLangLibrary = setLanguageToLS(Movie.language.ENGLISH);
   }
