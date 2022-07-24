@@ -1,4 +1,7 @@
 .message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 10px 0px;
   position: relative;
   z-index: -1;
@@ -12,28 +15,9 @@
   @media screen and (min-width: 768px) {
     font-size: 24px;
   }
-}
-
-.box-btns {
-  display: flex;
-}
-
-.btn-pg {
-  width: 25px;
-  height: 25px;
-}
-
-.first-box-btn,
-.last-box-btn {
-  display: flex;
 
 }
 
-.btn-hidden {
-    @extend %visually-hidden;
+.message--hidden {
+  @extend %visually-hidden;
 }
-
-.btn-current-pages {
-  background-color: $orange-color;
-}
-

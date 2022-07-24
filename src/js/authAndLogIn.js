@@ -12,7 +12,7 @@ import { keyLS } from './languageSwitch';
 import { getLanguageFromLS } from './languageSwitch';
 
 const refs = {
-  emptyLibText: document.querySelector('.not-logged-gallery'),
+  emptyLibText: document.querySelector('.not-logged-message'),
   libContainer: document.querySelector('.container-library'),
   libGallery: document.querySelector('.gallery-library'),
   loginForm: document.querySelector('.login__form'),
@@ -222,6 +222,7 @@ async function monitorAuthState() {
     const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
     if (refs.libGallery) {
       // refs.emptyLibText.style.display = 'none';
+      refs.emptyLibText.classList.add('message--hidden');
       refs.libGallery.style.display = 'flex';
     }
     if (username) {
@@ -242,6 +243,7 @@ const logout = async () => {
   await signOut(auth);
   if (refs.libGallery) {
     // refs.emptyLibText.style.display = 'flex';
+    refs.emptyLibText.classList.remove('message--hidden');
     refs.libGallery.style.display = 'none';
   }
   localStorage.removeItem(keyLS.LS_WATHED_UA_DATA_KEY);
@@ -265,6 +267,7 @@ function checkIfLogged() {
   if (username || usernameSS) {
     if (refs.libGallery) {
       // refs.emptyLibText.style.display = 'none';
+      refs.emptyLibText.classList.add('message--hidden');
       refs.libGallery.style.display = 'flex';
     }
     refs.loginForm.classList.add('logout-modal--hidden');
@@ -276,11 +279,12 @@ function checkIfLogged() {
   } else {
     if (refs.libGallery) {
       // refs.emptyLibText.style.display = 'flex';
+      refs.emptyLibText.classList.remove('message--hidden');
       refs.libGallery.style.display = 'none';
     }
     refs.loginForm.classList.remove('logout-modal--hidden');
     refs.logoutModal.classList.add('logout-modal--hidden');
-    currentLangLogOIn();
+    currentLangLogIn();
     // refs.loginHeaderBtn.textContent = 'Log In';
     refs.usernick.textContent = ``;
   }
@@ -301,17 +305,17 @@ function resetSignup() {
 async function currentLangLogIn() {
   const lang = await getLanguageFromLS();
   if (lang === 'en-US') {
-    return refs.loginHeaderBtn.textContent = 'Log In';
+    return (refs.loginHeaderBtn.textContent = 'Log In');
   } else {
-    return refs.loginHeaderBtn.textContent = 'Вхід';
+    return (refs.loginHeaderBtn.textContent = 'Вхід');
   }
 }
 
 async function currentLangLogOut() {
   const lang = await getLanguageFromLS();
   if (lang === 'en-US') {
-    return refs.loginHeaderBtn.textContent = 'Log Out';
+    return (refs.loginHeaderBtn.textContent = 'Log Out');
   } else {
-    return refs.loginHeaderBtn.textContent = 'Вихід';
+    return (refs.loginHeaderBtn.textContent = 'Вихід');
   }
 }

@@ -1,13 +1,29 @@
 <section class="gallery-section">
-    <button type="button" class="icon__button">
-        <svg class="icon" width="20" height="20">
-            <use class="icon__moon icon__moon--hidden" href="./images/sprite.svg#icon-moon-stars-fill"></use>
-            <use class="icon__sun" href="./images/sprite.svg#icon-sun-fill"></use>
-        </svg>
-    </button>
-    <div class="container container--space container-library">
-        <ul class="gallery gallery-library"></ul>
-        <!-- <h1 class="not-logged-gallery">Here will be your films, after you log in :)</h1>
-        <h1 class="empty-lib-gallery">Here will be your films, after you add them! :)</h1> -->
+  <button type="button" class="icon__button">
+    <svg class="icon" width="20" height="20">
+      <use
+        class="icon__moon icon__moon--hidden"
+        href="./images/sprite.svg#icon-moon-stars-fill"
+      ></use>
+      <use class="icon__sun" href="./images/sprite.svg#icon-sun-fill"></use>
+    </svg>
+  </button>
+  <div class="container container--space container-library">
+    <ul class="gallery gallery-library"></ul>
+    <h1 class="not-logged-message message animate__bounceInDown message--hidden">Here will be your films, after you log in :)</h1>
+    <!-- <h1 class="empty-lib-gallery">Here will be your films, after you add them! :)</h1> -->
+    <div class="box-btns">
+      <button type="button" class="btn-arrow left btn-pg"><-</button>
+      <div class="first-box-btn btn-hidden">
+        <button type="button" class="btn-first btn-pg">1</button>
+        <p class="hidden-btns left btn-pg">...</p>
+      </div>
+      <div class="box-main-btnss"></div>
+      <div class="last-box-btn btn-hidden">
+        <p class="hidden-btns right btn-pg">...</p>
+        <button type="button" class="btn-last btn-pg"></button>
+      </div>
+      <button type="button" class="btn-arrow right btn-pg">-></button>
     </div>
+  </div>
 </section>
