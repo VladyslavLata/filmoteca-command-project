@@ -280,7 +280,7 @@ function checkIfLogged() {
     }
     refs.loginForm.classList.remove('logout-modal--hidden');
     refs.logoutModal.classList.add('logout-modal--hidden');
-    currentLangLogOIn();
+    currentLangLogIn();
     // refs.loginHeaderBtn.textContent = 'Log In';
     refs.usernick.textContent = ``;
   }
@@ -301,17 +301,17 @@ function resetSignup() {
 async function currentLangLogIn() {
   const lang = await getLanguageFromLS();
   if (lang === 'en-US') {
-    return refs.loginHeaderBtn.textContent = 'Log In';
+    return (refs.loginHeaderBtn.textContent = 'Log In');
   } else {
-    return refs.loginHeaderBtn.textContent = 'Вхід';
+    return (refs.loginHeaderBtn.textContent = 'Вхід');
   }
 }
 
 async function currentLangLogOut() {
   const lang = await getLanguageFromLS();
   if (lang === 'en-US') {
-    return refs.loginHeaderBtn.textContent = 'Log Out';
+    return (refs.loginHeaderBtn.textContent = 'Log Out');
   } else {
-    return refs.loginHeaderBtn.textContent = 'Вихід';
+    return (refs.loginHeaderBtn.textContent = 'Вихід');
   }
 }
