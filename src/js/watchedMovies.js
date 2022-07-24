@@ -241,10 +241,10 @@ async function errorMessage() {
   const lang = await getLanguageFromLS();
   if (lang === Movie.language.ENGLISH) {
     galleryEl.innerHTML =
-    '<p class="message error animate__bounceInDown">Unknown error. Watched movies cannot be displayed.</p>';
+      '<p class="message error animate__bounceInDown">Unknown error. Watched movies cannot be displayed.</p>';
   } else if (lang === Movie.language.UKRAINIAN) {
     galleryEl.innerHTML =
-    '<p class="message error animate__bounceInDown">Невідома помилка. Доданы фільми не відображаються.</p>';
+      '<p class="message error animate__bounceInDown">Невідома помилка. Додані фільми не відображаються.</p>';
   }
 }
 
