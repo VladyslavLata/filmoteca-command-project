@@ -44,10 +44,15 @@
 
 .pagination-list li {
   list-style: none;
+  color: $black-color;
   height: 40px;
   width: 40px;
   margin: 0;
   border-radius: 5px;
+
+  body.dark__theme & {
+    color: $white-color;
+  }
 }
 
 .pagination-list button {
