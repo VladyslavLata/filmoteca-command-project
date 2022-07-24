@@ -8,9 +8,21 @@ export const refsTranslate = {
   linkMyLibrary: document.querySelector('.js-myLibrary-text'),
   btnSignUp: document.querySelector('.js-signUp-text'),
   btnLogIn: document.querySelector('.js-logIn-text'),
+  searchPlaceholder: document.querySelector('.search-form__input'),
 };
 
-const { linkHome, linkMyLibrary, btnSignUp, btnLogIn, searchPlaceholder, textUpFirst, textUpSecond, textUpThird, textLink } = refsTranslate;
+const {
+  linkHome,
+  linkMyLibrary,
+  btnSignUp,
+  btnLogIn,
+  searchPlaceholder,
+  textUpFirst,
+  textUpSecond,
+  textUpThird,
+  textLink,
+} = refsTranslate;
+console.log(searchPlaceholder);
 
 export async function translatePage() {
   const lang = await getLanguageFromLS();
