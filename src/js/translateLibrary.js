@@ -1,18 +1,20 @@
-import { getLanguageFromLS } from './languageSwitch';
-import { refs } from './languageSwitch';
-import { refsTrendTime } from './trendTime';
+import { getLanguageFromLS } from "./languageSwitch";
 import { Movie } from './fetchMovie';
+import { refs } from "./languageSwitch";
+import {watchedMovieBtnEl, queueMovieBtnEl} from './watchedMovies'
 
-export const refsTranslate = {
+const refsTranslateLibrary = {
   linkHome: document.querySelector('.js-homeLink-text'),
   linkMyLibrary: document.querySelector('.js-myLibrary-text'),
   btnSignUp: document.querySelector('.js-signUp-text'),
   btnLogIn: document.querySelector('.js-logIn-text'),
+  notLoggedMessage: document.querySelector('.js-notLoggedMessage')
 };
 
-const { linkHome, linkMyLibrary, btnSignUp, btnLogIn, searchPlaceholder, textUpFirst, textUpSecond, textUpThird, textLink } = refsTranslate;
 
-export async function translatePage() {
+const { linkHome, linkMyLibrary, btnSignUp, btnLogIn, notLoggedMessage } = refsTranslateLibrary;
+
+export async function translatePageLibrary() {
   const lang = await getLanguageFromLS();
 
   if (lang === Movie.language.ENGLISH) {
@@ -24,11 +26,11 @@ export async function translatePage() {
     } else if (btnLogIn.textContent === 'Вихід') {
       btnLogIn.textContent = 'Log Out';
     }
-    searchPlaceholder.placeholder = 'Movie search';
+    watchedMovieBtnEl.textContent = 'watched';
+    queueMovieBtnEl.textContent = 'queue';
     refs.btnSwitchEN.textContent = 'en';
     refs.btnSwitchUA.textContent = 'ua';
-    refsTrendTime.btnSwitchDay.textContent = 'day';
-    refsTrendTime.btnSwitchWeek.textContent = 'week';
+    notLoggedMessage.textContent = 'Here will be your films, after you log in :)';
   }
 
   if (lang === Movie.language.UKRAINIAN) {
@@ -40,12 +42,12 @@ export async function translatePage() {
     } else if (btnLogIn.textContent === 'Log Out') {
       btnLogIn.textContent = 'Вихід';
     }
-    searchPlaceholder.placeholder = 'Пошук фільму';
+    watchedMovieBtnEl.textContent = 'Переглянуті';
+    queueMovieBtnEl.textContent = 'До перегляду';
     refs.btnSwitchEN.textContent = 'англ';
     refs.btnSwitchUA.textContent = 'укр';
-    refsTrendTime.btnSwitchDay.textContent = 'день';
-    refsTrendTime.btnSwitchWeek.textContent = 'тиждень';
+    notLoggedMessage.textContent = 'Тут будуть Ваші фільми після реєстрації :)';
   }
 }
 
-translatePage();
+translatePageLibrary();

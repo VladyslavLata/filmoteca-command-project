@@ -6,6 +6,7 @@ import {
 } from './watchedMovies';
 import { renderFooter } from './footerTranslation';
 import Loader from './loader';
+import { translatePageLibrary } from './translateLibrary';
 
 const loader = new Loader();
 
@@ -15,6 +16,7 @@ refs.btnSwitchUA.addEventListener('click', onClickUA);
 function onClickEN() {
   setLanguageToLS(Movie.language.ENGLISH);
   onClickENBtnMarkupFilms();
+  translatePageLibrary();
   renderFooter();
   loader.disable('loader');  
 }
@@ -22,6 +24,7 @@ function onClickEN() {
 function onClickUA() {
   setLanguageToLS(Movie.language.UKRAINIAN);
   onClickUABtnMarkupFilms();
+  translatePageLibrary();
   renderFooter();
   loader.disable('loader'); 
 }

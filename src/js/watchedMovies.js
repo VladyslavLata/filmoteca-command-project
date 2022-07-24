@@ -44,8 +44,8 @@ const boxLastBtnEl = document.querySelector('.last-box-btn');
 const btnArrowLeftEl = document.querySelector('.btn-arrow.left');
 const btnArrowRightEl = document.querySelector('.btn-arrow.right');
 
-const watchedMovieBtnEl = document.querySelector('.watched');
-const queueMovieBtnEl = document.querySelector('.queue');
+export const watchedMovieBtnEl = document.querySelector('.watched');
+export const queueMovieBtnEl = document.querySelector('.queue');
 
 const galleryEl = document.querySelector('.gallery');
 let watchedFilms = null;
@@ -221,9 +221,15 @@ function getWatchedFilmsLocalStorage(currentLSWatchedFilms) {
   }
 }
 
-function noFilmsMessage() {
-  galleryEl.innerHTML =
-    '<p class="message info animate__bounceInDown">Your watch list is empty.</p>';
+async function noFilmsMessage() {
+  const lang = await getLanguageFromLS();
+  if (lang === Movie.language.ENGLISH) {
+    galleryEl.innerHTML =
+      '<p class="message info animate__bounceInDown">Your watch list is empty.</p>';
+  } else if (lang === Movie.language.UKRAINIAN) {
+    galleryEl.innerHTML =
+      '<p class="message info animate__bounceInDown">Ваш список доданих фільмів порожній.</p>';
+  }
 }
 
 // function noFilmsNoLogInMessage() {
@@ -231,9 +237,15 @@ function noFilmsMessage() {
 //     '<p class="message animate__bounceInDown">If you want to add movie to library then you have to log in first.</p>';
 // }
 
-function errorMessage() {
-  galleryEl.innerHTML =
+async function errorMessage() {
+  const lang = await getLanguageFromLS();
+  if (lang === Movie.language.ENGLISH) {
+    galleryEl.innerHTML =
     '<p class="message error animate__bounceInDown">Unknown error. Watched movies cannot be displayed.</p>';
+  } else if (lang === Movie.language.UKRAINIAN) {
+    galleryEl.innerHTML =
+    '<p class="message error animate__bounceInDown">Невідома помилка. Доданы фільми не відображаються.</p>';
+  }
 }
 
 function clearGallery() {
