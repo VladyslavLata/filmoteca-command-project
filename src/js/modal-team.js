@@ -48,7 +48,7 @@ backdropTeam.addEventListener('click', onCloseClickBackdrop);
 function onTeamClick(e) {
   e.preventDefault();
   backdropTeam.classList.remove('is-hidden');
-  body.classList.add('modal-team-open');
+  body.classList.add('modal-open');
   modalTeamMarkup();
   heartIcon.classList.remove('animate__heartBeat');
 
@@ -60,8 +60,9 @@ function onTeamClick(e) {
 }
 
 function onCloseTeamClick(e) {
+  window.removeEventListener('keydown', onEscKeyPress);
   backdropTeam.classList.add('is-hidden');
-  body.classList.remove('modal-team-open');
+  body.classList.remove('modal-open');
   heartIcon.classList.add('animate__heartBeat');
 }
 
@@ -72,9 +73,10 @@ function onCloseClickBackdrop(e) {
   }
 }
 
-function onEscKeyPress(e) {  
+function onEscKeyPress(e) {
   if (e.code === 'Escape') {
     onCloseTeamClick();
+    console.log('yup');
   }
 }
 
@@ -97,7 +99,7 @@ function modalTeamMarkup() {
   let diachenko = langUS ? 'Olena Diachenko' : 'Олена Дяченко';
   let malynovska = langUS ? 'Natalia Malynovska' : 'Наталя Малиновська';
   let garnyk = langUS ? 'Alyona Garnyk' : 'Альона Гарнюк';
-  let photoWith = langUS ? 'photo with' : 'на фото'
+  let photoWith = langUS ? 'photo with' : 'на фото';
 
   ref.lead.textContent = teamLead;
   ref.scrum.textContent = scrumMaster;
@@ -116,22 +118,23 @@ function modalTeamMarkup() {
   ref.malynovska.textContent = malynovska;
   ref.garnyk.textContent = garnyk;
   ref.developer.forEach(item => {
-    item.textContent = developer});
-    ref.imgSainchuk.alt = `${photoWith} ${sainchuk}`;
-    ref.imgKurka.alt = `${photoWith} ${kurka}`;
-    ref.imgTikka.alt = `${photoWith} ${tikka}`;
-    ref.imgVelychko.alt = `${photoWith} ${velychko}`;
-    ref.imgTsiukh.alt = `${photoWith} ${tsiukh}`;
-    ref.imgBoiko.alt = `${photoWith} ${boiko}`;
-    ref.imgKonovalova.alt = `${photoWith} ${konovalova}`;
-    ref.imgLata.alt = `${photoWith} ${lata}`;
-    ref.imgMuzalevskiy.alt = `${photoWith} ${muzalevskiy}`;
-    ref.imgDiachenko.alt = `${photoWith} ${diachenko}`;
-    ref.imgMalynovska.alt = `${photoWith} ${malynovska}`;
-    ref.imgGarnyk.alt = `${photoWith} ${garnyk}`;
-    // ref.imgTikka.alt = '123';
-  
-  console.log(ref.imgTikka.alt)
+    item.textContent = developer;
+  });
+  ref.imgSainchuk.alt = `${photoWith} ${sainchuk}`;
+  ref.imgKurka.alt = `${photoWith} ${kurka}`;
+  ref.imgTikka.alt = `${photoWith} ${tikka}`;
+  ref.imgVelychko.alt = `${photoWith} ${velychko}`;
+  ref.imgTsiukh.alt = `${photoWith} ${tsiukh}`;
+  ref.imgBoiko.alt = `${photoWith} ${boiko}`;
+  ref.imgKonovalova.alt = `${photoWith} ${konovalova}`;
+  ref.imgLata.alt = `${photoWith} ${lata}`;
+  ref.imgMuzalevskiy.alt = `${photoWith} ${muzalevskiy}`;
+  ref.imgDiachenko.alt = `${photoWith} ${diachenko}`;
+  ref.imgMalynovska.alt = `${photoWith} ${malynovska}`;
+  ref.imgGarnyk.alt = `${photoWith} ${garnyk}`;
+  // ref.imgTikka.alt = '123';
+
+  // console.log(ref.imgTikka.alt);
 
   // const makeMarkupModalTeam = `<ul class="team__list">
   //       <li class="team__item">
