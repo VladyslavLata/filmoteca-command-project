@@ -3,6 +3,7 @@ import { fetchTrendAndMarkup, fetchSearchAndMarkup } from './fetchAndMarkup';
 import { trendMovie } from './homePage';
 import { keyword, keywordMovies } from './moviesKeyword';
 import { handleButtonClick as goToStart } from './up-btnAndSwitcher';
+import themeSwitcher from './themeSwitcher';
 
 import Loader from './loader';
 
@@ -10,7 +11,6 @@ const loader = new Loader();
 
 const paginationContainer = document.querySelector('.pagination-container');
 paginationContainer.addEventListener('click', onClickPagination);
-console.log(paginationContainer);
 
 // const refs = {
 // btnLoadPrevious: document.querySelector('.pagination-page__btn-previous'),
@@ -71,6 +71,7 @@ function onClickPagination(evt) {
   if (activePage === currentPage) {
     return;
   }
+ 
 
   setPageNum(activePage);
   onFetchAndMarkup();

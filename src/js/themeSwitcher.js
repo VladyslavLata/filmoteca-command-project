@@ -8,9 +8,10 @@ export const themeKey = {
   DARK: 'dark',
 };
 
+
 iconButton.addEventListener('click', toggleTheme);
 
-const enableDarkMode = () => {
+ const enableDarkMode = () => {
   body.classList.add('dark__theme');
   iconMoon.classList.remove('icon__item--hidden');
   iconSun.classList.add('icon__item--hidden');
@@ -22,7 +23,7 @@ const enableLightMode = () => {
   iconSun.classList.remove('icon__item--hidden');
 };
 
-startTheme();
+ startTheme();
 
 function toggleTheme(e) {
   const themeMode = localStorage.getItem(themeKey.LS_KEY);
@@ -35,8 +36,9 @@ function toggleTheme(e) {
   }
 }
 
+
 function startTheme() {
-  const themeMode = localStorage.getItem(themeKey.LS_KEY);
+  themeMode = localStorage.getItem(themeKey.LS_KEY);
   if (!themeMode) {
     enableLightMode();
     localStorage.setItem(themeKey.LS_KEY, themeKey.LIGHT);
@@ -51,4 +53,6 @@ function startTheme() {
       enableDarkMode();
       break;
   }
+  return themeMode;
+  
 }
