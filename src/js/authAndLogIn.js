@@ -10,7 +10,7 @@ import {
 import { getDatabase, set, ref, child, update, get } from 'firebase/database';
 import { keyLS } from './languageSwitch';
 import { getLanguageFromLS } from './languageSwitch';
-import { libraryStart } from './watchedMovies';
+// import { libraryStart } from './watchedMovies';
 
 const refs = {
   emptyLibText: document.querySelector('.not-logged-message'),
@@ -174,7 +174,7 @@ const loginEmailPassword = async () => {
       currentLangLogOut();
       // refs.loginHeaderBtn.textContent = 'Log Out';
       refs.usernick.textContent = `${username}`;
-      libraryStart();
+      // libraryStart();
       console.log(username);
       getDataFromDatabase(userUID);
       monitorAuthState();
