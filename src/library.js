@@ -9,3 +9,4 @@ import * as footerTranslation from './js/footerTranslation';
 import * as modalTeam from './js/modal-team';
 import * as signIn from './js/switchSignInForms';
 import * as authAndLoIn from './js/authAndLogIn';
+import * as translateLibrary from './js/translateLibrary';
