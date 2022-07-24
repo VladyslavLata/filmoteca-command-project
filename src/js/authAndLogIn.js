@@ -9,6 +9,7 @@ import {
 } from 'firebase/auth';
 import { getDatabase, set, ref, child, update, get } from 'firebase/database';
 import { keyLS } from './languageSwitch';
+import { getLanguageFromLS } from './languageSwitch';
 
 const refs = {
   emptyLibText: document.querySelector('.not-logged-gallery'),
@@ -115,11 +116,11 @@ export async function updateUserData(userUID) {
   if (queueUA.length !== 2) {
     queueUA = JSON.parse(queueUA);
   }
-  console.log(watchedEN);
-  console.log(typeof watchedEN === 'string');
-  console.log(watchedUA);
-  console.log(queueEN);
-  console.log(queueUA);
+  // console.log(watchedEN);
+  // console.log(typeof watchedEN === 'string');
+  // console.log(watchedUA);
+  // console.log(queueEN);
+  // console.log(queueUA);
 
   if (watchedEN.length > 0) {
     updates['/users/' + userUID + '/' + 'watchedEN'] = watchedEN;
@@ -169,7 +170,8 @@ const loginEmailPassword = async () => {
         sessionStorage.setItem(LS_LOGIN_KEY, `${username}`);
       }
       localStorage.setItem(LS_UID_VALUE, `${userUID}`);
-      refs.loginHeaderBtn.textContent = 'Log Out';
+      currentLangLogOut();
+      // refs.loginHeaderBtn.textContent = 'Log Out';
       refs.usernick.textContent = `${username}`;
       console.log(username);
       getDataFromDatabase(userUID);
@@ -247,7 +249,8 @@ const logout = async () => {
   localStorage.removeItem(keyLS.LS_QUEUE_UA_DATA_KEY);
   localStorage.removeItem(keyLS.LS_QUEUE_EN_DATA_KEY);
   localStorage.removeItem(LS_LOGIN_KEY);
-  refs.loginHeaderBtn.textContent = 'Log In';
+  currentLangLogIn();
+  // refs.loginHeaderBtn.textContent = 'Log In';
   refs.usernick.textContent = ``;
   refs.loginForm.classList.remove('logout-modal--hidden');
   refs.logoutModal.classList.add('logout-modal--hidden');
@@ -266,7 +269,8 @@ function checkIfLogged() {
     }
     refs.loginForm.classList.add('logout-modal--hidden');
     refs.logoutModal.classList.remove('logout-modal--hidden');
-    refs.loginHeaderBtn.textContent = 'Log Out';
+    currentLangLogOut();
+    // refs.loginHeaderBtn.textContent = 'Log Out';
     refs.usernick.textContent = `${username}`;
     refs.logoutText.innerHTML = `You are logged in as ${username}`;
   } else {
@@ -276,7 +280,8 @@ function checkIfLogged() {
     }
     refs.loginForm.classList.remove('logout-modal--hidden');
     refs.logoutModal.classList.add('logout-modal--hidden');
-    refs.loginHeaderBtn.textContent = 'Log In';
+    currentLangLogOIn();
+    // refs.loginHeaderBtn.textContent = 'Log In';
     refs.usernick.textContent = ``;
   }
 }
@@ -291,4 +296,22 @@ function resetLogin() {
 function resetSignup() {
   refs.signupPassword.value = '';
   refs.signupEmail.value = '';
+}
+
+async function currentLangLogIn() {
+  const lang = await getLanguageFromLS();
+  if (lang === 'en-US') {
+    return refs.loginHeaderBtn.textContent = 'Log In';
+  } else {
+    return refs.loginHeaderBtn.textContent = 'Вхід';
+  }
+}
+
+async function currentLangLogOut() {
+  const lang = await getLanguageFromLS();
+  if (lang === 'en-US') {
+    return refs.loginHeaderBtn.textContent = 'Log Out';
+  } else {
+    return refs.loginHeaderBtn.textContent = 'Вихід';
+  }
 }

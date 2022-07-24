@@ -197,6 +197,9 @@
 
 .user-nick {
   color: $white-color;
+  @include mq(mobile-only) {
+      display: none;
+    }
 }
 
 .registration__menu {
@@ -208,7 +211,7 @@
 }
 
 .signup__button, .login__button {
-  width: 50px;
+  min-width: 50px;
   height: 23px;
   opacity: 0.7;
   border-radius: 5px;
