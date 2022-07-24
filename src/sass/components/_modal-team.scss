@@ -41,11 +41,13 @@ body.modal-team-open {
     transition: transform 500ms;
     border-radius: 5px;
     background: $white-color;
-       max-height: 100%;
+       
     overflow-y: auto;
         
     padding: 30px 30px;
-       
+        @media screen and (max-width: 1280px) {
+            height: 100%;
+        }
 
         @media screen and (min-width: 320px) {
             width: 320px;
