@@ -26,23 +26,58 @@ const ref = {
   diachenko: document.querySelector('.js-name-diachenko'),
   malynovska: document.querySelector('.js-name-malynovska'),
   garnyk: document.querySelector('.js-name-garnyk'),
+
+  imgSainchuk: document.querySelector('.team__img-js-sainchuk'),
+  imgKurka: document.querySelector('.team__img-js-kurka'),
+  imgTikka: document.querySelector('.team__img-js-tikka'),
+  imgVelychko: document.querySelector('.team__img-js-velychko'),
+  imgTsiukh: document.querySelector('.team__img-js-tsiukh'),
+  imgBoiko: document.querySelector('.team__img-js-boiko'),
+  imgKonovalova: document.querySelector('.team__img-js-konovalova'),
+  imgLata: document.querySelector('.team__img-js-lata'),
+  imgMuzalevskiy: document.querySelector('.team__img-js-muzalevskiy'),
+  imgDiachenko: document.querySelector('.team__img-js-diachenko'),
+  imgMalynovska: document.querySelector('.team__img-js-malynovska'),
+  imgGarnyk: document.querySelector('.team__img-js-garnyk'),
 };
 
 team.addEventListener('click', onTeamClick);
 closeTeam.addEventListener('click', onCloseTeamClick);
+backdropTeam.addEventListener('click', onCloseClickBackdrop);
 
 function onTeamClick(e) {
   e.preventDefault();
   backdropTeam.classList.remove('is-hidden');
-  body.classList.add('modal-team-open');
+  body.classList.add('modal-open');
   modalTeamMarkup();
   heartIcon.classList.remove('animate__heartBeat');
+
+  if (e.target !== e.currentTarget) {
+    window.addEventListener('keydown', onEscKeyPress);
+    body.classList.add('modal-open');
+    backdropTeam.classList.remove('is-hidden');
+  }
 }
 
 function onCloseTeamClick(e) {
+  window.removeEventListener('keydown', onEscKeyPress);
   backdropTeam.classList.add('is-hidden');
-  body.classList.remove('modal-team-open');
+  body.classList.remove('modal-open');
   heartIcon.classList.add('animate__heartBeat');
+}
+
+function onCloseClickBackdrop(e) {
+  if (e.target == e.currentTarget) {
+    body.classList.remove('modal-open');
+    backdropTeam.classList.add('is-hidden');
+  }
+}
+
+function onEscKeyPress(e) {
+  if (e.code === 'Escape') {
+    onCloseTeamClick();
+    console.log('yup');
+  }
 }
 
 function modalTeamMarkup() {
@@ -64,6 +99,7 @@ function modalTeamMarkup() {
   let diachenko = langUS ? 'Olena Diachenko' : 'Олена Дяченко';
   let malynovska = langUS ? 'Natalia Malynovska' : 'Наталя Малиновська';
   let garnyk = langUS ? 'Alyona Garnyk' : 'Альона Гарнюк';
+  let photoWith = langUS ? 'photo with' : 'на фото';
 
   ref.lead.textContent = teamLead;
   ref.scrum.textContent = scrumMaster;
@@ -84,6 +120,21 @@ function modalTeamMarkup() {
   ref.developer.forEach(item => {
     item.textContent = developer;
   });
+  ref.imgSainchuk.alt = `${photoWith} ${sainchuk}`;
+  ref.imgKurka.alt = `${photoWith} ${kurka}`;
+  ref.imgTikka.alt = `${photoWith} ${tikka}`;
+  ref.imgVelychko.alt = `${photoWith} ${velychko}`;
+  ref.imgTsiukh.alt = `${photoWith} ${tsiukh}`;
+  ref.imgBoiko.alt = `${photoWith} ${boiko}`;
+  ref.imgKonovalova.alt = `${photoWith} ${konovalova}`;
+  ref.imgLata.alt = `${photoWith} ${lata}`;
+  ref.imgMuzalevskiy.alt = `${photoWith} ${muzalevskiy}`;
+  ref.imgDiachenko.alt = `${photoWith} ${diachenko}`;
+  ref.imgMalynovska.alt = `${photoWith} ${malynovska}`;
+  ref.imgGarnyk.alt = `${photoWith} ${garnyk}`;
+  // ref.imgTikka.alt = '123';
+
+  // console.log(ref.imgTikka.alt);
 
   // const makeMarkupModalTeam = `<ul class="team__list">
   //       <li class="team__item">

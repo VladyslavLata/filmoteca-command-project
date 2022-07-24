@@ -1,7 +1,3 @@
-body.modal-team-open {
-    overflow: hidden;
-}
-
 .backdrop-team {
     position: fixed;
     // visibility: visible;
@@ -41,15 +37,13 @@ body.modal-team-open {
     transition: transform 500ms;
     border-radius: 5px;
     background: $white-color;
-        
+       
     overflow-y: auto;
         
     padding: 30px 30px;
-
-    @media screen and (max-width: 768px) {
+        @media screen and (max-width: 1279px) {
             height: 100%;
         }
-    
 
         @media screen and (min-width: 320px) {
             width: 320px;
@@ -68,7 +62,15 @@ body.modal-team-open {
     body.dark__theme & {
         background-color: #303030;
     }
-}
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        }
+    
+        .modal-team::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+
 
 .modal-team__container {           
     height: 100%;    
@@ -87,9 +89,7 @@ body.modal-team-open {
     background-color: transparent;
     position: absolute;
     top: 8px;
-    right: 8px;
-
-    /* display: inline-flex; */
+    right: 8px;   
     align-items: center;
     width: 30px;
     height: 30px;
@@ -133,29 +133,26 @@ body.modal-team-open {
         transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
                 box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
         &:hover,
-            &:focus {
-                transform: scale(1.02);
-                box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25), 0 3px 3px rgba(0, 0, 0, 0.22);
-        
-                body.dark__theme & {
-                    box-shadow: 0 5px 5px rgba(255, 255, 255, 0.25),
-                        0 3px 3px rgba(255, 255, 255, 0.22);
-                }
+        &:focus {
+            transform: scale(1.02);
+            box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25), 0 3px 3px rgba(0, 0, 0, 0.22);
+    
+            body.dark__theme & {
+                box-shadow: 0 5px 5px rgba(255, 255, 255, 0.25),
+                    0 3px 3px rgba(255, 255, 255, 0.22);
+            }
         }
         border-radius: 5px;
 
     width: 100%;
     @media screen and (min-width: 320px) {
-        // min-height: 438px;
         flex-basis: calc((100% - 16px) / 2);
     }
     @media screen and (min-width: 768px) {
         flex-basis: calc((100% - 16px * 3) / 4);
-        // min-height: 495px;
     }
     @media screen and (min-width: 1280px) {
-        flex-basis: calc((100% - 10px * 5) / 6);
-        // min-height: 634px;
+        flex-basis: calc((100% - 10px * 5) / 6);        
     }
 }
 
@@ -184,8 +181,7 @@ body.modal-team-open {
 }
 
 .team__overlay {
-    position: absolute;
-    
+    position: absolute;   
     
     top: 0;
     left: 0;
@@ -193,15 +189,15 @@ body.modal-team-open {
     background-color: $orange-color;
     opacity: 0.5;
     width: 100%;
-    height: 100%;
-    // padding: 63px 24px;
+    height: 100%;   
 
     transition: transform;
     transform: translate(0, 101%);
     transition-duration: 250ms;
     transition-timing-function: $typical-cubic;
 
-    .team__wrapper:hover & {
+    .team__wrapper:hover &,
+    .team__wrapper:focus & {
         transform: translate(0, 0);
         border-radius: 5px;
     }
@@ -213,12 +209,6 @@ body.modal-team-open {
         align-items: center;
         justify-content: space-between;
 }
-.team-thumb {
-    // display: flex;
-    // align-items: center;
-    // justify-content: space-between;
-    margin: auto;
-}
 
 .overlay__img {
     position: absolute;
@@ -227,9 +217,8 @@ body.modal-team-open {
         transform: translate(-50%, -50%) scale(1.0);
     display: flex;
     justify-content: space-between;
-    // display: block;
     width: 70%;
-    // margin: auto;
+    
 }
 
 .team__name, .team__role {
@@ -246,18 +235,18 @@ body.modal-team-open {
     
     
         @media screen and (min-width: 320px) {
-            font-size: 11px;
+            font-size: 10px;
     
         }
     
         @media screen and (min-width: 768px) {
     
-            font-size: 13px;
+            font-size: 14px;
         }
     
         @media screen and (min-width: 1280px) {
     
-            font-size: 15px;
+            font-size: 18px;
             
         }
 }
