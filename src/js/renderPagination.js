@@ -23,7 +23,7 @@ function createPaginationMarkup(pages, page) {
   if (page > 1) {
     str += `<li class="${paginationClass.BTN} ${
       paginationClass.PREV_PAGE
-    }" ><button data-page="${page - 1}"><<</button></li>`;
+    }" ><button data-page="${page - 1}">&#129144;</button></li>`;
   }
 
   if (pages < 6) {
@@ -35,7 +35,7 @@ function createPaginationMarkup(pages, page) {
   } else {
     if (page > 2) {
       str += `<li class="${paginationClass.NUMB} ${paginationClass.FIRST_PAGE}" ><button data-page="1">1</button></li>`;
-      if (page > 3) {
+      if (page > 3 && window.innerWidth>768) {
         str += `<li class="${paginationClass.DOTS}"><button ${paginationClass.DISABLED}>...</button></li>`;
       }
     }
@@ -64,8 +64,8 @@ function createPaginationMarkup(pages, page) {
       str += `<li class="${paginationClass.NUMB} ${active}" ><button ${disabled} data-page="${p}">${p}</button></li>`;
     }
 
-    if (page < pages - 1) {
-      if (page < pages - 2) {
+    if (page < pages - 1 && window.innerWidth>768) {
+      if (page < pages - 2 ) {
         str += `<li class="${paginationClass.DOTS}"><button ${paginationClass.DISABLED}>...</button></li>`;
       }
       str += `<li class="${paginationClass.NUMB} ${paginationClass.LAST_PAGE}" ><button data-page="${pages}">${pages}</button></li>`;
@@ -75,7 +75,7 @@ function createPaginationMarkup(pages, page) {
   if (page < pages) {
     str += `<li class="${paginationClass.BTN} ${
       paginationClass.NEXT_PAGE
-    }" ><button data-page="${page + 1}">>></button></li>`;
+    }" ><button data-page="${page + 1}">&#129146;</button></li>`;
   }
   str += '</ul>';
 
