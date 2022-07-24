@@ -82,7 +82,6 @@ function mobilePagination(e) {
   } else if (!e.matches) {
     makeMarkupBtns(totalPages);
   }
- 
 }
 
 function libraryStart() {
@@ -94,7 +93,9 @@ function libraryStart() {
   }
   switchBtnLang(currentLangLibrary);
   setCurrentPageToLS(keyLS.VALUE_PAGE_LIBRARY_W);
-  setTimeout(() => { loader.disable('preloader') }, 1000);
+  setTimeout(() => {
+    loader.disable('preloader');
+  }, 1000);
 }
 
 export function onClickENBtnMarkupFilms() {
@@ -159,7 +160,6 @@ function getCurrentLSQueueFilms() {
   }
 }
 
-
 export function createMarkupFilms(currentLSWatchedFilms) {
   watchedFilms = getWatchedFilmsLocalStorage(currentLSWatchedFilms);
   if (watchedFilms === null || watchedFilms.length === 0) {
@@ -168,15 +168,15 @@ export function createMarkupFilms(currentLSWatchedFilms) {
     boxLastBtnEl.classList.add('btn-hidden');
     //  btnArrowLeftEl.classList.add('.btn-hidden');
     // btnArrowRightEl.classList.add('.btn-hidden');
-    if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
-      noFilmsNoLogInMessage();
-      return;
-    }
+    // if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
+    //   noFilmsNoLogInMessage();
+    //   return;
+    // }
     noFilmsMessage();
     loader.disable('loader');
     return;
   } else if (watchedFilms === undefined) {
-      clearPagination();
+    clearPagination();
     boxFirstBtnEl.classList.add('btn-hidden');
     boxLastBtnEl.classList.add('btn-hidden');
     loader.disable('loader');
@@ -226,10 +226,10 @@ function noFilmsMessage() {
     '<p class="message info animate__bounceInDown">Your watch list is empty.</p>';
 }
 
-function noFilmsNoLogInMessage() {
-  galleryEl.innerHTML =
-    '<p class="message animate__bounceInDown">If you want to add movie to library then you have to log in first.</p>';
-}
+// function noFilmsNoLogInMessage() {
+//   galleryEl.innerHTML =
+//     '<p class="message animate__bounceInDown">If you want to add movie to library then you have to log in first.</p>';
+// }
 
 function errorMessage() {
   galleryEl.innerHTML =
@@ -249,7 +249,7 @@ function handledChangeMobile(e) {
     currentTotalFilmsInPage = MOBILE_FILMS;
     // clearGallery();
     createMarkupFilms(currentLSWatchedFilms);
-    
+
     //  totalPages = getTotalPages(watchedFilmsLength, currentTotalFilmsInPage);
     // makeMarkupBtns(totalPages);
   }
@@ -265,7 +265,7 @@ function handledChangeTablet(e) {
       currentPage = totalPages;
       createMarkupFilms(currentLSWatchedFilms);
     }
-createNumberLastBtn()
+    createNumberLastBtn();
     //  totalPages = getTotalPages(watchedFilmsLength, currentTotalFilmsInPage);
     // makeMarkupBtns(totalPages);
   }
@@ -280,7 +280,7 @@ function handledChangeDeskTop(e) {
       currentPage = totalPages;
       createMarkupFilms(currentLSWatchedFilms);
     }
-    createNumberLastBtn()
+    createNumberLastBtn();
     // totalPages = getTotalPages(watchedFilmsLength, currentTotalFilmsInPage);
     // makeMarkupBtns(totalPages);
   }
@@ -417,45 +417,49 @@ function makeMarkupBtnsMobile(totalPages) {
   boxLastBtnEl.classList.add('btn-hidden');
   if (totalPages <= 5 && totalPages > 0) {
     totalBtn = totalPages;
-      for (let i = 1; i <= totalBtn; i += 1) {
+    for (let i = 1; i <= totalBtn; i += 1) {
       markupBtns += markupBtn();
     }
     addMarkupBtns(markupBtns);
-      [...boxMainBbtnsEl.children].map((btn, i) => {
+    [...boxMainBbtnsEl.children].map((btn, i) => {
       btn.textContent = i + 1;
     });
     return;
   } else if (totalPages > 5 && currentPage <= 3) {
     totalBtn = 5;
-      for (let i = 1; i <= totalBtn; i += 1) {
+    for (let i = 1; i <= totalBtn; i += 1) {
       markupBtns += markupBtn();
     }
     addMarkupBtns(markupBtns);
-      [...boxMainBbtnsEl.children].map((btn, i) => {
+    [...boxMainBbtnsEl.children].map((btn, i) => {
       btn.textContent = i + 1;
     });
     return;
-  } else if (totalPages > 5 && currentPage > 3 && currentPage <= totalPages - 2) {
+  } else if (
+    totalPages > 5 &&
+    currentPage > 3 &&
+    currentPage <= totalPages - 2
+  ) {
     totalBtn = 5;
-      for (let i = 1; i <= totalBtn; i += 1) {
+    for (let i = 1; i <= totalBtn; i += 1) {
       markupBtns += markupBtn();
     }
     addMarkupBtns(markupBtns);
-      [...boxMainBbtnsEl.children].map((btn, i) => {
+    [...boxMainBbtnsEl.children].map((btn, i) => {
       btn.textContent = currentPage - 2 + i;
     });
     return;
   } else if (totalPages > 5 && currentPage >= totalPages - 1) {
     totalBtn = 5;
-      for (let i = 1; i <= totalBtn; i += 1) {
+    for (let i = 1; i <= totalBtn; i += 1) {
       markupBtns += markupBtn();
     }
     addMarkupBtns(markupBtns);
-      [...boxMainBbtnsEl.children].map((btn, i) => {
+    [...boxMainBbtnsEl.children].map((btn, i) => {
       btn.textContent = totalPages - 4 + i;
     });
     return;
-   }
+  }
 }
 
 function addMarkupBtns(markupBtns) {
