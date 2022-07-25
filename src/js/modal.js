@@ -183,7 +183,7 @@ function modalMarkup({
                   <p class="modal-info__article-title">${
                     currentInfoTitle.ABOUT
                   }</p>
-                  <p class="modal-info__article">${overview + currentInfoTitle.OVERVIEW}</p>
+                  <p class="modal-info__article">${overview || currentInfoTitle.OVERVIEW}</p>
                   <div class="container-btn">
             <button type="button" class="btn" name="${
               btnNameKey.WATCHED
