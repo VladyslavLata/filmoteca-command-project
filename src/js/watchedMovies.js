@@ -1,5 +1,5 @@
 import { Movie } from './fetchMovie';
-import { username, usernameSS } from './modal';
+// import { username, usernameSS } from './modal';
 import {
   keyLS,
   setLanguageToLS,
