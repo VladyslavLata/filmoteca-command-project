@@ -26,6 +26,7 @@ const refs = {
   loginBtn: document.querySelector('#login__button'),
   loginHeaderBtn: document.querySelector('.login__button'),
   signupBtn: document.querySelector('#signup__button'),
+  signupBtnHeader: document.querySelector('.signup__button'),
   logoutBtn: document.querySelector('#logout__button'),
   logoutText: document.querySelector('.logout-modal__text'),
   logoutModal: document.querySelector('.logout-modal'),
@@ -173,6 +174,7 @@ const loginEmailPassword = async () => {
       }
       localStorage.setItem(LS_UID_VALUE, `${userUID}`);
       currentLangLogOut();
+      refs.signupBtnHeader.style.display = 'none';
       // refs.loginHeaderBtn.textContent = 'Log Out';
       refs.usernick.textContent = `${username}`;
       refs.libBtnheader.style.display = 'block';
@@ -257,6 +259,7 @@ const logout = async () => {
   localStorage.removeItem(LS_LOGIN_KEY);
   currentLangLogIn();
   // refs.loginHeaderBtn.textContent = 'Log In';
+  refs.signupBtnHeader.style.display = 'inline-block';
   refs.libBtnheader.style.display = 'none';
   refs.usernick.textContent = ``;
   refs.loginForm.classList.remove('logout-modal--hidden');
@@ -271,6 +274,7 @@ function checkIfLogged() {
   const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
   if (username || usernameSS) {
     refs.libBtnheader.style.display = 'block';
+    refs.signupBtnHeader.style.display = 'none';
     if (refs.libGallery) {
       // refs.emptyLibText.style.display = 'none';
       // refs.emptyLibText.classList.add('message--hidden');
@@ -289,6 +293,7 @@ function checkIfLogged() {
       // refs.emptyLibText.classList.remove('message--hidden');
       refs.libGallery.style.display = 'none';
     }
+    refs.signupBtnHeader.style.display = 'inline-block';
     refs.loginForm.classList.remove('logout-modal--hidden');
     refs.logoutModal.classList.add('logout-modal--hidden');
     currentLangLogIn();
