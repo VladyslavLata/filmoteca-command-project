@@ -1,5 +1,5 @@
 import { Movie } from './fetchMovie';
-import { genreFind } from './workWithGenres';
+import { genreFindForModal } from './workWithGenres';
 import { getCurrenDataFromLS, getDataFromLibraryLS } from './currentPageData';
 import { LS_LOGIN_KEY } from './authAndLogIn';
 import { updateUserData } from './authAndLogIn';
@@ -177,7 +177,7 @@ function modalMarkup({
               </tr>
               <tr class="modal-info__item">
                 <td class="modal-info__title">${currentInfoTitle.GENRE}</td>
-                <td class="modal-info__content">${genreFind(genre_ids)}</td>
+                <td class="modal-info__content">${genreFindForModal(genre_ids)}</td>
               </tr>
               </table>            
                   <p class="modal-info__article-title">${

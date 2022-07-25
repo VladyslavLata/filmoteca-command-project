@@ -67,3 +67,36 @@ export function genreFind(genreList = []) {
     return genreResult.join(', ');
   }
 }
+export function genreFindForModal(genreList = []) {
+  let genreLS = localStorage.getItem(keyLS.LS_GENRE_KEY_EN);
+  let noGenre = 'No genres';
+    const langGenre = getLanguageFromLS();
+
+  switch (langGenre) {
+    case Movie.language.ENGLISH:
+      genreLS = localStorage.getItem(keyLS.LS_GENRE_KEY_EN);
+      noGenre = 'No genres';
+      break;
+
+    case Movie.language.UKRAINIAN:
+      genreLS = localStorage.getItem(keyLS.LS_GENRE_KEY_UA);
+      noGenre = 'Жанри відсутні';
+      break;
+  }
+  if (!genreLS || genreList.length === 0) {
+    return noGenre;
+  }
+  const genreArray = JSON.parse(genreLS);
+  const genreResult = genreArray.reduce((previousValue, element) => {
+    if (genreList.includes(element.id)) {
+      previousValue.push(element.name);
+    }
+    return previousValue;
+  }, []);
+
+  if (genreResult.length === 0) {
+    return noGenre;
+  }  else {
+    return genreResult.join(', ');
+  }
+}
