@@ -30,7 +30,7 @@ export async function translatePageLibrary() {
     queueMovieBtnEl.textContent = 'queue';
     refs.btnSwitchEN.textContent = 'en';
     refs.btnSwitchUA.textContent = 'ua';
-    notLoggedMessage.textContent = 'Here will be your films, after you log in :)';
+    // notLoggedMessage.textContent = 'Here will be your films, after you log in :)';
   }
 
   if (lang === Movie.language.UKRAINIAN) {
