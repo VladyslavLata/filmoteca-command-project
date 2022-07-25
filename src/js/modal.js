@@ -1,5 +1,5 @@
 import { Movie } from './fetchMovie';
-import { genreFind } from './workWithGenres';
+import { genreFindForModal } from './workWithGenres';
 import { getCurrenDataFromLS, getDataFromLibraryLS } from './currentPageData';
 import { LS_LOGIN_KEY } from './authAndLogIn';
 import { updateUserData } from './authAndLogIn';
@@ -19,6 +19,7 @@ const btnText = {
   WATCHED_ADD_UA: 'додати до переглянутого',
   QUEUE_DEL_UA: 'видалити з черги',
   QUEUE_ADD_UA: 'додати до черги',
+  
 };
 
 const textInfoTitle = {
@@ -27,11 +28,13 @@ const textInfoTitle = {
   ORIGINAL_TITLE_EN: 'Original Title',
   GENRE_EN: 'Genre',
   ABOUT_EN: 'About',
+  OVERVIEW_EN: 'No information',
   VOTE_UA: 'Оцінка / Голосували',
   POPULARITY_UA: 'Популярність',
   ORIGINAL_TITLE_UA: 'Оригінальна назва',
   GENRE_UA: 'Жанр',
   ABOUT_UA: 'Опис',
+  OVERVIEW_UA: 'Опис відсутній',
 };
 
 const dataActionKey = {
@@ -67,6 +70,7 @@ const currentInfoTitle = {
   ORIGINAL_TITLE: textInfoTitle.ORIGINAL_TITLE_EN,
   GENRE: textInfoTitle.GENRE_EN,
   ABOUT: textInfoTitle.ABOUT_EN,
+  OVERVIEW: textInfoTitle.ABOUT_EN,
 };
 
 gallery.addEventListener('click', onImageClick);
@@ -173,13 +177,13 @@ function modalMarkup({
               </tr>
               <tr class="modal-info__item">
                 <td class="modal-info__title">${currentInfoTitle.GENRE}</td>
-                <td class="modal-info__content">${genreFind(genre_ids)}</td>
+                <td class="modal-info__content">${genreFindForModal(genre_ids)}</td>
               </tr>
               </table>            
                   <p class="modal-info__article-title">${
                     currentInfoTitle.ABOUT
                   }</p>
-                  <p class="modal-info__article">${overview}</p>
+                  <p class="modal-info__article">${overview + currentInfoTitle.OVERVIEW}</p>
                   <div class="container-btn">
             <button type="button" class="btn" name="${
               btnNameKey.WATCHED
@@ -269,6 +273,9 @@ function modalTextInfoTitle() {
   currentInfoTitle.ABOUT = isUA
     ? textInfoTitle.ABOUT_UA
     : textInfoTitle.ABOUT_EN;
+  currentInfoTitle.OVERVIEW = isUA
+    ? textInfoTitle.OVERVIEW_UA
+    : textInfoTitle.OVERVIEW_EN; 
 }
 // function buttonTextContent() {
 //   const modalButtons = document.querySelector('.container-btn');
