@@ -3,19 +3,23 @@
     color: $footer-text-color;
     padding-top: 29px;
     padding-bottom: 29px;
-    // margin-top: 40px;
+    transition: background-color 500ms $typical-cubic, color 500ms $typical-cubic;
 
     @include mq(tablet) {
         padding-top: 30px;
         padding-bottom: 30px;
         display: flex;
         align-items: center;
-        // margin-top: 60px;
       };
 
     @include mq(desktop) {
         padding-bottom: 28px;
       };
+
+      body.dark__theme & {
+        color: $white-color;
+        background-color: #272424;
+      }
 }
 
 .footer-text {
@@ -28,6 +32,11 @@
     color: $footer-text-color;
     text-decoration:underline;
     margin-left: 4px;
+    transition: color 500ms $typical-cubic;
+
+    body.dark__theme & {
+        color: $white-color;
+      }
 };
 
 .footer-text__up {
