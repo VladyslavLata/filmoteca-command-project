@@ -3,7 +3,7 @@ import { fetchTrendAndMarkup, fetchSearchAndMarkup } from './fetchAndMarkup';
 import { trendMovie } from './homePage';
 import { keyword, keywordMovies } from './moviesKeyword';
 import { handleButtonClick as goToStart } from './up-btnAndSwitcher';
-import themeSwitcher from './themeSwitcher';
+// import themeSwitcher from './themeSwitcher';
 
 import Loader from './loader';
 
@@ -71,7 +71,6 @@ function onClickPagination(evt) {
   if (activePage === currentPage) {
     return;
   }
- 
 
   setPageNum(activePage);
   onFetchAndMarkup();
