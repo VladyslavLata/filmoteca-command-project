@@ -34,3 +34,7 @@ function startPageVisit() {
   switchBtnTrendTime(Movie.trendTime.DAY);
   setCurrentPageToLS(keyLS.VALUE_PAGE_INDEX);
 }
+
+export function setOldTrendMovie(classIstance) {
+  trendMovie = classIstance;
+}

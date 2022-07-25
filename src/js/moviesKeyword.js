@@ -4,6 +4,8 @@ import { getLanguageFromLS } from './languageSwitch';
 import { unlockBtnTrendTime } from './trendTime';
 import { setCurrenDataToLS, getCurrenDataFromLS } from './currentPageData';
 import { renderPagination } from './renderPagination';
+import { oldTrendMovie, resetOldTrendMovie } from './fetchAndMarkup';
+import { setOldTrendMovie } from './homePage';
 import Loader from './loader';
 
 const loader = new Loader();
@@ -14,6 +16,7 @@ export const refs = {
 
 export let keyword = null;
 export let keywordMovies;
+let oldKeywordMovies = undefined;
 
 refs.formEl.addEventListener('submit', onClickSubmit);
 
@@ -37,18 +40,28 @@ async function onClickSubmit(event) {
       event.target.reset();
       refs.paragraphEl.innerHTML = `Search result not successful. Enter the correct movie name and try again.`;
       loader.disable('loader');
+      if (oldTrendMovie) {
+        resetKeyword();
+        setOldTrendMovie(oldTrendMovie);
+      }
+      if (oldKeywordMovies) {
+        keywordMovies = oldKeywordMovies;
+      }
       return;
     }
 
     makeMarkupCard(data);
     renderPagination(data);
     event.target.reset();
-    refs.paragraphEl.innerHTML = '';
+    resetTextAlertSearch();
+    // refs.paragraphEl.innerHTML = '';
 
     console.log(data);
     keywordMovies.lastPage = data.total_pages;
     setCurrenDataToLS(data.results);
     unlockBtnTrendTime();
+    oldKeywordMovies = keywordMovies;
+    resetOldTrendMovie();
   } catch (error) {
     console.log(error.message);
   }
@@ -56,4 +69,9 @@ async function onClickSubmit(event) {
 
 export function resetKeyword() {
   keyword = null;
+  oldKeywordMovies = undefined;
+}
+
+export function resetTextAlertSearch() {
+  refs.paragraphEl.innerHTML = '';
 }

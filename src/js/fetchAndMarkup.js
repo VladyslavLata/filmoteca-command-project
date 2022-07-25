@@ -3,7 +3,9 @@ import { makeMarkupCard } from './cardMarkup';
 import { genreLoad } from './workWithGenres';
 import { setCurrenDataToLS, getCurrenDataFromLS } from './currentPageData';
 import { renderPagination } from './renderPagination';
+import { resetTextAlertSearch } from './moviesKeyword';
 
+export let oldTrendMovie = undefined;
 
 export async function fetchTrendAndMarkup(classIstance) {
   try {
@@ -14,6 +16,8 @@ export async function fetchTrendAndMarkup(classIstance) {
     makeMarkupCard(data);
     renderPagination(data);
     classIstance.lastPage = data.total_pages;
+    oldTrendMovie = classIstance;
+    resetTextAlertSearch();
   } catch (error) {
     console.log(error);
   }
@@ -28,7 +32,12 @@ export async function fetchSearchAndMarkup(classIstance) {
     makeMarkupCard(data);
     renderPagination(data);
     classIstance.lastPage = data.total_pages;
+    resetTextAlertSearch();
   } catch (error) {
     console.log(error);
   }
+}
+
+export function resetOldTrendMovie() {
+  oldTrendMovie = undefined;
 }
