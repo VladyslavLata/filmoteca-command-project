@@ -4,6 +4,7 @@ import { genreLoad } from './workWithGenres';
 import { setCurrenDataToLS, getCurrenDataFromLS } from './currentPageData';
 import { renderPagination } from './renderPagination';
 
+
 export async function fetchTrendAndMarkup(classIstance) {
   try {
     await genreLoad(classIstance);
