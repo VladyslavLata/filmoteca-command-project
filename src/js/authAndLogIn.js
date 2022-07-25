@@ -167,11 +167,11 @@ const loginEmailPassword = async () => {
       userCredential.user.displayName = refs.loginUsername.value;
       const username = userCredential.user.displayName;
       const userUID = userCredential.user.uid;
-      if (refs.checkbox.checked) {
-        localStorage.setItem(LS_LOGIN_KEY, `${username}`);
-      } else if (!refs.checkbox.checked) {
-        sessionStorage.setItem(LS_LOGIN_KEY, `${username}`);
-      }
+      // if (refs.checkbox.checked) {
+      localStorage.setItem(LS_LOGIN_KEY, `${username}`);
+      // } else if (!refs.checkbox.checked) {
+      //   sessionStorage.setItem(LS_LOGIN_KEY, `${username}`);
+      // }
       localStorage.setItem(LS_UID_VALUE, `${userUID}`);
       currentLangLogOut();
       refs.signupBtnHeader.style.display = 'none';
@@ -247,6 +247,10 @@ async function monitorAuthState() {
 
 const logout = async () => {
   await signOut(auth);
+  if (window.location.pathname === '/library.html') {
+    window.location = 'index.html';
+  }
+  console.log(window.location);
   if (refs.libGallery) {
     // refs.emptyLibText.style.display = 'flex';
     // refs.emptyLibText.classList.remove('message--hidden');
@@ -306,7 +310,7 @@ function resetLogin() {
   refs.loginUsername.value = '';
   refs.loginEmail.value = '';
   refs.loginPassword.value = '';
-  refs.checkbox.checked = false;
+  // refs.checkbox.checked = false;
 }
 
 function resetSignup() {
