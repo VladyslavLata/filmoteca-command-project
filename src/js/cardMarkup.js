@@ -7,7 +7,8 @@ const loader = new Loader();
 
 export function makeMarkupCard(data) {
   const gallery = document.querySelector('.gallery');
-  const makeMarkupCard = data.results.map(movieItem => {
+  const makeMarkupCard = data.results
+    .map(movieItem => {
       return `<li class="card">
           <a class="card__link" href=""  >
             <img data-id="${movieItem.id}" class="card__img" src="${
@@ -30,8 +31,8 @@ export function makeMarkupCard(data) {
     })
     .join('');
   gallery.innerHTML = makeMarkupCard;
-  setTimeout(() => { loader.disable('preloader') }, 1000);
+  setTimeout(() => {
+    loader.disable('preloader');
+  }, 500);
   loader.disable('loader');
 }
-
-
