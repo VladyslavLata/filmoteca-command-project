@@ -247,7 +247,10 @@ async function monitorAuthState() {
 
 const logout = async () => {
   await signOut(auth);
-  if (window.location.pathname === '/library.html') {
+  if (
+    window.location.pathname === '/library.html' ||
+    window.location.pathname === '/filmoteka-project/library.html'
+  ) {
     window.location = 'index.html';
   }
   console.log(window.location);
