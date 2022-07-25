@@ -46,7 +46,7 @@ export async function translatePageLibrary() {
     queueMovieBtnEl.textContent = 'До перегляду';
     refs.btnSwitchEN.textContent = 'англ';
     refs.btnSwitchUA.textContent = 'укр';
-    notLoggedMessage.textContent = 'Тут будуть Ваші фільми після реєстрації :)';
+    // notLoggedMessage.textContent = 'Тут будуть Ваші фільми після реєстрації :)';
   }
 }
 
