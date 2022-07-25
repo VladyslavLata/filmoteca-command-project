@@ -1,4 +1,4 @@
-let currentThemeOfSite = themeMode ? themeMode : 'light';
+// let currentThemeOfSite = themeMode ? themeMode : 'light';
 
 const paginationClass = {
   ACTIVE: 'active',
@@ -24,11 +24,11 @@ function createPaginationMarkup(pages, page) {
   let nextPage = page + 1;
   let theme;
 
-  if (currentThemeOfSite == 'light') {
-    theme = 'arrow-light-theme';
-  } else {
-    theme = 'arrow-dark-theme';
-  }
+  // if (currentThemeOfSite == 'light') {
+  //   theme = 'arrow-light-theme';
+  // } else {
+  //   theme = 'arrow-dark-theme';
+  // }
 
   if (page > 1) {
     str += `<li class="${paginationClass.BTN} ${
