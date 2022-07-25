@@ -1,5 +1,5 @@
 import { Movie } from './fetchMovie';
-import { handleButtonClick as scrollToStart } from './up-btnAndSwitcher';
+// import { handleButtonClick as scrollToStart } from './up-btnAndSwitcher';
 // import { username, usernameSS } from './modal';
 import {
   keyLS,
@@ -39,7 +39,7 @@ const mediaQueryDesk = window.matchMedia('(min-width: 1280px)');
 
 const DESKTOP_FILMS = 9;
 const TABLET_FILMS = 2;
-const MOBILE_FILMS = 8;
+const MOBILE_FILMS = 3;
 export let currentTotalFilmsInPage = 9;
 // let currentLangLibrary = Movie.language.ENGLISH;
 // let currentLSWatchedFilms = keyLS.LS_WATHED_DATA_KEY;
@@ -51,7 +51,7 @@ const boxFirstBtnEl = document.querySelector('.first-box-btn');
 const boxLastBtnEl = document.querySelector('.last-box-btn');
 const btnArrowLeftEl = document.querySelector('.btn-arrow.left');
 const btnArrowRightEl = document.querySelector('.btn-arrow.right');
-const messageBoxEl = document.querySelector('.message-box');
+
 
 export const watchedMovieBtnEl = document.querySelector('.watched');
 export const queueMovieBtnEl = document.querySelector('.queue');
@@ -171,27 +171,28 @@ function getCurrentLSQueueFilms() {
 
 export function createMarkupFilms(currentLSWatchedFilms) {
   watchedFilms = getWatchedFilmsLocalStorage(currentLSWatchedFilms);
-  if (watchedFilms === null) {
-    clearGallery();
+  // if (watchedFilms === null) {
+  //   clearGallery();
 
-    clearPagination();
-    hiddenBtnArrow();
-    boxFirstBtnEl.classList.add('btn-hidden');
-    boxLastBtnEl.classList.add('btn-hidden');
-    //  btnArrowLeftEl.classList.add('.btn-hidden');
-    // btnArrowRightEl.classList.add('.btn-hidden');
-    noFilmsNoLogInMessage();
+  //   clearPagination();
+  //   hiddenBtnArrow();
+  //   boxFirstBtnEl.classList.add('btn-hidden');
+  //   boxLastBtnEl.classList.add('btn-hidden');
+  //   //  btnArrowLeftEl.classList.add('.btn-hidden');
+  //   // btnArrowRightEl.classList.add('.btn-hidden');
+  //   noFilmsNoLogInMessage();
     
-    // if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
-    //   noFilmsNoLogInMessage();
-    //   return;
-    // }
-    // noFilmsMessage();
-    loader.disable('loader');
-    return;
-  } else if (watchedFilms.length === 0) {
+  //   // if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
+  //   //   noFilmsNoLogInMessage();
+  //   //   return;
+  //   // }
+  //   // noFilmsMessage();
+  //   loader.disable('loader');
+  //   return;
+// } else
+if (watchedFilms.length === 0 || watchedFilms === null) {
     console.log('2', watchedFilms);
-    clearGallery();
+    // clearGallery();
     clearPagination();
     hiddenBtnArrow();
     boxFirstBtnEl.classList.add('btn-hidden');
@@ -201,7 +202,7 @@ export function createMarkupFilms(currentLSWatchedFilms) {
     return;
   }
   else if (watchedFilms === undefined) {
-    clearGallery();
+    // clearGallery();
     clearPagination();
     hiddenBtnArrow();
     boxFirstBtnEl.classList.add('btn-hidden');
@@ -211,8 +212,7 @@ export function createMarkupFilms(currentLSWatchedFilms) {
   } else if (watchedFilms) {
     watchedFilmsLength = watchedFilms.length;
     totalPages = getTotalPages(watchedFilmsLength, currentTotalFilmsInPage);
-    clearMessage();
-    mobilePagination(mediaQueryMob);
+      mobilePagination(mediaQueryMob);
     pickOutCurrentPage(currentPage);
     const filmsFormCurrentPage = watchedFilms.slice(
       (currentPage - 1) * currentTotalFilmsInPage,
@@ -252,32 +252,32 @@ function getWatchedFilmsLocalStorage(currentLSWatchedFilms) {
 async function noFilmsMessage() {
   currentLangLibrary = getLanguageFromLS();
   if (currentLangLibrary === Movie.language.ENGLISH) {
-    messageBoxEl.innerHTML =
+    galleryEl.innerHTML =
       '<p class="message info animate__bounceInDown">Your watch list is empty.</p>';
   } else if (currentLangLibrary === Movie.language.UKRAINIAN) {
-    messageBoxEl.innerHTML =
+    galleryEl.innerHTML =
       '<p class="message info animate__bounceInDown">Ваш список доданих фільмів порожній.</p>';
   }
 }
 
-function noFilmsNoLogInMessage() {
-    currentLangLibrary = getLanguageFromLS();
-  if (currentLangLibrary === Movie.language.ENGLISH) {
-    messageBoxEl.innerHTML =
-      '<p class="message info animate__bounceInDown">If you want to add movie to library then you have to log in first.</p>';
-  } else if (currentLangLibrary === Movie.language.UKRAINIAN) {
-    messageBoxEl.innerHTML =
-      '<p class="message info animate__bounceInDown">куку.</p > ';
-  }
-}
+// function noFilmsNoLogInMessage() {
+//     currentLangLibrary = getLanguageFromLS();
+//   if (currentLangLibrary === Movie.language.ENGLISH) {
+//     messageBoxEl.innerHTML =
+//       '<p class="message info animate__bounceInDown">If you want to add movie to library then you have to log in first.</p>';
+//   } else if (currentLangLibrary === Movie.language.UKRAINIAN) {
+//     messageBoxEl.innerHTML =
+//       '<p class="message info animate__bounceInDown">test.</p > ';
+//   }
+// }
 
 async function errorMessage() {
   currentLangLibrary = getLanguageFromLS();
   if (currentLangLibrary === Movie.language.ENGLISH) {
-    messageBoxEl.innerHTML =
+    galleryEl.innerHTML =
       '<p class="message error animate__bounceInDown">Unknown error. Watched movies cannot be displayed.</p>';
   } else if (currentLangLibrary === Movie.language.UKRAINIAN) {
-    messageBoxEl.innerHTML =
+    galleryEl.innerHTML =
       '<p class="message error animate__bounceInDown">Невідома помилка. Додані фільми не відображаються.</p>';
   }
 }
@@ -290,9 +290,6 @@ function clearPagination() {
   boxMainBbtnsEl.innerHTML = '';
 }
 
-function clearMessage() {
-  messageBoxEl.innerHTML = '';
-}
  
 function handledChangeMobile(e) {
   if (e.matches) {
@@ -342,7 +339,7 @@ function onClickBtnInMainBoxChangePage(event) {
   if (event.target.nodeName !== 'BUTTON') {
     return;
   }
-  scrollToStart();
+  // scrollToStart();
   currentPage = Number(event.target.textContent);
   createMarkupFilms(currentLSWatchedFilms);
   pickOutCurrentPage(currentPage);
@@ -385,7 +382,7 @@ function onClickBtnArrowLeftChangePage() {
     return;
   }
   currentPage -= 1;
-  scrollToStart();
+  // scrollToStart();
   createMarkupFilms(currentLSWatchedFilms);
   pickOutCurrentPage(currentPage);
 }
@@ -395,7 +392,7 @@ function onClickBtnArrowRightChangePage() {
     return;
   }
   currentPage += 1;
-  scrollToStart();
+  // scrollToStart();
   createMarkupFilms(currentLSWatchedFilms);
   pickOutCurrentPage(currentPage);
 }

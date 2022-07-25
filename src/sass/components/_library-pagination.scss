@@ -22,11 +22,11 @@ body.dark__theme & {
 }
 }
 
-.btn-pg.hidden-btns {
- @include center;
-align-items: baseline;
+// .btn-pg.hidden-btns {
+//  @include center;
+// align-items: baseline;
 
-}
+// }
 
 
 .btn-arrow {
@@ -51,6 +51,10 @@ flex-wrap: wrap;
 .btn-hidden {
   display: none;
   
+}
+
+.hidden-btns {
+padding-bottom: 10px;
 }
 
 .btn-current-pages {
