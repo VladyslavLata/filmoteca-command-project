@@ -16,14 +16,14 @@ import { modal, btnNameKey } from './modal';
 import Loader from './loader';
 
 const loader = new Loader();
-const loginBtn = document.querySelector('#login__button');
-loginBtn.addEventListener('click', () => {
-  setTimeout(() => {
-    console.log('Here');
+// const loginBtn = document.querySelector('#login__button');
+// loginBtn.addEventListener('click', () => {
+//   setTimeout(() => {
+//     console.log('Here');
 
-    onClickWatchedBtnMarkupFilms();
-  }, 1500);
-});
+//     onClickWatchedBtnMarkupFilms();
+//   }, 1500);
+// });
 loader.enable('preloader');
 
 modal.addEventListener('click', refreshLibraryOnClickBtnModal);
@@ -51,7 +51,6 @@ const boxFirstBtnEl = document.querySelector('.first-box-btn');
 const boxLastBtnEl = document.querySelector('.last-box-btn');
 const btnArrowLeftEl = document.querySelector('.btn-arrow.left');
 const btnArrowRightEl = document.querySelector('.btn-arrow.right');
-
 
 export const watchedMovieBtnEl = document.querySelector('.watched');
 export const queueMovieBtnEl = document.querySelector('.queue');
@@ -181,7 +180,7 @@ export function createMarkupFilms(currentLSWatchedFilms) {
   //   //  btnArrowLeftEl.classList.add('.btn-hidden');
   //   // btnArrowRightEl.classList.add('.btn-hidden');
   //   noFilmsNoLogInMessage();
-    
+
   //   // if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
   //   //   noFilmsNoLogInMessage();
   //   //   return;
@@ -189,19 +188,18 @@ export function createMarkupFilms(currentLSWatchedFilms) {
   //   // noFilmsMessage();
   //   loader.disable('loader');
   //   return;
-// } else
-if (watchedFilms.length === 0 || watchedFilms === null) {
-    console.log('2', watchedFilms);
+  // } else
+  // if (typeof watchedFilms === string) || watchedFilms === null) {
+  if (watchedFilms === null || watchedFilms.length === 0) {
     // clearGallery();
     clearPagination();
     hiddenBtnArrow();
     boxFirstBtnEl.classList.add('btn-hidden');
     boxLastBtnEl.classList.add('btn-hidden');
     noFilmsMessage();
-     loader.disable('loader');
+    loader.disable('loader');
     return;
-  }
-  else if (watchedFilms === undefined) {
+  } else if (watchedFilms === undefined) {
     // clearGallery();
     clearPagination();
     hiddenBtnArrow();
@@ -212,7 +210,7 @@ if (watchedFilms.length === 0 || watchedFilms === null) {
   } else if (watchedFilms) {
     watchedFilmsLength = watchedFilms.length;
     totalPages = getTotalPages(watchedFilmsLength, currentTotalFilmsInPage);
-      mobilePagination(mediaQueryMob);
+    mobilePagination(mediaQueryMob);
     pickOutCurrentPage(currentPage);
     const filmsFormCurrentPage = watchedFilms.slice(
       (currentPage - 1) * currentTotalFilmsInPage,
@@ -290,7 +288,6 @@ function clearPagination() {
   boxMainBbtnsEl.innerHTML = '';
 }
 
- 
 function handledChangeMobile(e) {
   if (e.matches) {
     currentTotalFilmsInPage = MOBILE_FILMS;
@@ -365,7 +362,7 @@ function onClickBtnInLastBoxChangePage(event) {
   if (event.target.nodeName !== 'BUTTON') {
     return;
   } else if (event.target.textContent === '...') {
-    currentPage = totalPages >= (currentPage + 5) ? currentPage + 5 : totalPages;
+    currentPage = totalPages >= currentPage + 5 ? currentPage + 5 : totalPages;
     // scrollToStart();
     createMarkupFilms(currentLSWatchedFilms);
     pickOutCurrentPage(currentPage);
@@ -475,12 +472,12 @@ function makeMarkupBtns(totalPages) {
 }
 
 function makeMarkupBtnsMobile(totalPages) {
-if (totalPages > 1) {
+  if (totalPages > 1) {
     visibleBtnArrow();
   } else if (totalPages <= 1) {
     hiddenBtnArrow();
   }
- if (currentPage > totalPages) {
+  if (currentPage > totalPages) {
     currentPage = totalPages;
   }
 
@@ -556,11 +553,9 @@ function getTotalPages(watchedFilmsLength, currentTotalFilmsInPage) {
   return Math.ceil(watchedFilmsLength / currentTotalFilmsInPage);
 }
 
-
 function hiddenBtnArrow() {
-    btnArrowLeftEl.classList.add('btn-hidden');
-    btnArrowRightEl.classList.add('btn-hidden');
-
+  btnArrowLeftEl.classList.add('btn-hidden');
+  btnArrowRightEl.classList.add('btn-hidden');
 }
 
 function visibleBtnArrow() {
