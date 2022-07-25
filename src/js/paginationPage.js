@@ -62,16 +62,21 @@ function onClickPagination(evt) {
 
   const currentPage = refs.elPaginationList.dataset.current;
   const lastPage = refs.elPaginationList.dataset.last;
+  let activePage = 1;
 
-  if (evt.target.nodeName !== 'BUTTON') {
-    return;
+  if (evt.target.nodeName === 'BUTTON') {
+    activePage = evt.target.dataset.page;
+  } else {
+    const dataPageEL = evt.target.closest('[data-page]');
+    if (!dataPageEL) {
+      return;
+    }
+    activePage = dataPageEL.dataset.page;
   }
-  const activePage = evt.target.dataset.page;
 
   if (activePage === currentPage) {
     return;
   }
- 
 
   setPageNum(activePage);
   onFetchAndMarkup();
