@@ -28,13 +28,13 @@ const textInfoTitle = {
   ORIGINAL_TITLE_EN: 'Original Title',
   GENRE_EN: 'Genre',
   ABOUT_EN: 'About',
-  OVERVIEW_EN: 'no information',
+  OVERVIEW_EN: 'No information',
   VOTE_UA: 'Оцінка / Голосували',
   POPULARITY_UA: 'Популярність',
   ORIGINAL_TITLE_UA: 'Оригінальна назва',
   GENRE_UA: 'Жанр',
   ABOUT_UA: 'Опис',
-  OVERVIEW_UA: 'опис відсутній',
+  OVERVIEW_UA: 'Опис відсутній',
 };
 
 const dataActionKey = {
