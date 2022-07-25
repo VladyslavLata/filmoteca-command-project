@@ -15,14 +15,14 @@ import { modal, btnNameKey } from './modal';
 import Loader from './loader';
 
 const loader = new Loader();
-const loginBtn = document.querySelector('#login__button');
-loginBtn.addEventListener('click', () => {
-  setTimeout(() => {
-    console.log('Here');
+// const loginBtn = document.querySelector('#login__button');
+// loginBtn.addEventListener('click', () => {
+//   setTimeout(() => {
+//     console.log('Here');
 
-    onClickWatchedBtnMarkupFilms();
-  }, 1500);
-});
+//     onClickWatchedBtnMarkupFilms();
+//   }, 1500);
+// });
 loader.enable('preloader');
 
 modal.addEventListener('click', refreshLibraryOnClickBtnModal);
