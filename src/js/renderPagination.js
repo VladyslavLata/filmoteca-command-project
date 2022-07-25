@@ -1,7 +1,3 @@
-// import themeSwitcher from './themeSwitcher';
-
-// let currentThemeOfSite = themeMode ? themeMode : 'light';
-
 const paginationClass = {
   ACTIVE: 'active',
   BTN: 'btn-pagination',
@@ -12,7 +8,6 @@ const paginationClass = {
   LAST_PAGE: 'last-page',
   DOTS: 'dots',
   DISABLED: 'disabled',
-  // THEME: 'theme',
 };
 
 const CHANGE_RESOLUTION = 768;
@@ -26,23 +21,6 @@ function createPaginationMarkup(pages, page) {
   let disabled;
   let prevPage = page - 1;
   let nextPage = page + 1;
-  // let theme;
-
-  //  if (currentThemeOfSite =='light') {
-  //     theme = 'arrow-light-theme';
-  //   } else {
-  //     theme = 'arrow-dark-theme';
-  //   }
-
-  //   <svg class="arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-  // <path class="${theme}" d="M12.6667 8H3.33337" stroke="none" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
-  // <path class="${theme}" d="M8.00004 12.6667L3.33337 8.00004L8.00004 3.33337" stroke="none" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
-  // </svg>
-
-  //   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-  // <path class="${theme}" d="M3.33329 8H12.6666" stroke="black" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
-  // <path class="${theme}" d="M7.99996 12.6667L12.6666 8.00004L7.99996 3.33337" stroke="black" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
-  // </svg>
 
   if (page > 1) {
     str += `<li class="${paginationClass.BTN} ${
@@ -51,6 +29,10 @@ function createPaginationMarkup(pages, page) {
       page - 1
     }"><svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.667 8H3.333M8 12.667 3.333 8 8 3.333" stroke-width="1.333" stroke-linecap="round" stroke-linejoin="round"/>
     </svg></button></li>`;
+    //     }"><svg class="arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    // <path class="${theme}" d="M12.6667 8H3.33337" stroke="none" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+    // <path class="${theme}" d="M8.00004 12.6667L3.33337 8.00004L8.00004 3.33337" stroke="none" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+    // </svg></button></li>`;
   }
 
   if (pages < 6) {
