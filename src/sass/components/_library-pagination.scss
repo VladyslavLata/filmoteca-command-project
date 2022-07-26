@@ -2,31 +2,67 @@
   margin-top: 40px;
   display: flex;
   justify-content: center;
+
+  @include mq(tablet) {
+    margin-top: 60px;
+  }
 }
 
 .btn-pg {
+  color: $black-color;
   width: 40px;
   height: 40px;
   border: none;
 background-color: inherit;
 text-align: center;
 border-radius: 5px;
+
+body.dark__theme & {
+  color: $white-color
+}
 }
 
-// .hidden-btns {
+// .btn-pg.hidden-btns {
+//  @include center;
+// align-items: baseline;
 
 // }
 
-.first-box-btn,
-.last-box-btn {
-  display: flex;
 
+.btn-arrow {
+  background-color: $modal-number-grey-bg;
+ fill: currentColor;
+@include center;
+
+body.dark__theme & {
+   background-color: $footer-text-color;
+  }
+}
+
+
+
+.first-box-btn,
+.last-box-btn,
+.box-main-btnss {
+  display: flex;
+flex-wrap: wrap;
 }
 
 .btn-hidden {
-  @extend %visually-hidden;
+  display: none;
+  
+}
+
+.hidden-btns {
+padding-bottom: 10px;
 }
 
 .btn-current-pages {
   background-color: $orange-color;
+}
+
+.btn-pg span {
+@include center;
+height: 30;
+
 }

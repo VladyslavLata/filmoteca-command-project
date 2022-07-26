@@ -10,7 +10,6 @@ const loader = new Loader();
 
 const paginationContainer = document.querySelector('.pagination-container');
 paginationContainer.addEventListener('click', onClickPagination);
-console.log(paginationContainer);
 
 // const refs = {
 // btnLoadPrevious: document.querySelector('.pagination-page__btn-previous'),
@@ -62,11 +61,17 @@ function onClickPagination(evt) {
 
   const currentPage = refs.elPaginationList.dataset.current;
   const lastPage = refs.elPaginationList.dataset.last;
+  let activePage = 1;
 
-  if (evt.target.nodeName !== 'BUTTON') {
-    return;
+  if (evt.target.nodeName === 'BUTTON') {
+    activePage = evt.target.dataset.page;
+  } else {
+    const dataPageEL = evt.target.closest('[data-page]');
+    if (!dataPageEL) {
+      return;
+    }
+    activePage = dataPageEL.dataset.page;
   }
-  const activePage = evt.target.dataset.page;
 
   if (activePage === currentPage) {
     return;

@@ -10,8 +10,10 @@ import {
 import { getDatabase, set, ref, child, update, get } from 'firebase/database';
 import { keyLS } from './languageSwitch';
 import { getLanguageFromLS } from './languageSwitch';
+// import { libraryStart } from './watchedMovies';
 
 const refs = {
+  libBtnheader: document.querySelector('.site-nav__item--library__header'),
   emptyLibText: document.querySelector('.not-logged-message'),
   libContainer: document.querySelector('.container-library'),
   libGallery: document.querySelector('.gallery-library'),
@@ -24,6 +26,7 @@ const refs = {
   loginBtn: document.querySelector('#login__button'),
   loginHeaderBtn: document.querySelector('.login__button'),
   signupBtn: document.querySelector('#signup__button'),
+  signupBtnHeader: document.querySelector('.signup__button'),
   logoutBtn: document.querySelector('#logout__button'),
   logoutText: document.querySelector('.logout-modal__text'),
   logoutModal: document.querySelector('.logout-modal'),
@@ -164,15 +167,18 @@ const loginEmailPassword = async () => {
       userCredential.user.displayName = refs.loginUsername.value;
       const username = userCredential.user.displayName;
       const userUID = userCredential.user.uid;
-      if (refs.checkbox.checked) {
-        localStorage.setItem(LS_LOGIN_KEY, `${username}`);
-      } else if (!refs.checkbox.checked) {
-        sessionStorage.setItem(LS_LOGIN_KEY, `${username}`);
-      }
+      // if (refs.checkbox.checked) {
+      localStorage.setItem(LS_LOGIN_KEY, `${username}`);
+      // } else if (!refs.checkbox.checked) {
+      //   sessionStorage.setItem(LS_LOGIN_KEY, `${username}`);
+      // }
       localStorage.setItem(LS_UID_VALUE, `${userUID}`);
       currentLangLogOut();
+      refs.signupBtnHeader.style.display = 'none';
       // refs.loginHeaderBtn.textContent = 'Log Out';
       refs.usernick.textContent = `${username}`;
+      refs.libBtnheader.style.display = 'block';
+      // libraryStart();
       console.log(username);
       getDataFromDatabase(userUID);
       monitorAuthState();
@@ -222,7 +228,7 @@ async function monitorAuthState() {
     const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
     if (refs.libGallery) {
       // refs.emptyLibText.style.display = 'none';
-      refs.emptyLibText.classList.add('message--hidden');
+      // refs.emptyLibText.classList.add('message--hidden');
       refs.libGallery.style.display = 'flex';
     }
     if (username) {
@@ -241,9 +247,16 @@ async function monitorAuthState() {
 
 const logout = async () => {
   await signOut(auth);
+  if (
+    window.location.pathname === '/library.html' ||
+    window.location.pathname === '/filmoteka-project/library.html'
+  ) {
+    window.location = 'index.html';
+  }
+  console.log(window.location);
   if (refs.libGallery) {
     // refs.emptyLibText.style.display = 'flex';
-    refs.emptyLibText.classList.remove('message--hidden');
+    // refs.emptyLibText.classList.remove('message--hidden');
     refs.libGallery.style.display = 'none';
   }
   localStorage.removeItem(keyLS.LS_WATHED_UA_DATA_KEY);
@@ -253,6 +266,8 @@ const logout = async () => {
   localStorage.removeItem(LS_LOGIN_KEY);
   currentLangLogIn();
   // refs.loginHeaderBtn.textContent = 'Log In';
+  refs.signupBtnHeader.style.display = 'inline-block';
+  refs.libBtnheader.style.display = 'none';
   refs.usernick.textContent = ``;
   refs.loginForm.classList.remove('logout-modal--hidden');
   refs.logoutModal.classList.add('logout-modal--hidden');
@@ -265,9 +280,11 @@ function checkIfLogged() {
   const username = localStorage.getItem(LS_LOGIN_KEY);
   const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
   if (username || usernameSS) {
+    refs.libBtnheader.style.display = 'block';
+    refs.signupBtnHeader.style.display = 'none';
     if (refs.libGallery) {
       // refs.emptyLibText.style.display = 'none';
-      refs.emptyLibText.classList.add('message--hidden');
+      // refs.emptyLibText.classList.add('message--hidden');
       refs.libGallery.style.display = 'flex';
     }
     refs.loginForm.classList.add('logout-modal--hidden');
@@ -277,11 +294,13 @@ function checkIfLogged() {
     refs.usernick.textContent = `${username}`;
     refs.logoutText.innerHTML = `You are logged in as ${username}`;
   } else {
+    refs.libBtnheader.style.display = 'none';
     if (refs.libGallery) {
       // refs.emptyLibText.style.display = 'flex';
-      refs.emptyLibText.classList.remove('message--hidden');
+      // refs.emptyLibText.classList.remove('message--hidden');
       refs.libGallery.style.display = 'none';
     }
+    refs.signupBtnHeader.style.display = 'inline-block';
     refs.loginForm.classList.remove('logout-modal--hidden');
     refs.logoutModal.classList.add('logout-modal--hidden');
     currentLangLogIn();
@@ -294,7 +313,7 @@ function resetLogin() {
   refs.loginUsername.value = '';
   refs.loginEmail.value = '';
   refs.loginPassword.value = '';
-  refs.checkbox.checked = false;
+  // refs.checkbox.checked = false;
 }
 
 function resetSignup() {
