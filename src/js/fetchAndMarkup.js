@@ -1,7 +1,6 @@
-import { Movie } from './fetchMovie';
 import { makeMarkupCard } from './cardMarkup';
 import { genreLoad } from './workWithGenres';
-import { setCurrenDataToLS, getCurrenDataFromLS } from './currentPageData';
+import { setCurrenDataToLS } from './currentPageData';
 import { renderPagination } from './renderPagination';
 import { resetTextAlertSearch } from './moviesKeyword';
 

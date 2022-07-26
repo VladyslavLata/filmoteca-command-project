@@ -1,9 +1,5 @@
 import { Movie } from './fetchMovie';
-import {
-  keyLS,
-  getLanguageFromLS,
-  getCurrentPageFromLS,
-} from './languageSwitch';
+import { keyLS, getCurrentPageFromLS } from './languageSwitch';
 
 const LS_CURRENT_DATA_KEY = 'themoviedb-current-data';
 

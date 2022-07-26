@@ -17,10 +17,6 @@
   border-radius: 5px;
   transition: $typical-transition-background , $typical-transition-color;
 
-// &:not(:last-child) {
-//   margin-right: 1px;
-// }
-
   &:hover,
   &:focus {
         background-color: $orange-color;

@@ -28,11 +28,11 @@ async function onClickSubmit(event) {
     const lang = await getLanguageFromLS();
 
     if (keyword === '') {
-      if(lang === Movie.language.ENGLISH){
-        refs.paragraphEl.innerHTML = `Enter the name in the search field.`
+      if (lang === Movie.language.ENGLISH) {
+        refs.paragraphEl.innerHTML = `Enter the name in the search field.`;
       } else {
-        refs.paragraphEl.innerHTML = `Введіть назву в поле пошуку.`
-      };
+        refs.paragraphEl.innerHTML = `Введіть назву в поле пошуку.`;
+      }
       loader.disable('loader');
       return;
     }
@@ -43,11 +43,11 @@ async function onClickSubmit(event) {
 
     if (data.total_results === 0) {
       event.target.reset();
-      if(lang === Movie.language.ENGLISH){
-        refs.paragraphEl.innerHTML = `Search result not successful. Enter the correct movie name and try again.`
+      if (lang === Movie.language.ENGLISH) {
+        refs.paragraphEl.innerHTML = `Search result not successful. Enter the correct movie name and try again.`;
       } else {
-        refs.paragraphEl.innerHTML = `Результат пошуку невдалий. Введіть правильну назву фільму та повторіть спробу.`
-      };
+        refs.paragraphEl.innerHTML = `Результат пошуку невдалий. Введіть правильну назву фільму та повторіть спробу.`;
+      }
 
       loader.disable('loader');
       if (oldTrendMovie) {
@@ -58,14 +58,13 @@ async function onClickSubmit(event) {
         keywordMovies = oldKeywordMovies;
       }
       return;
-    };
+    }
 
     makeMarkupCard(data);
     renderPagination(data);
     event.target.reset();
     resetTextAlertSearch();
 
-    console.log(data);
     keywordMovies.lastPage = data.total_pages;
     setCurrenDataToLS(data.results);
     unlockBtnTrendTime();
@@ -73,14 +72,14 @@ async function onClickSubmit(event) {
     resetOldTrendMovie();
   } catch (error) {
     console.log(error.message);
-  };
-};
+  }
+}
 
 export function resetKeyword() {
   keyword = null;
   oldKeywordMovies = undefined;
-};
+}
 
 export function resetTextAlertSearch() {
   refs.paragraphEl.innerHTML = '';
-};
+}

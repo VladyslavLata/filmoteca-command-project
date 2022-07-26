@@ -53,12 +53,6 @@ position: relative;
     width: 400px;
   }
 
-  @media screen and (min-width: 1280px) {
-    // width: 806px;
-    // height: 558px;
-    // padding: 40px 12px;
-  }
-
   body.dark__theme & {
     background-color: #303030;
   }
