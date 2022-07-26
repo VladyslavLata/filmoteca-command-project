@@ -1,6 +1,5 @@
 .backdrop-team {
     position: fixed;
-    // visibility: visible;
     opacity: 1;
     top: 0;
     left: 0;
@@ -18,12 +17,6 @@
         pointer-events: none;
         visibility: hidden;
     }
-    // &.is-hidden.modal {
-    //     visibility: hidden;
-    //     opacity: 0;
-    //     pointer-events: none;
-        
-    // }
 }
 .backdrop-team.is-hidden .modal-team {
      transform: translate(-50%, -50%) scale(0.4);

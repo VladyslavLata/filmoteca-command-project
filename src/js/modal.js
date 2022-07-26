@@ -10,8 +10,6 @@ import {
   getCurrentPageFromLS,
 } from './languageSwitch';
 import { Movie } from './fetchMovie';
-import { async } from '@firebase/util';
-// import { unlockEl } from './interfaceWork';
 
 const btnText = {
   WATCHED_DEL_EN: 'remove from watched',
@@ -51,13 +49,10 @@ export const btnNameKey = {
 
 const body = document.querySelector('body');
 
-// console.log('~ username', username);
-
 const gallery = document.querySelector('.gallery');
 const backdrop = document.querySelector('.backdrop');
 const modalBtn = document.querySelector('.modal__button');
 export const modal = document.querySelector('.modal-info__container');
-// const modalWindow = document.querySelector('.modal');
 
 let ID = 0;
 let movieToAdd = {};
@@ -125,8 +120,6 @@ function onCloseClick(e) {
 }
 
 function onEscKeyPress(e) {
-  // console.log(e);
-  // console.log(e.code);
   if (e.code === 'Escape') {
     onCloseClick();
   }
@@ -206,8 +199,6 @@ let watchedArrAltLang = [];
 let queueArrCurrentLang = [];
 let queueArrAltLang = [];
 
-// const LS_WATHED_DATA_KEY = 'themovie-watched-lib';
-// const LS_QUEUE_DATA_KEY = 'themovie-queue-lib';
 export const username = localStorage.getItem(LS_LOGIN_KEY);
 export const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
 
@@ -367,23 +358,7 @@ function modalTextInfoTitle() {
     ? textInfoTitle.OVERVIEW_UA
     : textInfoTitle.OVERVIEW_EN;
 }
-// function buttonTextContent() {
-//   const modalButtons = document.querySelector('.container-btn');
-//   watchedBtn = modalButtons.children[0];
-//   queueBtn = modalButtons.children[1];
-//   if (watchedArrCurrentLang.some(value => value.id === ID)) {
-//     watchedBtn.textContent = 'delete from watched';
-//     return;
-//   } else {
-//     watchedBtn.textContent = 'add to watched';
-//   }
-//   if (queueArrCurrentLang.some(value => value.id === ID)) {
-//     queueBtn.textContent = 'delete from queue';
-//     return;
-//   } else {
-//     queueBtn.textContent = 'add to queue';
-//   }
-// }
+
 ////// ADD TO WATCHED   ///////
 async function addToWatched(evt) {
   const currentLanguage = getLanguageFromLS();
@@ -404,10 +379,7 @@ async function addToWatched(evt) {
   watchedArrCurrentLang =
     JSON.parse(localStorage.getItem(dataCurrentKey)) || [];
   watchedArrAltLang = JSON.parse(localStorage.getItem(dataAltKey)) || [];
-  // del
   if (watchedArrCurrentLang.some(value => value.id === ID)) {
-    // console.log('этот фильм уже есть, удаляем');
-    // watchedBtn.textContent = 'add to watched';
     evt.target.textContent =
       currentLanguage === Movie.language.UKRAINIAN
         ? btnText.WATCHED_ADD_UA
@@ -423,14 +395,11 @@ async function addToWatched(evt) {
     localStorage.setItem(dataAltKey, JSON.stringify(filteredWatchedArrAlt));
     return;
   }
-  // add
   watchedArrCurrentLang.push(filtrCurrentData(movieToAdd));
   localStorage.setItem(dataCurrentKey, JSON.stringify(watchedArrCurrentLang));
-  // console.log('watched:');
   const altLangData = await fetchAltLangByID(ID, altLang);
   watchedArrAltLang.push(altLangData);
   localStorage.setItem(dataAltKey, JSON.stringify(watchedArrAltLang));
-  // watchedBtn.textContent = 'delete from watched';
   evt.target.textContent =
     currentLanguage === Movie.language.UKRAINIAN
       ? btnText.WATCHED_DEL_UA
@@ -458,10 +427,7 @@ async function addToQueue(evt) {
 
   queueArrCurrentLang = JSON.parse(localStorage.getItem(dataCurrentKey)) || [];
   queueArrAltLang = JSON.parse(localStorage.getItem(dataAltKey)) || [];
-  // del
   if (queueArrCurrentLang.some(value => value.id === ID)) {
-    // console.log('этот фильм уже есть, удаляем');
-    // queueBtn.innerHTML = 'add to queue';
     evt.target.textContent =
       currentLanguage === Movie.language.UKRAINIAN
         ? btnText.QUEUE_ADD_UA
@@ -477,14 +443,11 @@ async function addToQueue(evt) {
     localStorage.setItem(dataAltKey, JSON.stringify(filteredQueueArrAlt));
     return;
   }
-  // add
   queueArrCurrentLang.push(filtrCurrentData(movieToAdd));
   localStorage.setItem(dataCurrentKey, JSON.stringify(queueArrCurrentLang));
-  // console.log('queue:');
   const altLangData = await fetchAltLangByID(ID, altLang);
   queueArrAltLang.push(altLangData);
   localStorage.setItem(dataAltKey, JSON.stringify(queueArrAltLang));
-  // queueBtn.innerHTML = 'delete from queue';
   evt.target.textContent =
     currentLanguage === Movie.language.UKRAINIAN
       ? btnText.QUEUE_DEL_UA

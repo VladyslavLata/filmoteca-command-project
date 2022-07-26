@@ -11,17 +11,8 @@ export const refsTranslate = {
   searchPlaceholder: document.querySelector('.search-form__input'),
 };
 
-const {
-  linkHome,
-  linkMyLibrary,
-  btnSignUp,
-  btnLogIn,
-  searchPlaceholder,
-  textUpFirst,
-  textUpSecond,
-  textUpThird,
-  textLink,
-} = refsTranslate;
+const { linkHome, linkMyLibrary, btnSignUp, btnLogIn, searchPlaceholder } =
+  refsTranslate;
 console.log(searchPlaceholder);
 
 export async function translatePage() {

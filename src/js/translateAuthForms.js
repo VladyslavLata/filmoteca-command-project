@@ -46,7 +46,6 @@ export async function translateAuthForms() {
     refs.logoutButton.textContent = 'Log Out';
   }
 
-  // if (lang === 'uk-UA') {
   if (lang === Movie.language.UKRAINIAN) {
     refs.signupTitle.textContent = 'Реєстрація';
     refs.signupEmail.placeholder = 'Пошта';

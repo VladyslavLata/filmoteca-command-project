@@ -1,18 +1,17 @@
-import { getLanguageFromLS } from "./languageSwitch";
+import { getLanguageFromLS } from './languageSwitch';
 import { Movie } from './fetchMovie';
-import { refs } from "./languageSwitch";
-import {watchedMovieBtnEl, queueMovieBtnEl} from './watchedMovies'
+import { refs } from './languageSwitch';
+import { watchedMovieBtnEl, queueMovieBtnEl } from './watchedMovies';
 
 const refsTranslateLibrary = {
   linkHome: document.querySelector('.js-homeLink-text'),
   linkMyLibrary: document.querySelector('.js-myLibrary-text'),
   btnSignUp: document.querySelector('.js-signUp-text'),
   btnLogIn: document.querySelector('.js-logIn-text'),
-  notLoggedMessage: document.querySelector('.js-notLoggedMessage')
+  notLoggedMessage: document.querySelector('.js-notLoggedMessage'),
 };
 
-
-const { linkHome, linkMyLibrary, btnSignUp, btnLogIn, notLoggedMessage } = refsTranslateLibrary;
+const { linkHome, linkMyLibrary, btnSignUp, btnLogIn } = refsTranslateLibrary;
 
 export async function translatePageLibrary() {
   const lang = await getLanguageFromLS();
@@ -30,7 +29,6 @@ export async function translatePageLibrary() {
     queueMovieBtnEl.textContent = 'queue';
     refs.btnSwitchEN.textContent = 'en';
     refs.btnSwitchUA.textContent = 'ua';
-    // notLoggedMessage.textContent = 'Here will be your films, after you log in :)';
   }
 
   if (lang === Movie.language.UKRAINIAN) {
@@ -46,7 +44,6 @@ export async function translatePageLibrary() {
     queueMovieBtnEl.textContent = 'До перегляду';
     refs.btnSwitchEN.textContent = 'англ';
     refs.btnSwitchUA.textContent = 'укр';
-    // notLoggedMessage.textContent = 'Тут будуть Ваші фільми після реєстрації :)';
   }
 }
 

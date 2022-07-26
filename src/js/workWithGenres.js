@@ -46,8 +46,6 @@ export function genreFind(genreList = []) {
       genreOther = 'Інші';
       break;
   }
-  // console.log(langGenre);
-  // console.log(genreLS);
   if (!genreLS || genreList.length === 0) {
     return noGenre;
   }

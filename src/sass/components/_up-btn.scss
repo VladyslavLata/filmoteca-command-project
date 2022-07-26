@@ -13,12 +13,8 @@
     background-color: $orange-color;
     fill: #303030;
     border: none;
-    // background-color: transparent;
 
     transition: $typical-transition-opacity;
-    // transition-property: opacity;
-    // transition-duration: 200ms;
-    // transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 
     @include mq(tablet) {
             right: 3%;

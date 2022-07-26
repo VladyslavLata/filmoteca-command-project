@@ -16,13 +16,7 @@
 .pagination-container {
   background-color: transparent;
 }
-// .arrow-light-theme{
-// stroke: $black-color;
-// }
 
-// .arrow-dark-theme {
-//   stroke: $white-color;
-// }
 .pagination-list {
   width: 100%;
   display: flex;
@@ -70,7 +64,6 @@
 }
 .pagination-list li.dots button {
   font-weight: bold;
-  // margin: 0 -3px;
 }
 
 .pagination-list li.dots:hover,

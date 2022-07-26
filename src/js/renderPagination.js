@@ -129,8 +129,6 @@ function createPaginationMarkup(pages, page) {
     </svg></button></li>`;
   }
   str += '</ul>';
-
-  // document.querySelector('.pagination').innerHTML = str;
   return str;
 }
 
