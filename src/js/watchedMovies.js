@@ -1,6 +1,5 @@
 import { Movie } from './fetchMovie';
-// import { handleButtonClick as scrollToStart } from './up-btnAndSwitcher';
-// import { username, usernameSS } from './modal';
+import { handleButtonClick as scrollToStart } from './up-btnAndSwitcher';
 import {
   keyLS,
   setLanguageToLS,
@@ -9,27 +8,16 @@ import {
   setCurrentPageToLS,
   getCurrentPageFromLS,
 } from './languageSwitch';
-// import { genreFind } from './workWithGenres';
 import { makeMarkupCard } from './cardMarkup';
 import { modal, btnNameKey } from './modal';
 
 import Loader from './loader';
 
 const loader = new Loader();
-// const loginBtn = document.querySelector('#login__button');
-// loginBtn.addEventListener('click', () => {
-//   setTimeout(() => {
-//     console.log('Here');
 
-//     onClickWatchedBtnMarkupFilms();
-//   }, 1500);
-// });
 loader.enable('preloader');
 
 modal.addEventListener('click', refreshLibraryOnClickBtnModal);
-
-// localStorage.setItem(keyLS.LS_WATHED_UA_DATA_KEY, JSON.stringify(filmLocal));
-// localStorage.setItem(keyLS.LS_QUEUE_UA_DATA_KEY, JSON.stringify(filmLocalUA));
 
 const mediaQueryMob = window.matchMedia('(max-width: 767px)');
 const mediaQueryTab = window.matchMedia(
@@ -38,11 +26,10 @@ const mediaQueryTab = window.matchMedia(
 const mediaQueryDesk = window.matchMedia('(min-width: 1280px)');
 
 const DESKTOP_FILMS = 9;
-const TABLET_FILMS = 2;
-const MOBILE_FILMS = 3;
+const TABLET_FILMS = 8;
+const MOBILE_FILMS = 4;
 export let currentTotalFilmsInPage = 9;
-// let currentLangLibrary = Movie.language.ENGLISH;
-// let currentLSWatchedFilms = keyLS.LS_WATHED_DATA_KEY;
+
 let currentLangLibrary = getLanguageFromLS();
 export let currentLSWatchedFilms = keyLS.LS_WATHED_EN_DATA_KEY;
 
@@ -74,8 +61,6 @@ boxLastBtnEl.addEventListener('click', onClickBtnInLastBoxChangePage);
 
 btnArrowLeftEl.addEventListener('click', onClickBtnArrowLeftChangePage);
 btnArrowRightEl.addEventListener('click', onClickBtnArrowRightChangePage);
-
-// currentLangLibrary = getLanguageFromLS();
 
 libraryStart();
 getCurrentLSWatchedFilms();
@@ -130,8 +115,7 @@ function onClickWatchedBtnMarkupFilms() {
   loader.enable('loader');
   currentLangLibrary = getLanguageFromLS();
   getCurrentLSWatchedFilms();
-  // clearGallery();
-  currentPage = 1;
+   currentPage = 1;
   createMarkupFilms(currentLSWatchedFilms);
   setCurrentPageToLS(keyLS.VALUE_PAGE_LIBRARY_W);
   watchedMovieBtnEl.classList.add('is-active');
@@ -143,8 +127,7 @@ function onClickQueueBtnMarkupFilms() {
   loader.enable('loader');
   currentLangLibrary = getLanguageFromLS();
   getCurrentLSQueueFilms();
-  // clearGallery();
-  currentPage = 1;
+   currentPage = 1;
   createMarkupFilms(currentLSWatchedFilms);
   setCurrentPageToLS(keyLS.VALUE_PAGE_LIBRARY_Q);
   queueMovieBtnEl.classList.add('is-active');
@@ -170,29 +153,9 @@ function getCurrentLSQueueFilms() {
 
 export function createMarkupFilms(currentLSWatchedFilms) {
   watchedFilms = getWatchedFilmsLocalStorage(currentLSWatchedFilms);
-  // if (watchedFilms === null) {
-  //   clearGallery();
 
-  //   clearPagination();
-  //   hiddenBtnArrow();
-  //   boxFirstBtnEl.classList.add('btn-hidden');
-  //   boxLastBtnEl.classList.add('btn-hidden');
-  //   //  btnArrowLeftEl.classList.add('.btn-hidden');
-  //   // btnArrowRightEl.classList.add('.btn-hidden');
-  //   noFilmsNoLogInMessage();
-
-  //   // if ((username !== '' && username) || (usernameSS !== '' && usernameSS)) {
-  //   //   noFilmsNoLogInMessage();
-  //   //   return;
-  //   // }
-  //   // noFilmsMessage();
-  //   loader.disable('loader');
-  //   return;
-  // } else
-  // if (typeof watchedFilms === string) || watchedFilms === null) {
   if (watchedFilms === null || watchedFilms.length === 0) {
-    // clearGallery();
-    clearPagination();
+      clearPagination();
     hiddenBtnArrow();
     boxFirstBtnEl.classList.add('btn-hidden');
     boxLastBtnEl.classList.add('btn-hidden');
@@ -200,8 +163,7 @@ export function createMarkupFilms(currentLSWatchedFilms) {
     loader.disable('loader');
     return;
   } else if (watchedFilms === undefined) {
-    // clearGallery();
-    clearPagination();
+      clearPagination();
     hiddenBtnArrow();
     boxFirstBtnEl.classList.add('btn-hidden');
     boxLastBtnEl.classList.add('btn-hidden');
@@ -210,6 +172,7 @@ export function createMarkupFilms(currentLSWatchedFilms) {
   } else if (watchedFilms) {
     watchedFilmsLength = watchedFilms.length;
     totalPages = getTotalPages(watchedFilmsLength, currentTotalFilmsInPage);
+    hiddenBtnArrow();
     mobilePagination(mediaQueryMob);
     pickOutCurrentPage(currentPage);
     const filmsFormCurrentPage = watchedFilms.slice(
@@ -219,23 +182,6 @@ export function createMarkupFilms(currentLSWatchedFilms) {
     makeMarkupCard({ results: filmsFormCurrentPage });
   }
 }
-
-// function createMarkupFilms(currentLSWatchedFilms) {
-//   watchedFilms = getWatchedFilmsLocalStorage(currentLSWatchedFilms);
-//   if (watchedFilms === null) {
-//     noFilmsMessage();
-//     return;
-//   } else if (watchedFilms === undefined) {
-//     return;
-//   } else if (watchedFilms) {
-//     watchedFilmsLength = watchedFilms.length;
-//     const filmsFormCurrentPage = watchedFilms.slice(
-//       (currentPage - 1) * currentTotalFilmsInPage,
-//       currentPage * currentTotalFilmsInPage
-//     );
-//     galleryEl.innerHTML = markupCards(filmsFormCurrentPage);
-//   }
-// }
 
 function getWatchedFilmsLocalStorage(currentLSWatchedFilms) {
   try {
@@ -258,17 +204,6 @@ async function noFilmsMessage() {
   }
 }
 
-// function noFilmsNoLogInMessage() {
-//     currentLangLibrary = getLanguageFromLS();
-//   if (currentLangLibrary === Movie.language.ENGLISH) {
-//     messageBoxEl.innerHTML =
-//       '<p class="message info animate__bounceInDown">If you want to add movie to library then you have to log in first.</p>';
-//   } else if (currentLangLibrary === Movie.language.UKRAINIAN) {
-//     messageBoxEl.innerHTML =
-//       '<p class="message info animate__bounceInDown">test.</p > ';
-//   }
-// }
-
 async function errorMessage() {
   currentLangLibrary = getLanguageFromLS();
   if (currentLangLibrary === Movie.language.ENGLISH) {
@@ -280,9 +215,6 @@ async function errorMessage() {
   }
 }
 
-function clearGallery() {
-  galleryEl.innerHTML = '';
-}
 
 function clearPagination() {
   boxMainBbtnsEl.innerHTML = '';
@@ -291,27 +223,20 @@ function clearPagination() {
 function handledChangeMobile(e) {
   if (e.matches) {
     currentTotalFilmsInPage = MOBILE_FILMS;
-    // clearGallery();
-    createMarkupFilms(currentLSWatchedFilms);
-
-    //  totalPages = getTotalPages(watchedFilmsLength, currentTotalFilmsInPage);
-    // makeMarkupBtns(totalPages);
+       createMarkupFilms(currentLSWatchedFilms);
   }
 }
 
 function handledChangeTablet(e) {
   if (e.matches) {
     currentTotalFilmsInPage = TABLET_FILMS;
-    // clearGallery();
-
+    
     createMarkupFilms(currentLSWatchedFilms);
     if (currentPage > totalPages) {
       currentPage = totalPages;
       createMarkupFilms(currentLSWatchedFilms);
     }
     createNumberLastBtn();
-    //  totalPages = getTotalPages(watchedFilmsLength, currentTotalFilmsInPage);
-    // makeMarkupBtns(totalPages);
   }
 }
 
@@ -325,8 +250,6 @@ function handledChangeDeskTop(e) {
       createMarkupFilms(currentLSWatchedFilms);
     }
     createNumberLastBtn();
-    // totalPages = getTotalPages(watchedFilmsLength, currentTotalFilmsInPage);
-    // makeMarkupBtns(totalPages);
   }
 }
 
@@ -336,7 +259,7 @@ function onClickBtnInMainBoxChangePage(event) {
   if (event.target.nodeName !== 'BUTTON') {
     return;
   }
-  // scrollToStart();
+  scrollToStart();
   currentPage = Number(event.target.textContent);
   createMarkupFilms(currentLSWatchedFilms);
   pickOutCurrentPage(currentPage);
@@ -347,13 +270,13 @@ function onClickBtnInFirstBoxChangePage(event) {
     return;
   } else if (event.target.textContent === '...') {
     currentPage = currentPage >= 6 ? currentPage - 5 : 1;
-    // scrollToStart();
+    scrollToStart();
     createMarkupFilms(currentLSWatchedFilms);
     pickOutCurrentPage(currentPage);
     return;
   }
   currentPage = 1;
-  // scrollToStart();
+  scrollToStart();
   createMarkupFilms(currentLSWatchedFilms);
   pickOutCurrentPage(currentPage);
 }
@@ -363,13 +286,13 @@ function onClickBtnInLastBoxChangePage(event) {
     return;
   } else if (event.target.textContent === '...') {
     currentPage = totalPages >= currentPage + 5 ? currentPage + 5 : totalPages;
-    // scrollToStart();
+    scrollToStart();
     createMarkupFilms(currentLSWatchedFilms);
     pickOutCurrentPage(currentPage);
     return;
   }
   currentPage = Number(event.target.textContent);
-  // scrollToStart();
+  scrollToStart();
   createMarkupFilms(currentLSWatchedFilms);
   pickOutCurrentPage(currentPage);
 }
@@ -379,7 +302,7 @@ function onClickBtnArrowLeftChangePage() {
     return;
   }
   currentPage -= 1;
-  // scrollToStart();
+  scrollToStart();
   createMarkupFilms(currentLSWatchedFilms);
   pickOutCurrentPage(currentPage);
 }
@@ -389,7 +312,7 @@ function onClickBtnArrowRightChangePage() {
     return;
   }
   currentPage += 1;
-  // scrollToStart();
+  scrollToStart();
   createMarkupFilms(currentLSWatchedFilms);
   pickOutCurrentPage(currentPage);
 }
@@ -399,14 +322,11 @@ function markupBtn() {
 }
 
 function makeMarkupBtns(totalPages) {
-  if (totalPages > 1) {
-    visibleBtnArrow();
-  } else if (totalPages <= 1) {
-    hiddenBtnArrow();
-  }
   if (currentPage > totalPages) {
     currentPage = totalPages;
   }
+
+  visibilityBtnsArrows();
 
   let markupBtns = '';
   let totalBtn = 0;
@@ -472,14 +392,10 @@ function makeMarkupBtns(totalPages) {
 }
 
 function makeMarkupBtnsMobile(totalPages) {
-  if (totalPages > 1) {
-    visibleBtnArrow();
-  } else if (totalPages <= 1) {
-    hiddenBtnArrow();
-  }
   if (currentPage > totalPages) {
     currentPage = totalPages;
   }
+  visibilityBtnsArrows();
 
   let markupBtns = '';
   let totalBtn = 0;
@@ -563,18 +479,28 @@ function visibleBtnArrow() {
   btnArrowRightEl.classList.remove('btn-hidden');
 }
 
+function visibilityBtnsArrows() {
+  if ((totalPages > 1) & (currentPage > 1) & (currentPage < totalPages)) {
+    visibleBtnArrow();
+  } else if (totalPages <= 1) {
+    hiddenBtnArrow();
+  } else if ((totalPages > 1) & (currentPage === 1)) {
+    btnArrowRightEl.classList.remove('btn-hidden');
+  } else if ((totalPages > 1) & (currentPage === totalPages)) {
+    btnArrowLeftEl.classList.remove('btn-hidden');
+  }
+}
+
 function refreshLibraryOnClickBtnModal(evt) {
   const currentPage = getCurrentPageFromLS();
   if (evt.target.name === btnNameKey.WATCHED) {
     if (currentPage === keyLS.VALUE_PAGE_LIBRARY_W) {
       createMarkupFilms(currentLSWatchedFilms);
-      // onClickWatchedBtnMarkupFilms();
     }
   }
   if (evt.target.name === btnNameKey.QUEUE) {
     if (currentPage === keyLS.VALUE_PAGE_LIBRARY_Q) {
       createMarkupFilms(currentLSWatchedFilms);
-      // onClickQueueBtnMarkupFilms();
     }
   }
 }
