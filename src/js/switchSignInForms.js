@@ -34,7 +34,7 @@ function onCloseModal(e) {
   signupOverlay.classList.add('sign-up__overlay--hidden');
 }
 
-function onLoginOpen(e) {
+export function onLoginOpen(e) {
   window.addEventListener('keydown', onEscKeyPress);
   loginOverlay.classList.remove('log-in__overlay--hidden');
   body.classList.add('modal-open');

@@ -10,6 +10,7 @@ import {
 import { getDatabase, set, ref, child, update, get } from 'firebase/database';
 import { keyLS } from './languageSwitch';
 import { getLanguageFromLS } from './languageSwitch';
+import { onLoginOpen } from './switchSignInForms';
 // import { libraryStart } from './watchedMovies';
 
 const refs = {
@@ -33,6 +34,9 @@ const refs = {
   checkbox: document.querySelector('.form-check-input'),
   usernick: document.querySelector('.user-nick'),
 };
+
+// let loginEmail = '';
+// let loginPassword = '';
 
 export const LS_LOGIN_KEY = 'keep_logged_as';
 export const LS_UID_VALUE = 'UID';
@@ -152,9 +156,36 @@ export async function updateUserData(userUID) {
   return update(ref(database), updates);
 }
 // ----------------------------------------------------------------------------------
+const createAccount = async e => {
+  const signupEmail = refs.signupEmail.value;
+  const signupPassword = refs.signupPassword.value;
+  refs.loginEmail.value = signupEmail;
+  refs.loginPassword.value = signupPassword;
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      signupEmail,
+      signupPassword
+    );
+    writeUserData(
+      userCredential.user.uid,
+      userCredential.user.displayName,
+      userCredential.user.email
+    );
+    onLoginOpen();
+    alert('You are signed up now');
+    resetSignup();
+  } catch (error) {
+    showLoginError(error);
+  }
+};
+
+refs.signupBtn.addEventListener('click', createAccount);
+
 const loginEmailPassword = async () => {
   const loginEmail = refs.loginEmail.value;
   const loginPassword = refs.loginPassword.value;
+
   try {
     const userCredential = await signInWithEmailAndPassword(
       auth,
@@ -198,29 +229,6 @@ function showLoginError(error) {
 }
 
 refs.loginBtn.addEventListener('click', loginEmailPassword);
-
-const createAccount = async e => {
-  const signupEmail = refs.signupEmail.value;
-  const signupPassword = refs.signupPassword.value;
-  try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      signupEmail,
-      signupPassword
-    );
-    writeUserData(
-      userCredential.user.uid,
-      userCredential.user.displayName,
-      userCredential.user.email
-    );
-    alert('You are signed up now');
-    resetSignup();
-  } catch (error) {
-    showLoginError(error);
-  }
-};
-
-refs.signupBtn.addEventListener('click', createAccount);
 
 async function monitorAuthState() {
   onAuthStateChanged(auth, user => {
