@@ -8,12 +8,14 @@ import {
   signOut,
 } from 'firebase/auth';
 import { getDatabase, set, ref, child, update, get } from 'firebase/database';
+import Swal from 'sweetalert2';
 import { keyLS } from './languageSwitch';
 import { getLanguageFromLS } from './languageSwitch';
 import { onLoginOpen } from './switchSignInForms';
 // import { libraryStart } from './watchedMovies';
 
 const refs = {
+  body: document.querySelector('body'),
   libBtnheader: document.querySelector('.site-nav__item--library__header'),
   emptyLibText: document.querySelector('.not-logged-message'),
   libContainer: document.querySelector('.container-library'),
@@ -173,7 +175,22 @@ const createAccount = async e => {
       userCredential.user.email
     );
     onLoginOpen();
-    alert('You are signed up now. Please, log in.');
+    Swal.fire({
+      background: '#303030',
+      color: '#ffffff',
+      title: 'Success!',
+      text: 'You are signed up now. Please, log in.',
+      icon: 'success',
+      confirmButtonText: 'OK',
+    });
+    if (!refs.body.classList.contains('dark__theme')) {
+      Swal.fire({
+        title: 'Success!',
+        text: 'You are signed up now. Please, log in.',
+        icon: 'success',
+        confirmButtonText: 'OK',
+      });
+    }
     resetSignup();
   } catch (error) {
     showLoginError(error);
@@ -193,7 +210,22 @@ const loginEmailPassword = async () => {
       loginPassword
     );
     if (refs.loginUsername.value.length > 9) {
-      alert('Your nickname is too long. Make it 9 characters maximum.');
+      Swal.fire({
+        background: '#303030',
+        color: '#ffffff',
+        title: 'Warning!',
+        text: 'Your nickname is too long. Make it 9 characters maximum.',
+        icon: 'warning',
+        confirmButtonText: 'OK',
+      });
+      if (!refs.body.classList.contains('dark__theme')) {
+        Swal.fire({
+          title: 'Warning!',
+          text: 'Your nickname is too long. Make it 9 characters maximum.',
+          icon: 'warning',
+          confirmButtonText: 'OK',
+        });
+      }
     } else {
       userCredential.user.displayName = refs.loginUsername.value;
       const username = userCredential.user.displayName;
@@ -222,9 +254,60 @@ const loginEmailPassword = async () => {
 
 function showLoginError(error) {
   if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
-    alert('Wrong password. Try again.');
-  } else {
-    alert(`Error: ${error.message}`);
+    Swal.fire({
+      background: '#303030',
+      color: '#ffffff',
+      title: 'Error!',
+      text: 'Wrong password. Try again.',
+      icon: 'error',
+      confirmButtonText: 'OK',
+    });
+  }
+  if (error.code == AuthErrorCodes.EMAIL_EXISTS) {
+    Swal.fire({
+      background: '#303030',
+      color: '#ffffff',
+      title: 'Error!',
+      text: `This email is already in use.`,
+      icon: 'error',
+      confirmButtonText: 'OK',
+    });
+  }
+  if (error.code == AuthErrorCodes.USER_DELETED) {
+    Swal.fire({
+      background: '#303030',
+      color: '#ffffff',
+      title: 'Error!',
+      text: `User is not found.`,
+      icon: 'error',
+      confirmButtonText: 'OK',
+    });
+  }
+  if (!refs.body.classList.contains('dark__theme')) {
+    if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Wrong password. Try again.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
+    if (error.code == AuthErrorCodes.EMAIL_EXISTS) {
+      Swal.fire({
+        title: 'Error!',
+        text: `This email is already in use.`,
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
+    if (error.code == AuthErrorCodes.USER_DELETED) {
+      Swal.fire({
+        title: 'Error!',
+        text: `User is not found.`,
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
   }
 }
 
@@ -244,11 +327,11 @@ async function monitorAuthState() {
       refs.logoutModal.classList.remove('logout-modal--hidden');
       refs.logoutText.innerHTML = `You are logged in as ${username}`;
     }
-    if (usernameSS) {
-      refs.loginForm.classList.add('logout-modal--hidden');
-      refs.logoutModal.classList.remove('logout-modal--hidden');
-      refs.logoutText.innerHTML = `You are logged in as ${usernameSS}`;
-    }
+    // if (usernameSS) {
+    //   refs.loginForm.classList.add('logout-modal--hidden');
+    //   refs.logoutModal.classList.remove('logout-modal--hidden');
+    //   refs.logoutText.innerHTML = `You are logged in as ${usernameSS}`;
+    // }
     // return user.uid;
   });
 }
@@ -261,7 +344,6 @@ const logout = async () => {
   ) {
     window.location = 'index.html';
   }
-  console.log(window.location);
   if (refs.libGallery) {
     // refs.emptyLibText.style.display = 'flex';
     // refs.emptyLibText.classList.remove('message--hidden');
@@ -279,7 +361,6 @@ const logout = async () => {
   refs.usernick.textContent = ``;
   refs.loginForm.classList.remove('logout-modal--hidden');
   refs.logoutModal.classList.add('logout-modal--hidden');
-  alert("You're not logged in anymore");
 };
 
 refs.logoutBtn.addEventListener('click', logout);

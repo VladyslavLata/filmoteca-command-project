@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 import { Movie } from './fetchMovie';
 import { genreFindForModal } from './workWithGenres';
 import { getCurrenDataFromLS, getDataFromLibraryLS } from './currentPageData';
@@ -19,7 +20,6 @@ const btnText = {
   WATCHED_ADD_UA: 'додати до переглянутого',
   QUEUE_DEL_UA: 'видалити з черги',
   QUEUE_ADD_UA: 'додати до черги',
-  
 };
 
 const textInfoTitle = {
@@ -177,13 +177,17 @@ function modalMarkup({
               </tr>
               <tr class="modal-info__item">
                 <td class="modal-info__title">${currentInfoTitle.GENRE}</td>
-                <td class="modal-info__content">${genreFindForModal(genre_ids)}</td>
+                <td class="modal-info__content">${genreFindForModal(
+                  genre_ids
+                )}</td>
               </tr>
               </table>            
                   <p class="modal-info__article-title">${
                     currentInfoTitle.ABOUT
                   }</p>
-                  <p class="modal-info__article">${overview || currentInfoTitle.OVERVIEW}</p>
+                  <p class="modal-info__article">${
+                    overview || currentInfoTitle.OVERVIEW
+                  }</p>
                   <div class="container-btn">
             <button type="button" class="btn" name="${
               btnNameKey.WATCHED
@@ -214,9 +218,22 @@ async function onBtnClick(evt) {
       const UID = localStorage.getItem('UID');
       updateUserData(UID);
     } else {
-      alert(
-        'If you want to add movie to "Watched" then you have to log in first.'
-      );
+      Swal.fire({
+        background: '#303030',
+        color: '#ffffff',
+        title: 'Warning!',
+        text: 'If you want to add movie to "Watched" then you have to log in first.',
+        icon: 'warning',
+        confirmButtonText: 'OK',
+      });
+      if (!body.classList.contains('dark__theme')) {
+        Swal.fire({
+          title: 'Warning!',
+          text: 'If you want to add movie to "Watched" then you have to log in first.',
+          icon: 'warning',
+          confirmButtonText: 'OK',
+        });
+      }
     }
   }
   if (evt.target.name === btnNameKey.QUEUE) {
@@ -225,9 +242,22 @@ async function onBtnClick(evt) {
       await addToQueue(evt);
       updateUserData(UID);
     } else {
-      alert(
-        'If you want to add movie to "Queue" then you have to log in first.'
-      );
+      Swal.fire({
+        background: '#303030',
+        color: '#ffffff',
+        title: 'Warning!',
+        text: 'If you want to add movie to "Queue" then you have to log in first.',
+        icon: 'warning',
+        confirmButtonText: 'OK',
+      });
+      if (!body.classList.contains('dark__theme')) {
+        Swal.fire({
+          title: 'Warning!',
+          text: 'If you want to add movie to "Queue" then you have to log in first.',
+          icon: 'warning',
+          confirmButtonText: 'OK',
+        });
+      }
     }
   }
 }
@@ -275,7 +305,7 @@ function modalTextInfoTitle() {
     : textInfoTitle.ABOUT_EN;
   currentInfoTitle.OVERVIEW = isUA
     ? textInfoTitle.OVERVIEW_UA
-    : textInfoTitle.OVERVIEW_EN; 
+    : textInfoTitle.OVERVIEW_EN;
 }
 // function buttonTextContent() {
 //   const modalButtons = document.querySelector('.container-btn');
