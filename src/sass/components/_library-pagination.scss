@@ -1,9 +1,9 @@
 .box-btns {
-  margin-top: 40px;
+  padding-bottom: 40px;
   display: flex;
   justify-content: center;
   @include mq(tablet) {
-    margin-top: 60px;
+    padding-bottom: 60px;
   }
 }
 
@@ -85,7 +85,8 @@
 }
 
 .hidden-btns {
-  padding-bottom: 10px;
+  padding-bottom: 6px;
+  font-weight: 700;
 }
 
 .box-main-btnss li:not(:last-child) {
