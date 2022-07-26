@@ -308,13 +308,13 @@ const logout = async () => {
   refs.usernick.textContent = ``;
   refs.loginForm.classList.remove('logout-modal--hidden');
   refs.logoutModal.classList.add('logout-modal--hidden');
-  Swal.fire({
-    position: 'top-end',
-    icon: 'success',
-    title: 'You are not logged in anymore',
-    showConfirmButton: false,
-    timer: 1500,
-  });
+  // Swal.fire({
+  //   position: 'top-end',
+  //   icon: 'success',
+  //   title: 'You are not logged in anymore',
+  //   showConfirmButton: false,
+  //   timer: 1500,
+  // });
 };
 
 refs.logoutBtn.addEventListener('click', logout);
