@@ -17,9 +17,14 @@
   border-radius: 5px;
   transition: $typical-transition-background , $typical-transition-color;
 
+// &:not(:last-child) {
+//   margin-right: 1px;
+// }
+
   &:hover,
   &:focus {
         background-color: $orange-color;
+        color: $white-color;
   }
 
 
@@ -32,10 +37,16 @@
   background-color: $modal-number-grey-bg;
   @include center;
 
+  &.left {
+    margin-right: 1px;
+  }
+
   &:hover,
   &:focus {
     background-color: $orange-color;
   }
+
+
 
   body.dark__theme & {
     background-color: $footer-text-color;
@@ -50,7 +61,13 @@
 .btn-arrow-svg {
   
   stroke: #000000;
-  transition: stroke 250ms cubic-bezier(0.4, 0, 0.2, 1);;
+  transition: stroke 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+
+  .btn-arrow:hover &,
+  .btn-arrow:focus & {
+    stroke: #ffffff;
+  }
 
   body.dark__theme & {
     stroke: #ffffff;
@@ -60,6 +77,7 @@
 .first-box-btn,
 .last-box-btn,
 .box-main-btnss {
+  margin: 0 1px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -72,6 +90,16 @@
   padding-bottom: 10px;
 }
 
+.box-main-btnss li:not(:last-child) {
+  margin-right: 2px;
+}
+
+.first-box-btn li:first-child,
+.last-box-btn li:first-child {
+margin-right: 2px;
+}
+
 .btn-current-pages {
   background-color: $orange-color;
+  color: $white-color;
 }
