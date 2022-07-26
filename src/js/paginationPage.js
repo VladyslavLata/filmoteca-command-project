@@ -55,6 +55,7 @@ paginationContainer.addEventListener('click', onClickPagination);
 // }
 
 function onClickPagination(evt) {
+  loader.enable('loader');
   const refs = {
     elPaginationList: document.querySelector('.pagination-list'),
   };
