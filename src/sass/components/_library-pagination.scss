@@ -2,7 +2,6 @@
   margin-top: 40px;
   display: flex;
   justify-content: center;
-
   @include mq(tablet) {
     margin-top: 60px;
   }
@@ -13,56 +12,66 @@
   width: 40px;
   height: 40px;
   border: none;
-background-color: inherit;
-text-align: center;
-border-radius: 5px;
+  background-color: inherit;
+  text-align: center;
+  border-radius: 5px;
+  transition: $typical-transition-background , $typical-transition-color;
 
-body.dark__theme & {
-  color: $white-color
-}
-}
-
-// .btn-pg.hidden-btns {
-//  @include center;
-// align-items: baseline;
-
-// }
+  &:hover,
+  &:focus {
+        background-color: $orange-color;
+  }
 
 
-.btn-arrow {
-  background-color: $modal-number-grey-bg;
- fill: currentColor;
-@include center;
-
-body.dark__theme & {
-   background-color: $footer-text-color;
+  body.dark__theme & {
+    color: $white-color;
   }
 }
 
+.btn-arrow {
+  background-color: $modal-number-grey-bg;
+  @include center;
 
+  &:hover,
+  &:focus {
+    background-color: $orange-color;
+  }
+
+  body.dark__theme & {
+    background-color: $footer-text-color;
+
+    &:hover,
+    &:focus {
+      background-color: $orange-color;
+    }
+  }
+}
+
+.btn-arrow-svg {
+  
+  stroke: #000000;
+  transition: stroke 250ms cubic-bezier(0.4, 0, 0.2, 1);;
+
+  body.dark__theme & {
+    stroke: #ffffff;
+  }
+}
 
 .first-box-btn,
 .last-box-btn,
 .box-main-btnss {
   display: flex;
-flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
 .btn-hidden {
   display: none;
-  
 }
 
 .hidden-btns {
-padding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 .btn-current-pages {
   background-color: $orange-color;
-}
-
-.btn-pg span {
-@include center;
-height: 30;
-
 }
