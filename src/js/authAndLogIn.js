@@ -173,7 +173,7 @@ const createAccount = async e => {
       userCredential.user.email
     );
     onLoginOpen();
-    alert('You are signed up now');
+    alert('You are signed up now. Please, log in.');
     resetSignup();
   } catch (error) {
     showLoginError(error);
