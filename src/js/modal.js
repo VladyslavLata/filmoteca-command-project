@@ -10,6 +10,7 @@ import {
   getCurrentPageFromLS,
 } from './languageSwitch';
 import { Movie } from './fetchMovie';
+import { async } from '@firebase/util';
 // import { unlockEl } from './interfaceWork';
 
 const btnText = {
@@ -211,7 +212,6 @@ export const username = localStorage.getItem(LS_LOGIN_KEY);
 export const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
 
 async function onBtnClick(evt) {
-  const lang = await getLanguageFromLS();
   const username = localStorage.getItem(LS_LOGIN_KEY);
   const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
   if (evt.target.name === 'watched') {
@@ -220,46 +220,7 @@ async function onBtnClick(evt) {
       const UID = localStorage.getItem('UID');
       updateUserData(UID);
     } else {
-      if (lang === Movie.language.ENGLISH) {
-        Swal.fire({
-          confirmButtonColor: '#ff6b01',
-          background: '#303030',
-          color: '#ffffff',
-          title: 'Warning!',
-          text: 'If you want to add movie to "Watched" then you have to log in first.',
-          icon: 'warning',
-          confirmButtonText: 'OK',
-        });
-        if (!body.classList.contains('dark__theme')) {
-          Swal.fire({
-            confirmButtonColor: '#ff6b01',
-            title: 'Warning!',
-            text: 'If you want to add movie to "Watched" then you have to log in first.',
-            icon: 'warning',
-            confirmButtonText: 'OK',
-          });
-        }
-      }
-      if (lang === Movie.language.UKRAINIAN) {
-        Swal.fire({
-          confirmButtonColor: '#ff6b01',
-          background: '#303030',
-          color: '#ffffff',
-          title: 'Ой!',
-          text: 'Для того, щоб додати фільм до переглянутих, Ви маєте увійти у свій обліковий запис.',
-          icon: 'warning',
-          confirmButtonText: 'OK',
-        });
-        if (!body.classList.contains('dark__theme')) {
-          Swal.fire({
-            confirmButtonColor: '#ff6b01',
-            title: 'Ой!',
-            text: 'Для того, щоб додати фільм до переглянутих, Ви маєте увійти у свій обліковий запис.',
-            icon: 'warning',
-            confirmButtonText: 'OK',
-          });
-        }
-      }
+      notLoggedInWatchedMessage();
     }
   }
   if (evt.target.name === btnNameKey.QUEUE) {
@@ -268,46 +229,95 @@ async function onBtnClick(evt) {
       await addToQueue(evt);
       updateUserData(UID);
     } else {
-      if (lang === Movie.language.ENGLISH) {
-        Swal.fire({
-          confirmButtonColor: '#ff6b01',
-          background: '#303030',
-          color: '#ffffff',
-          title: 'Warning!',
-          text: 'If you want to add movie to "Queue" then you have to log in first.',
-          icon: 'warning',
-          confirmButtonText: 'OK',
-        });
-        if (!body.classList.contains('dark__theme')) {
-          Swal.fire({
-            confirmButtonColor: '#ff6b01',
-            title: 'Warning!',
-            text: 'If you want to add movie to "Queue" then you have to log in first.',
-            icon: 'warning',
-            confirmButtonText: 'OK',
-          });
-        }
-      }
-      if (lang === Movie.language.UKRAINIAN) {
-        Swal.fire({
-          confirmButtonColor: '#ff6b01',
-          background: '#303030',
-          color: '#ffffff',
-          title: 'Ой!',
-          text: 'Для того, щоб додати фільм до перегляду, Ви маєте увійти у свій обліковий запис.',
-          icon: 'warning',
-          confirmButtonText: 'OK',
-        });
-        if (!body.classList.contains('dark__theme')) {
-          Swal.fire({
-            confirmButtonColor: '#ff6b01',
-            title: 'Ой!',
-            text: 'Для того, щоб додати фільм до перегляду, Ви маєте увійти у свій обліковий запис.',
-            icon: 'warning',
-            confirmButtonText: 'OK',
-          });
-        }
-      }
+      notLoggedInQueueMessage();
+    }
+  }
+}
+
+async function notLoggedInWatchedMessage() {
+  const lang = await getLanguageFromLS();
+  if (lang === Movie.language.ENGLISH) {
+    Swal.fire({
+      confirmButtonColor: '#ff6b01',
+      background: '#303030',
+      color: '#ffffff',
+      title: 'Warning!',
+      text: 'If you want to add movie to "Watched" then you have to log in first.',
+      icon: 'warning',
+      confirmButtonText: 'OK',
+    });
+    if (!body.classList.contains('dark__theme')) {
+      Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        title: 'Warning!',
+        text: 'If you want to add movie to "Watched" then you have to log in first.',
+        icon: 'warning',
+        confirmButtonText: 'OK',
+      });
+    }
+  }
+  if (lang === Movie.language.UKRAINIAN) {
+    Swal.fire({
+      confirmButtonColor: '#ff6b01',
+      background: '#303030',
+      color: '#ffffff',
+      title: 'Ой!',
+      text: 'Для того, щоб додати фільм до переглянутих, Ви маєте увійти у свій обліковий запис.',
+      icon: 'warning',
+      confirmButtonText: 'OK',
+    });
+    if (!body.classList.contains('dark__theme')) {
+      Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        title: 'Ой!',
+        text: 'Для того, щоб додати фільм до переглянутих, Ви маєте увійти у свій обліковий запис.',
+        icon: 'warning',
+        confirmButtonText: 'OK',
+      });
+    }
+  }
+}
+
+async function notLoggedInQueueMessage() {
+  const lang = await getLanguageFromLS();
+  if (lang === Movie.language.ENGLISH) {
+    Swal.fire({
+      confirmButtonColor: '#ff6b01',
+      background: '#303030',
+      color: '#ffffff',
+      title: 'Warning!',
+      text: 'If you want to add movie to "Queue" then you have to log in first.',
+      icon: 'warning',
+      confirmButtonText: 'OK',
+    });
+    if (!body.classList.contains('dark__theme')) {
+      Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        title: 'Warning!',
+        text: 'If you want to add movie to "Queue" then you have to log in first.',
+        icon: 'warning',
+        confirmButtonText: 'OK',
+      });
+    }
+  }
+  if (lang === Movie.language.UKRAINIAN) {
+    Swal.fire({
+      confirmButtonColor: '#ff6b01',
+      background: '#303030',
+      color: '#ffffff',
+      title: 'Ой!',
+      text: 'Для того, щоб додати фільм до перегляду, Ви маєте увійти у свій обліковий запис.',
+      icon: 'warning',
+      confirmButtonText: 'OK',
+    });
+    if (!body.classList.contains('dark__theme')) {
+      Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        title: 'Ой!',
+        text: 'Для того, щоб додати фільм до перегляду, Ви маєте увійти у свій обліковий запис.',
+        icon: 'warning',
+        confirmButtonText: 'OK',
+      });
     }
   }
 }
