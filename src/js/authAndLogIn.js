@@ -9,9 +9,9 @@ import {
 } from 'firebase/auth';
 import { getDatabase, set, ref, child, update, get } from 'firebase/database';
 import Swal from 'sweetalert2';
-import { keyLS } from './languageSwitch';
-import { getLanguageFromLS } from './languageSwitch';
+import { keyLS, getLanguageFromLS } from './languageSwitch';
 import { onLoginOpen } from './switchSignInForms';
+import { Movie } from './fetchMovie';
 // import { libraryStart } from './watchedMovies';
 
 const refs = {
@@ -159,6 +159,7 @@ export async function updateUserData(userUID) {
 }
 // ----------------------------------------------------------------------------------
 const createAccount = async e => {
+  const lang = await getLanguageFromLS();
   const signupEmail = refs.signupEmail.value;
   const signupPassword = refs.signupPassword.value;
   refs.loginEmail.value = signupEmail;
@@ -175,21 +176,45 @@ const createAccount = async e => {
       userCredential.user.email
     );
     onLoginOpen();
-    Swal.fire({
-      background: '#303030',
-      color: '#ffffff',
-      title: 'Success!',
-      text: 'You are signed up now. Please, log in.',
-      icon: 'success',
-      confirmButtonText: 'OK',
-    });
-    if (!refs.body.classList.contains('dark__theme')) {
+    if (lang === Movie.language.ENGLISH) {
       Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        background: '#303030',
+        color: '#ffffff',
         title: 'Success!',
         text: 'You are signed up now. Please, log in.',
         icon: 'success',
         confirmButtonText: 'OK',
       });
+      if (!refs.body.classList.contains('dark__theme')) {
+        Swal.fire({
+          confirmButtonColor: '#ff6b01',
+          title: 'Success!',
+          text: 'You are signed up now. Please, log in.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });
+      }
+    }
+    if (lang === Movie.language.UKRAINIAN) {
+      Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        background: '#303030',
+        color: '#ffffff',
+        title: 'Супер!',
+        text: 'Обліковий запис створено. Будь ласка, зайдіть у свій акаунт.',
+        icon: 'success',
+        confirmButtonText: 'OK',
+      });
+      if (!refs.body.classList.contains('dark__theme')) {
+        Swal.fire({
+          confirmButtonColor: '#ff6b01',
+          title: 'Супер!',
+          text: 'Обліковий запис створено. Будь ласка, зайдіть у свій акаунт.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });
+      }
     }
     resetSignup();
   } catch (error) {
@@ -200,6 +225,7 @@ const createAccount = async e => {
 refs.signupBtn.addEventListener('click', createAccount);
 
 const loginEmailPassword = async () => {
+  const lang = await getLanguageFromLS();
   const loginEmail = refs.loginEmail.value;
   const loginPassword = refs.loginPassword.value;
 
@@ -209,22 +235,46 @@ const loginEmailPassword = async () => {
       loginEmail,
       loginPassword
     );
-    if (refs.loginUsername.value.length > 9) {
-      Swal.fire({
-        background: '#303030',
-        color: '#ffffff',
-        title: 'Warning!',
-        text: 'Your nickname is too long. Make it 9 characters maximum.',
-        icon: 'warning',
-        confirmButtonText: 'OK',
-      });
-      if (!refs.body.classList.contains('dark__theme')) {
+    if (refs.loginUsername.value.length > 15) {
+      if (lang === Movie.language.ENGLISH) {
         Swal.fire({
+          confirmButtonColor: '#ff6b01',
+          background: '#303030',
+          color: '#ffffff',
           title: 'Warning!',
-          text: 'Your nickname is too long. Make it 9 characters maximum.',
+          text: 'Your nickname is too long. Make it 15 characters maximum.',
           icon: 'warning',
           confirmButtonText: 'OK',
         });
+        if (!refs.body.classList.contains('dark__theme')) {
+          Swal.fire({
+            confirmButtonColor: '#ff6b01',
+            title: 'Warning!',
+            text: 'Your nickname is too long. Make it 15 characters maximum.',
+            icon: 'warning',
+            confirmButtonText: 'OK',
+          });
+        }
+      }
+      if (lang === Movie.language.UKRAINIAN) {
+        Swal.fire({
+          confirmButtonColor: '#ff6b01',
+          background: '#303030',
+          color: '#ffffff',
+          title: 'Ой!',
+          text: 'Нікнейм має бути максимум 15 символів.',
+          icon: 'warning',
+          confirmButtonText: 'OK',
+        });
+        if (!refs.body.classList.contains('dark__theme')) {
+          Swal.fire({
+            confirmButtonColor: '#ff6b01',
+            title: 'Ой!',
+            text: 'Нікнейм має бути максимум 15 символів.',
+            icon: 'warning',
+            confirmButtonText: 'OK',
+          });
+        }
       }
     } else {
       userCredential.user.displayName = refs.loginUsername.value;
@@ -252,40 +302,14 @@ const loginEmailPassword = async () => {
   }
 };
 
-function showLoginError(error) {
-  if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
-    Swal.fire({
-      background: '#303030',
-      color: '#ffffff',
-      title: 'Error!',
-      text: 'Wrong password. Try again.',
-      icon: 'error',
-      confirmButtonText: 'OK',
-    });
-  }
-  if (error.code == AuthErrorCodes.EMAIL_EXISTS) {
-    Swal.fire({
-      background: '#303030',
-      color: '#ffffff',
-      title: 'Error!',
-      text: `This email is already in use.`,
-      icon: 'error',
-      confirmButtonText: 'OK',
-    });
-  }
-  if (error.code == AuthErrorCodes.USER_DELETED) {
-    Swal.fire({
-      background: '#303030',
-      color: '#ffffff',
-      title: 'Error!',
-      text: `User is not found.`,
-      icon: 'error',
-      confirmButtonText: 'OK',
-    });
-  }
-  if (!refs.body.classList.contains('dark__theme')) {
+async function showLoginError(error) {
+  const lang = await getLanguageFromLS();
+  if (lang === Movie.language.ENGLISH) {
     if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
       Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        background: '#303030',
+        color: '#ffffff',
         title: 'Error!',
         text: 'Wrong password. Try again.',
         icon: 'error',
@@ -294,6 +318,9 @@ function showLoginError(error) {
     }
     if (error.code == AuthErrorCodes.EMAIL_EXISTS) {
       Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        background: '#303030',
+        color: '#ffffff',
         title: 'Error!',
         text: `This email is already in use.`,
         icon: 'error',
@@ -302,11 +329,107 @@ function showLoginError(error) {
     }
     if (error.code == AuthErrorCodes.USER_DELETED) {
       Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        background: '#303030',
+        color: '#ffffff',
         title: 'Error!',
         text: `User is not found.`,
         icon: 'error',
         confirmButtonText: 'OK',
       });
+    }
+    if (!refs.body.classList.contains('dark__theme')) {
+      if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
+        Swal.fire({
+          confirmButtonColor: '#ff6b01',
+          title: 'Error!',
+          text: 'Wrong password. Try again.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      }
+      if (error.code == AuthErrorCodes.EMAIL_EXISTS) {
+        Swal.fire({
+          confirmButtonColor: '#ff6b01',
+          title: 'Error!',
+          text: `This email is already in use.`,
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      }
+      if (error.code == AuthErrorCodes.USER_DELETED) {
+        Swal.fire({
+          confirmButtonColor: '#ff6b01',
+          title: 'Error!',
+          text: `User is not found.`,
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      }
+    }
+  }
+  if (lang === Movie.language.UKRAINIAN) {
+    if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
+      Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        background: '#303030',
+        color: '#ffffff',
+        title: 'Помилка!',
+        text: 'Неправильний пароль. Спробуйте ще раз.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
+    if (error.code == AuthErrorCodes.EMAIL_EXISTS) {
+      Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        background: '#303030',
+        color: '#ffffff',
+        title: 'Помилка!',
+        text: `Ця пошта вже використовується.`,
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
+    if (error.code == AuthErrorCodes.USER_DELETED) {
+      Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        background: '#303030',
+        color: '#ffffff',
+        title: 'Error!',
+        text: `Користувача не знайдено.`,
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
+    if (!refs.body.classList.contains('dark__theme')) {
+      if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
+        Swal.fire({
+          confirmButtonColor: '#ff6b01',
+          title: 'Помилка!',
+          text: 'Неправильний пароль. Спробуйте ще раз.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      }
+      if (error.code == AuthErrorCodes.EMAIL_EXISTS) {
+        Swal.fire({
+          confirmButtonColor: '#ff6b01',
+          title: 'Помилка!',
+          text: `Ця пошта вже використовується.`,
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      }
+      if (error.code == AuthErrorCodes.USER_DELETED) {
+        Swal.fire({
+          confirmButtonColor: '#ff6b01',
+          title: 'Помилка!',
+          text: `Користувача не знайдено.`,
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      }
     }
   }
 }
