@@ -13,7 +13,6 @@ export const refsTranslate = {
 
 const { linkHome, linkMyLibrary, btnSignUp, btnLogIn, searchPlaceholder } =
   refsTranslate;
-console.log(searchPlaceholder);
 
 export async function translatePage() {
   const lang = await getLanguageFromLS();
