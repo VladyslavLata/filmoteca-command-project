@@ -506,7 +506,6 @@ async function checkIfLogged() {
     if (lang === Movie.language.UKRAINIAN) {
       logoutText.innerHTML = `Ви увійшли як ${username}`;
     }
-    logoutText.innerHTML = `You are logged in as ${username}`;
   } else {
     libBtnheader.style.display = 'none';
     if (libGallery) {
