@@ -301,7 +301,6 @@ const loginEmailPassword = async () => {
       signupBtnHeader.style.display = 'none';
       usernick.textContent = `${username}`;
       libBtnheader.style.display = 'block';
-      console.log(username);
       getDataFromDatabase(userUID);
       monitorAuthState();
       resetLogin();
