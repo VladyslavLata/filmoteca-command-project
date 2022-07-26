@@ -25,9 +25,14 @@ async function onClickSubmit(event) {
     loader.enable('loader');
     event.preventDefault();
     keyword = event.target.query.value.trim();
+    const lang = await getLanguageFromLS();
 
     if (keyword === '') {
-      refs.paragraphEl.innerHTML = `Enter the name in the search field`;
+      if(lang === Movie.language.ENGLISH){
+        refs.paragraphEl.innerHTML = `Enter the name in the search field.`
+      } else {
+        refs.paragraphEl.innerHTML = `Введіть назву в поле пошуку.`
+      };
       loader.disable('loader');
       return;
     }
@@ -38,7 +43,12 @@ async function onClickSubmit(event) {
 
     if (data.total_results === 0) {
       event.target.reset();
-      refs.paragraphEl.innerHTML = `Search result not successful. Enter the correct movie name and try again.`;
+      if(lang === Movie.language.ENGLISH){
+        refs.paragraphEl.innerHTML = `Search result not successful. Enter the correct movie name and try again.`
+      } else {
+        refs.paragraphEl.innerHTML = `Результат пошуку невдалий. Введіть правильну назву фільму та повторіть спробу.`
+      };
+
       loader.disable('loader');
       if (oldTrendMovie) {
         resetKeyword();
@@ -48,13 +58,12 @@ async function onClickSubmit(event) {
         keywordMovies = oldKeywordMovies;
       }
       return;
-    }
+    };
 
     makeMarkupCard(data);
     renderPagination(data);
     event.target.reset();
     resetTextAlertSearch();
-    // refs.paragraphEl.innerHTML = '';
 
     console.log(data);
     keywordMovies.lastPage = data.total_pages;
@@ -64,14 +73,14 @@ async function onClickSubmit(event) {
     resetOldTrendMovie();
   } catch (error) {
     console.log(error.message);
-  }
-}
+  };
+};
 
 export function resetKeyword() {
   keyword = null;
   oldKeywordMovies = undefined;
-}
+};
 
 export function resetTextAlertSearch() {
   refs.paragraphEl.innerHTML = '';
-}
+};

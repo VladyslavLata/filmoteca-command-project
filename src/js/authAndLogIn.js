@@ -9,23 +9,20 @@ import {
 } from 'firebase/auth';
 import { getDatabase, set, ref, child, update, get } from 'firebase/database';
 import Swal from 'sweetalert2';
-import { keyLS } from './languageSwitch';
-import { getLanguageFromLS } from './languageSwitch';
+import { keyLS, getLanguageFromLS } from './languageSwitch';
 import { onLoginOpen } from './switchSignInForms';
-// import { libraryStart } from './watchedMovies';
+import { Movie } from './fetchMovie';
 
 const refs = {
   body: document.querySelector('body'),
   libBtnheader: document.querySelector('.site-nav__item--library__header'),
-  emptyLibText: document.querySelector('.not-logged-message'),
-  libContainer: document.querySelector('.container-library'),
   libGallery: document.querySelector('.gallery-library'),
   loginForm: document.querySelector('.login__form'),
   loginUsername: document.querySelector('#login-username'),
-  loginEmail: document.querySelector('#login-email'),
-  loginPassword: document.querySelector('#login-password'),
-  signupEmail: document.querySelector('#signup-email'),
-  signupPassword: document.querySelector('#signup-password'),
+  loginEmailInput: document.querySelector('#login-email'),
+  loginPasswordInput: document.querySelector('#login-password'),
+  signupEmailInput: document.querySelector('#signup-email'),
+  signupPasswordInput: document.querySelector('#signup-password'),
   loginBtn: document.querySelector('#login__button'),
   loginHeaderBtn: document.querySelector('.login__button'),
   signupBtn: document.querySelector('#signup__button'),
@@ -33,12 +30,28 @@ const refs = {
   logoutBtn: document.querySelector('#logout__button'),
   logoutText: document.querySelector('.logout-modal__text'),
   logoutModal: document.querySelector('.logout-modal'),
-  checkbox: document.querySelector('.form-check-input'),
   usernick: document.querySelector('.user-nick'),
 };
 
-// let loginEmail = '';
-// let loginPassword = '';
+const {
+  body,
+  libBtnheader,
+  libGallery,
+  loginForm,
+  loginUsername,
+  loginEmailInput,
+  loginPasswordInput,
+  signupEmailInput,
+  signupPasswordInput,
+  loginBtn,
+  loginHeaderBtn,
+  signupBtn,
+  signupBtnHeader,
+  logoutBtn,
+  logoutText,
+  logoutModal,
+  usernick,
+} = refs;
 
 export const LS_LOGIN_KEY = 'keep_logged_as';
 export const LS_UID_VALUE = 'UID';
@@ -76,7 +89,6 @@ function getDataFromDatabase(userId) {
   const databaseRef = ref(getDatabase(firebaseApp));
   get(child(databaseRef, `users/${userId}`))
     .then(snapshot => {
-      // console.log(snapshot.exists());
       if (snapshot.exists()) {
         const dataFromFirebaseWatchedUA = snapshot.val().watchedUA;
         const dataFromFirebaseWatchedEN = snapshot.val().watchedEN;
@@ -125,11 +137,6 @@ export async function updateUserData(userUID) {
   if (queueUA.length !== 2) {
     queueUA = JSON.parse(queueUA);
   }
-  // console.log(watchedEN);
-  // console.log(typeof watchedEN === 'string');
-  // console.log(watchedUA);
-  // console.log(queueEN);
-  // console.log(queueUA);
 
   if (watchedEN.length > 0) {
     updates['/users/' + userUID + '/' + 'watchedEN'] = watchedEN;
@@ -157,12 +164,56 @@ export async function updateUserData(userUID) {
   }
   return update(ref(database), updates);
 }
-// ----------------------------------------------------------------------------------
+
+async function accountCreatedMessage() {
+  const lang = await getLanguageFromLS();
+  if (lang === Movie.language.ENGLISH) {
+    Swal.fire({
+      confirmButtonColor: '#ff6b01',
+      background: '#303030',
+      color: '#ffffff',
+      title: 'Success!',
+      text: 'You are signed up now. Please, log in.',
+      icon: 'success',
+      confirmButtonText: 'OK',
+    });
+    if (!body.classList.contains('dark__theme')) {
+      Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        title: 'Success!',
+        text: 'You are signed up now. Please, log in.',
+        icon: 'success',
+        confirmButtonText: 'OK',
+      });
+    }
+  }
+  if (lang === Movie.language.UKRAINIAN) {
+    Swal.fire({
+      confirmButtonColor: '#ff6b01',
+      background: '#303030',
+      color: '#ffffff',
+      title: 'Супер!',
+      text: 'Обліковий запис створено. Будь ласка, зайдіть у свій акаунт.',
+      icon: 'success',
+      confirmButtonText: 'OK',
+    });
+    if (!body.classList.contains('dark__theme')) {
+      Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        title: 'Супер!',
+        text: 'Обліковий запис створено. Будь ласка, зайдіть у свій акаунт.',
+        icon: 'success',
+        confirmButtonText: 'OK',
+      });
+    }
+  }
+}
+
 const createAccount = async e => {
-  const signupEmail = refs.signupEmail.value;
-  const signupPassword = refs.signupPassword.value;
-  refs.loginEmail.value = signupEmail;
-  refs.loginPassword.value = signupPassword;
+  const signupEmail = signupEmailInput.value;
+  const signupPassword = signupPasswordInput.value;
+  loginEmailInput.value = signupEmail;
+  loginPasswordInput.value = signupPassword;
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -175,33 +226,62 @@ const createAccount = async e => {
       userCredential.user.email
     );
     onLoginOpen();
-    Swal.fire({
-      background: '#303030',
-      color: '#ffffff',
-      title: 'Success!',
-      text: 'You are signed up now. Please, log in.',
-      icon: 'success',
-      confirmButtonText: 'OK',
-    });
-    if (!refs.body.classList.contains('dark__theme')) {
-      Swal.fire({
-        title: 'Success!',
-        text: 'You are signed up now. Please, log in.',
-        icon: 'success',
-        confirmButtonText: 'OK',
-      });
-    }
+    accountCreatedMessage();
     resetSignup();
   } catch (error) {
     showLoginError(error);
   }
 };
 
-refs.signupBtn.addEventListener('click', createAccount);
+signupBtn.addEventListener('click', createAccount);
+
+async function longUsernameMessage() {
+  const lang = await getLanguageFromLS();
+  if (lang === Movie.language.ENGLISH) {
+    Swal.fire({
+      confirmButtonColor: '#ff6b01',
+      background: '#303030',
+      color: '#ffffff',
+      title: 'Warning!',
+      text: 'Your nickname is too long. Make it 15 characters maximum.',
+      icon: 'warning',
+      confirmButtonText: 'OK',
+    });
+    if (!body.classList.contains('dark__theme')) {
+      Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        title: 'Warning!',
+        text: 'Your nickname is too long. Make it 15 characters maximum.',
+        icon: 'warning',
+        confirmButtonText: 'OK',
+      });
+    }
+  }
+  if (lang === Movie.language.UKRAINIAN) {
+    Swal.fire({
+      confirmButtonColor: '#ff6b01',
+      background: '#303030',
+      color: '#ffffff',
+      title: 'Ой!',
+      text: 'Нікнейм має бути максимум 15 символів.',
+      icon: 'warning',
+      confirmButtonText: 'OK',
+    });
+    if (!body.classList.contains('dark__theme')) {
+      Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        title: 'Ой!',
+        text: 'Нікнейм має бути максимум 15 символів.',
+        icon: 'warning',
+        confirmButtonText: 'OK',
+      });
+    }
+  }
+}
 
 const loginEmailPassword = async () => {
-  const loginEmail = refs.loginEmail.value;
-  const loginPassword = refs.loginPassword.value;
+  const loginEmail = loginEmailInput.value;
+  const loginPassword = loginPasswordInput.value;
 
   try {
     const userCredential = await signInWithEmailAndPassword(
@@ -209,39 +289,18 @@ const loginEmailPassword = async () => {
       loginEmail,
       loginPassword
     );
-    if (refs.loginUsername.value.length > 9) {
-      Swal.fire({
-        background: '#303030',
-        color: '#ffffff',
-        title: 'Warning!',
-        text: 'Your nickname is too long. Make it 9 characters maximum.',
-        icon: 'warning',
-        confirmButtonText: 'OK',
-      });
-      if (!refs.body.classList.contains('dark__theme')) {
-        Swal.fire({
-          title: 'Warning!',
-          text: 'Your nickname is too long. Make it 9 characters maximum.',
-          icon: 'warning',
-          confirmButtonText: 'OK',
-        });
-      }
+    if (loginUsername.value.length > 15) {
+      longUsernameMessage();
     } else {
-      userCredential.user.displayName = refs.loginUsername.value;
+      userCredential.user.displayName = loginUsername.value;
       const username = userCredential.user.displayName;
       const userUID = userCredential.user.uid;
-      // if (refs.checkbox.checked) {
       localStorage.setItem(LS_LOGIN_KEY, `${username}`);
-      // } else if (!refs.checkbox.checked) {
-      //   sessionStorage.setItem(LS_LOGIN_KEY, `${username}`);
-      // }
       localStorage.setItem(LS_UID_VALUE, `${userUID}`);
       currentLangLogOut();
-      refs.signupBtnHeader.style.display = 'none';
-      // refs.loginHeaderBtn.textContent = 'Log Out';
-      refs.usernick.textContent = `${username}`;
-      refs.libBtnheader.style.display = 'block';
-      // libraryStart();
+      signupBtnHeader.style.display = 'none';
+      usernick.textContent = `${username}`;
+      libBtnheader.style.display = 'block';
       console.log(username);
       getDataFromDatabase(userUID);
       monitorAuthState();
@@ -252,40 +311,14 @@ const loginEmailPassword = async () => {
   }
 };
 
-function showLoginError(error) {
-  if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
-    Swal.fire({
-      background: '#303030',
-      color: '#ffffff',
-      title: 'Error!',
-      text: 'Wrong password. Try again.',
-      icon: 'error',
-      confirmButtonText: 'OK',
-    });
-  }
-  if (error.code == AuthErrorCodes.EMAIL_EXISTS) {
-    Swal.fire({
-      background: '#303030',
-      color: '#ffffff',
-      title: 'Error!',
-      text: `This email is already in use.`,
-      icon: 'error',
-      confirmButtonText: 'OK',
-    });
-  }
-  if (error.code == AuthErrorCodes.USER_DELETED) {
-    Swal.fire({
-      background: '#303030',
-      color: '#ffffff',
-      title: 'Error!',
-      text: `User is not found.`,
-      icon: 'error',
-      confirmButtonText: 'OK',
-    });
-  }
-  if (!refs.body.classList.contains('dark__theme')) {
+async function showLoginError(error) {
+  const lang = await getLanguageFromLS();
+  if (lang === Movie.language.ENGLISH) {
     if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
       Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        background: '#303030',
+        color: '#ffffff',
         title: 'Error!',
         text: 'Wrong password. Try again.',
         icon: 'error',
@@ -294,6 +327,9 @@ function showLoginError(error) {
     }
     if (error.code == AuthErrorCodes.EMAIL_EXISTS) {
       Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        background: '#303030',
+        color: '#ffffff',
         title: 'Error!',
         text: `This email is already in use.`,
         icon: 'error',
@@ -302,37 +338,125 @@ function showLoginError(error) {
     }
     if (error.code == AuthErrorCodes.USER_DELETED) {
       Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        background: '#303030',
+        color: '#ffffff',
         title: 'Error!',
         text: `User is not found.`,
         icon: 'error',
         confirmButtonText: 'OK',
       });
     }
+    if (!body.classList.contains('dark__theme')) {
+      if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
+        Swal.fire({
+          confirmButtonColor: '#ff6b01',
+          title: 'Error!',
+          text: 'Wrong password. Try again.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      }
+      if (error.code == AuthErrorCodes.EMAIL_EXISTS) {
+        Swal.fire({
+          confirmButtonColor: '#ff6b01',
+          title: 'Error!',
+          text: `This email is already in use.`,
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      }
+      if (error.code == AuthErrorCodes.USER_DELETED) {
+        Swal.fire({
+          confirmButtonColor: '#ff6b01',
+          title: 'Error!',
+          text: `User is not found.`,
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      }
+    }
+  }
+  if (lang === Movie.language.UKRAINIAN) {
+    if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
+      Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        background: '#303030',
+        color: '#ffffff',
+        title: 'Помилка!',
+        text: 'Неправильний пароль. Спробуйте ще раз.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
+    if (error.code == AuthErrorCodes.EMAIL_EXISTS) {
+      Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        background: '#303030',
+        color: '#ffffff',
+        title: 'Помилка!',
+        text: `Ця пошта вже використовується.`,
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
+    if (error.code == AuthErrorCodes.USER_DELETED) {
+      Swal.fire({
+        confirmButtonColor: '#ff6b01',
+        background: '#303030',
+        color: '#ffffff',
+        title: 'Error!',
+        text: `Користувача не знайдено.`,
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
+    if (!body.classList.contains('dark__theme')) {
+      if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
+        Swal.fire({
+          confirmButtonColor: '#ff6b01',
+          title: 'Помилка!',
+          text: 'Неправильний пароль. Спробуйте ще раз.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      }
+      if (error.code == AuthErrorCodes.EMAIL_EXISTS) {
+        Swal.fire({
+          confirmButtonColor: '#ff6b01',
+          title: 'Помилка!',
+          text: `Ця пошта вже використовується.`,
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      }
+      if (error.code == AuthErrorCodes.USER_DELETED) {
+        Swal.fire({
+          confirmButtonColor: '#ff6b01',
+          title: 'Помилка!',
+          text: `Користувача не знайдено.`,
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      }
+    }
   }
 }
 
-refs.loginBtn.addEventListener('click', loginEmailPassword);
+loginBtn.addEventListener('click', loginEmailPassword);
 
 async function monitorAuthState() {
   onAuthStateChanged(auth, user => {
     const username = localStorage.getItem(LS_LOGIN_KEY);
     const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
-    if (refs.libGallery) {
-      // refs.emptyLibText.style.display = 'none';
-      // refs.emptyLibText.classList.add('message--hidden');
-      refs.libGallery.style.display = 'flex';
+    if (libGallery) {
+      libGallery.style.display = 'flex';
     }
     if (username) {
-      refs.loginForm.classList.add('logout-modal--hidden');
-      refs.logoutModal.classList.remove('logout-modal--hidden');
-      refs.logoutText.innerHTML = `You are logged in as ${username}`;
+      loginForm.classList.add('logout-modal--hidden');
+      logoutModal.classList.remove('logout-modal--hidden');
+      logoutText.innerHTML = `You are logged in as ${username}`;
     }
-    // if (usernameSS) {
-    //   refs.loginForm.classList.add('logout-modal--hidden');
-    //   refs.logoutModal.classList.remove('logout-modal--hidden');
-    //   refs.logoutText.innerHTML = `You are logged in as ${usernameSS}`;
-    // }
-    // return user.uid;
   });
 }
 
@@ -344,10 +468,8 @@ const logout = async () => {
   ) {
     window.location = 'index.html';
   }
-  if (refs.libGallery) {
-    // refs.emptyLibText.style.display = 'flex';
-    // refs.emptyLibText.classList.remove('message--hidden');
-    refs.libGallery.style.display = 'none';
+  if (libGallery) {
+    libGallery.style.display = 'none';
   }
   localStorage.removeItem(keyLS.LS_WATHED_UA_DATA_KEY);
   localStorage.removeItem(keyLS.LS_WATHED_EN_DATA_KEY);
@@ -355,75 +477,67 @@ const logout = async () => {
   localStorage.removeItem(keyLS.LS_QUEUE_EN_DATA_KEY);
   localStorage.removeItem(LS_LOGIN_KEY);
   currentLangLogIn();
-  // refs.loginHeaderBtn.textContent = 'Log In';
-  refs.signupBtnHeader.style.display = 'inline-block';
-  refs.libBtnheader.style.display = 'none';
-  refs.usernick.textContent = ``;
-  refs.loginForm.classList.remove('logout-modal--hidden');
-  refs.logoutModal.classList.add('logout-modal--hidden');
+  signupBtnHeader.style.display = 'inline-block';
+  libBtnheader.style.display = 'none';
+  usernick.textContent = ``;
+  loginForm.classList.remove('logout-modal--hidden');
+  logoutModal.classList.add('logout-modal--hidden');
 };
 
-refs.logoutBtn.addEventListener('click', logout);
+logoutBtn.addEventListener('click', logout);
 
 function checkIfLogged() {
   const username = localStorage.getItem(LS_LOGIN_KEY);
   const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
   if (username || usernameSS) {
-    refs.libBtnheader.style.display = 'block';
-    refs.signupBtnHeader.style.display = 'none';
-    if (refs.libGallery) {
-      // refs.emptyLibText.style.display = 'none';
-      // refs.emptyLibText.classList.add('message--hidden');
-      refs.libGallery.style.display = 'flex';
+    libBtnheader.style.display = 'block';
+    signupBtnHeader.style.display = 'none';
+    if (libGallery) {
+      libGallery.style.display = 'flex';
     }
-    refs.loginForm.classList.add('logout-modal--hidden');
-    refs.logoutModal.classList.remove('logout-modal--hidden');
+    loginForm.classList.add('logout-modal--hidden');
+    logoutModal.classList.remove('logout-modal--hidden');
     currentLangLogOut();
-    // refs.loginHeaderBtn.textContent = 'Log Out';
-    refs.usernick.textContent = `${username}`;
-    refs.logoutText.innerHTML = `You are logged in as ${username}`;
+    usernick.textContent = `${username}`;
+    logoutText.innerHTML = `You are logged in as ${username}`;
   } else {
-    refs.libBtnheader.style.display = 'none';
-    if (refs.libGallery) {
-      // refs.emptyLibText.style.display = 'flex';
-      // refs.emptyLibText.classList.remove('message--hidden');
-      refs.libGallery.style.display = 'none';
+    libBtnheader.style.display = 'none';
+    if (libGallery) {
+      libGallery.style.display = 'none';
     }
-    refs.signupBtnHeader.style.display = 'inline-block';
-    refs.loginForm.classList.remove('logout-modal--hidden');
-    refs.logoutModal.classList.add('logout-modal--hidden');
+    signupBtnHeader.style.display = 'inline-block';
+    loginForm.classList.remove('logout-modal--hidden');
+    logoutModal.classList.add('logout-modal--hidden');
     currentLangLogIn();
-    // refs.loginHeaderBtn.textContent = 'Log In';
-    refs.usernick.textContent = ``;
+    usernick.textContent = ``;
   }
 }
 
 function resetLogin() {
-  refs.loginUsername.value = '';
-  refs.loginEmail.value = '';
-  refs.loginPassword.value = '';
-  // refs.checkbox.checked = false;
+  loginUsername.value = '';
+  loginEmailInput.value = '';
+  loginPasswordInput.value = '';
 }
 
 function resetSignup() {
-  refs.signupPassword.value = '';
-  refs.signupEmail.value = '';
+  signupPasswordInput.value = '';
+  signupEmailInput.value = '';
 }
 
 async function currentLangLogIn() {
   const lang = await getLanguageFromLS();
   if (lang === 'en-US') {
-    return (refs.loginHeaderBtn.textContent = 'Log In');
+    return (loginHeaderBtn.textContent = 'Log In');
   } else {
-    return (refs.loginHeaderBtn.textContent = 'Вхід');
+    return (loginHeaderBtn.textContent = 'Вхід');
   }
 }
 
 async function currentLangLogOut() {
   const lang = await getLanguageFromLS();
   if (lang === 'en-US') {
-    return (refs.loginHeaderBtn.textContent = 'Log Out');
+    return (loginHeaderBtn.textContent = 'Log Out');
   } else {
-    return (refs.loginHeaderBtn.textContent = 'Вихід');
+    return (loginHeaderBtn.textContent = 'Вихід');
   }
 }

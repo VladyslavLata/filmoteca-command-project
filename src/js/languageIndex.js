@@ -6,6 +6,7 @@ import { refs, setLanguageToLS } from './languageSwitch';
 import Loader from './loader';
 import { renderFooter } from './footerTranslation';
 import { translatePage } from './translateIndex';
+import { translateAuthForms } from './translateAuthForms';
 
 const loader = new Loader();
 
@@ -23,6 +24,7 @@ function onClickEN() {
   }
   translatePage();
   renderFooter();
+  translateAuthForms();
 }
 
 function onClickUA() {
@@ -36,4 +38,5 @@ function onClickUA() {
   }
   translatePage();
   renderFooter();
+  translateAuthForms();
 }
