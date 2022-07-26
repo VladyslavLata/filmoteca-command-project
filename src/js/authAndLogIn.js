@@ -488,7 +488,8 @@ const logout = async () => {
 
 refs.logoutBtn.addEventListener('click', logout);
 
-function checkIfLogged() {
+async function checkIfLogged() {
+  const lang = await getLanguageFromLS();
   const username = localStorage.getItem(LS_LOGIN_KEY);
   const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
   if (username || usernameSS) {
@@ -504,7 +505,12 @@ function checkIfLogged() {
     currentLangLogOut();
     // refs.loginHeaderBtn.textContent = 'Log Out';
     refs.usernick.textContent = `${username}`;
-    refs.logoutText.innerHTML = `You are logged in as ${username}`;
+    if (lang === Movie.language.ENGLISH) {
+      refs.logoutText.innerHTML = `You are logged in as ${username}`;
+    }
+    if (lang === Movie.language.UKRAINIAN) {
+      refs.logoutText.innerHTML = `Ви увійшли як ${username}`;
+    }
   } else {
     refs.libBtnheader.style.display = 'none';
     if (refs.libGallery) {

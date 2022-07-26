@@ -7,6 +7,7 @@ import {
 import { renderFooter } from './footerTranslation';
 import Loader from './loader';
 import { translatePageLibrary } from './translateLibrary';
+import { translateAuthForms } from './translateAuthForms';
 
 const loader = new Loader();
 
@@ -18,6 +19,7 @@ function onClickEN() {
   onClickENBtnMarkupFilms();
   translatePageLibrary();
   renderFooter();
+  translateAuthForms();
   loader.disable('loader');  
 }
 
@@ -26,5 +28,6 @@ function onClickUA() {
   onClickUABtnMarkupFilms();
   translatePageLibrary();
   renderFooter();
+  translateAuthForms();
   loader.disable('loader'); 
 }
