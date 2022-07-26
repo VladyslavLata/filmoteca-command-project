@@ -40,8 +40,13 @@ function createPaginationMarkup(pages, page) {
   } else if (window.innerWidth >= CHANGE_RESOLUTION) {
     if (page > 3) {
       str += `<li class="${paginationClass.NUMB} ${paginationClass.FIRST_PAGE}" ><button data-page="1">1</button></li>`;
-      if (page > 4) {
-        str += `<li class="${paginationClass.DOTS}"><button ${paginationClass.DISABLED}>...</button></li>`;
+      if (page === 5) {
+        str += `<li class="${paginationClass.NUMB}" ><button data-page="2">2</button></li>`;
+      }
+      if (page > 5) {
+        str += `<li class="${paginationClass.DOTS}"><button data-page="${
+          page - 5
+        }">...</button></li>`;
       }
     }
     // Determine how many pages to show after the current page index
@@ -70,8 +75,15 @@ function createPaginationMarkup(pages, page) {
     }
 
     if (page < pages - 2) {
-      if (page < pages - 3) {
-        str += `<li class="${paginationClass.DOTS}"><button ${paginationClass.DISABLED}>...</button></li>`;
+      if (page < pages - 4) {
+        str += `<li class="${paginationClass.DOTS}"><button data-page="${
+          page + 5
+        }">...</button></li>`;
+      }
+      if (page === pages - 4) {
+        str += `<li class="${paginationClass.NUMB}" ><button data-page="${
+          pages - 1
+        }">${pages - 1}</button></li>`;
       }
       str += `<li class="${paginationClass.NUMB} ${paginationClass.LAST_PAGE}" ><button data-page="${pages}">${pages}</button></li>`;
     }
