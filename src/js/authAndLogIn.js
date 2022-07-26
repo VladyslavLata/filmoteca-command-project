@@ -486,7 +486,8 @@ const logout = async () => {
 
 logoutBtn.addEventListener('click', logout);
 
-function checkIfLogged() {
+async function checkIfLogged() {
+  const lang = await getLanguageFromLS();
   const username = localStorage.getItem(LS_LOGIN_KEY);
   const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
   if (username || usernameSS) {
@@ -499,7 +500,12 @@ function checkIfLogged() {
     logoutModal.classList.remove('logout-modal--hidden');
     currentLangLogOut();
     usernick.textContent = `${username}`;
-    logoutText.innerHTML = `You are logged in as ${username}`;
+    if (lang === Movie.language.ENGLISH) {
+      logoutText.innerHTML = `You are logged in as ${username}`;
+    }
+    if (lang === Movie.language.UKRAINIAN) {
+      logoutText.innerHTML = `Ви увійшли як ${username}`;
+    }
   } else {
     libBtnheader.style.display = 'none';
     if (libGallery) {
