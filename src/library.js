@@ -10,3 +10,4 @@ import * as modalTeam from './js/modal-team';
 import * as signIn from './js/switchSignInForms';
 import * as authAndLoIn from './js/authAndLogIn';
 import * as translateLibrary from './js/translateLibrary';
+import * as translateForms from './js/translateAuthForms';
