@@ -2,7 +2,7 @@ import { Movie } from './fetchMovie';
 import { makeMarkupCard } from './cardMarkup';
 import { getLanguageFromLS } from './languageSwitch';
 import { unlockBtnTrendTime } from './trendTime';
-import { setCurrenDataToLS, getCurrenDataFromLS } from './currentPageData';
+import { setCurrenDataToLS } from './currentPageData';
 import { renderPagination } from './renderPagination';
 import { oldTrendMovie, resetOldTrendMovie } from './fetchAndMarkup';
 import { setOldTrendMovie } from './homePage';
@@ -35,7 +35,7 @@ async function onClickSubmit(event) {
       };
       loader.disable('loader');
       return;
-    }
+    };
 
     keywordMovies = new Movie(keyword);
     keywordMovies.langCurrent = getLanguageFromLS();
@@ -53,10 +53,10 @@ async function onClickSubmit(event) {
       if (oldTrendMovie) {
         resetKeyword();
         setOldTrendMovie(oldTrendMovie);
-      }
+      };
       if (oldKeywordMovies) {
         keywordMovies = oldKeywordMovies;
-      }
+      };
       return;
     };
 
