@@ -15,6 +15,7 @@ import { onLoginOpen } from './switchSignInForms';
 // import { libraryStart } from './watchedMovies';
 
 const refs = {
+  body: document.querySelector('body'),
   libBtnheader: document.querySelector('.site-nav__item--library__header'),
   emptyLibText: document.querySelector('.not-logged-message'),
   libContainer: document.querySelector('.container-library'),
@@ -175,11 +176,21 @@ const createAccount = async e => {
     );
     onLoginOpen();
     Swal.fire({
+      background: '#303030',
+      color: '#ffffff',
       title: 'Success!',
       text: 'You are signed up now. Please, log in.',
       icon: 'success',
       confirmButtonText: 'OK',
     });
+    if (!refs.body.classList.contains('dark__theme')) {
+      Swal.fire({
+        title: 'Success!',
+        text: 'You are signed up now. Please, log in.',
+        icon: 'success',
+        confirmButtonText: 'OK',
+      });
+    }
     resetSignup();
   } catch (error) {
     showLoginError(error);
@@ -200,11 +211,21 @@ const loginEmailPassword = async () => {
     );
     if (refs.loginUsername.value.length > 9) {
       Swal.fire({
+        background: '#303030',
+        color: '#ffffff',
         title: 'Warning!',
         text: 'Your nickname is too long. Make it 9 characters maximum.',
         icon: 'warning',
         confirmButtonText: 'OK',
       });
+      if (!refs.body.classList.contains('dark__theme')) {
+        Swal.fire({
+          title: 'Warning!',
+          text: 'Your nickname is too long. Make it 9 characters maximum.',
+          icon: 'warning',
+          confirmButtonText: 'OK',
+        });
+      }
     } else {
       userCredential.user.displayName = refs.loginUsername.value;
       const username = userCredential.user.displayName;
@@ -234,6 +255,8 @@ const loginEmailPassword = async () => {
 function showLoginError(error) {
   if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
     Swal.fire({
+      background: '#303030',
+      color: '#ffffff',
       title: 'Error!',
       text: 'Wrong password. Try again.',
       icon: 'error',
@@ -242,6 +265,8 @@ function showLoginError(error) {
   }
   if (error.code == AuthErrorCodes.EMAIL_EXISTS) {
     Swal.fire({
+      background: '#303030',
+      color: '#ffffff',
       title: 'Error!',
       text: `This email is already in use.`,
       icon: 'error',
@@ -250,11 +275,39 @@ function showLoginError(error) {
   }
   if (error.code == AuthErrorCodes.USER_DELETED) {
     Swal.fire({
+      background: '#303030',
+      color: '#ffffff',
       title: 'Error!',
       text: `User is not found.`,
       icon: 'error',
       confirmButtonText: 'OK',
     });
+  }
+  if (!refs.body.classList.contains('dark__theme')) {
+    if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Wrong password. Try again.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
+    if (error.code == AuthErrorCodes.EMAIL_EXISTS) {
+      Swal.fire({
+        title: 'Error!',
+        text: `This email is already in use.`,
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
+    if (error.code == AuthErrorCodes.USER_DELETED) {
+      Swal.fire({
+        title: 'Error!',
+        text: `User is not found.`,
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
   }
 }
 
@@ -308,13 +361,6 @@ const logout = async () => {
   refs.usernick.textContent = ``;
   refs.loginForm.classList.remove('logout-modal--hidden');
   refs.logoutModal.classList.add('logout-modal--hidden');
-  // Swal.fire({
-  //   position: 'top-end',
-  //   icon: 'success',
-  //   title: 'You are not logged in anymore',
-  //   showConfirmButton: false,
-  //   timer: 1500,
-  // });
 };
 
 refs.logoutBtn.addEventListener('click', logout);

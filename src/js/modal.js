@@ -219,11 +219,21 @@ async function onBtnClick(evt) {
       updateUserData(UID);
     } else {
       Swal.fire({
+        background: '#303030',
+        color: '#ffffff',
         title: 'Warning!',
         text: 'If you want to add movie to "Watched" then you have to log in first.',
         icon: 'warning',
         confirmButtonText: 'OK',
       });
+      if (!body.classList.contains('dark__theme')) {
+        Swal.fire({
+          title: 'Warning!',
+          text: 'If you want to add movie to "Watched" then you have to log in first.',
+          icon: 'warning',
+          confirmButtonText: 'OK',
+        });
+      }
     }
   }
   if (evt.target.name === btnNameKey.QUEUE) {
@@ -233,11 +243,21 @@ async function onBtnClick(evt) {
       updateUserData(UID);
     } else {
       Swal.fire({
+        background: '#303030',
+        color: '#ffffff',
         title: 'Warning!',
         text: 'If you want to add movie to "Queue" then you have to log in first.',
         icon: 'warning',
         confirmButtonText: 'OK',
       });
+      if (!body.classList.contains('dark__theme')) {
+        Swal.fire({
+          title: 'Warning!',
+          text: 'If you want to add movie to "Queue" then you have to log in first.',
+          icon: 'warning',
+          confirmButtonText: 'OK',
+        });
+      }
     }
   }
 }
