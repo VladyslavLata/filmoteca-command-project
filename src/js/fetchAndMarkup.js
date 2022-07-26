@@ -10,7 +10,6 @@ export async function fetchTrendAndMarkup(classIstance) {
   try {
     await genreLoad(classIstance);
     const data = await classIstance.fetchTrend();
-    console.log(data);
     setCurrenDataToLS(data.results);
     makeMarkupCard(data);
     renderPagination(data);
