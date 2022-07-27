@@ -8,6 +8,11 @@ body {
   }
 }
 
+.hidden-section__title {
+  @include center;
+  @extend %visually-hidden;
+}
+
 .not-logged-gallery, .empty-lib-gallery {
   display: flex;
   align-items: center;
