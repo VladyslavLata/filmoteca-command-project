@@ -98,7 +98,7 @@ function modalTeamMarkup() {
   let muzalevskiy = langUS ? 'Evgeniy Muzalevskiy' : 'Євген Музалевський';
   let diachenko = langUS ? 'Olena Diachenko' : 'Олена Дяченко';
   let malynovska = langUS ? 'Natalia Malynovska' : 'Наталя Малиновська';
-  let garnyk = langUS ? 'Alyona Garnyk' : 'Альона Гарнюк';
+  let garnyk = langUS ? 'Alyona Garnyk' : 'Альона Гарник';
   let photoWith = langUS ? 'photo with' : 'на фото';
 
   ref.lead.textContent = teamLead;
