@@ -25,7 +25,7 @@ export async function fetchSearchAndMarkup(classIstance) {
   try {
     await genreLoad(classIstance);
     const data = await classIstance.fetchSearch();
-    console.log(data);
+    // console.log(data);
     setCurrenDataToLS(data.results);
     makeMarkupCard(data);
     renderPagination(data);
