@@ -2,8 +2,6 @@ import { getLanguageFromLS } from './languageSwitch';
 import { Movie } from './fetchMovie';
 import { LS_LOGIN_KEY } from './authAndLogIn';
 
-const username = localStorage.getItem(LS_LOGIN_KEY);
-
 const refs = {
   signupTitle: document.querySelector('.sign-up__title'),
   liginTitle: document.querySelector('.login__title'),
@@ -26,6 +24,7 @@ const refs = {
 };
 
 export async function translateAuthForms() {
+  const username = await localStorage.getItem(LS_LOGIN_KEY);
   const lang = await getLanguageFromLS();
   if (lang === Movie.language.ENGLISH) {
     refs.signupTitle.textContent = 'Sign Up';

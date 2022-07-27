@@ -445,7 +445,8 @@ async function showLoginError(error) {
 loginBtn.addEventListener('click', loginEmailPassword);
 
 async function monitorAuthState() {
-  onAuthStateChanged(auth, user => {
+  onAuthStateChanged(auth, async user => {
+    const lang = await getLanguageFromLS();
     const username = localStorage.getItem(LS_LOGIN_KEY);
     const usernameSS = sessionStorage.getItem(LS_LOGIN_KEY);
     if (libGallery) {
@@ -454,7 +455,13 @@ async function monitorAuthState() {
     if (username) {
       loginForm.classList.add('logout-modal--hidden');
       logoutModal.classList.remove('logout-modal--hidden');
-      logoutText.innerHTML = `You are logged in as ${username}`;
+      if (lang === Movie.language.ENGLISH) {
+        logoutText.textContent = `You are logged in as ${username}`;
+      }
+      if (lang === Movie.language.UKRAINIAN) {
+        logoutText.textContent = `Ви увійшли як ${username}`;
+      }
+      // logoutText.innerHTML = `You are logged in as ${username}`;
     }
   });
 }
@@ -500,10 +507,10 @@ async function checkIfLogged() {
     currentLangLogOut();
     usernick.textContent = `${username}`;
     if (lang === Movie.language.ENGLISH) {
-      logoutText.innerHTML = `You are logged in as ${username}`;
+      logoutText.textContent = `You are logged in as ${username}`;
     }
     if (lang === Movie.language.UKRAINIAN) {
-      logoutText.innerHTML = `Ви увійшли як ${username}`;
+      logoutText.textContent = `Ви увійшли як ${username}`;
     }
   } else {
     libBtnheader.style.display = 'none';
