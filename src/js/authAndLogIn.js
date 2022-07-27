@@ -461,7 +461,6 @@ async function monitorAuthState() {
       if (lang === Movie.language.UKRAINIAN) {
         logoutText.textContent = `Ви увійшли як ${username}`;
       }
-      // logoutText.innerHTML = `You are logged in as ${username}`;
     }
   });
 }
